@@ -1,0 +1,14 @@
+//@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+.property-value {
+  text-align: center;
+}
+
+.property-value.blue {
+  background: unset !important;
+  color: #3e8654;
+}
+
+.property-value.red {
+  background: unset !important;
+  color: #ae543b;
+}

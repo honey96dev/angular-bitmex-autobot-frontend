@@ -1,0 +1,79 @@
+$background2: #3c3c3c;
+$sidenav-breakpoint: 1200px;
+$sidenav-breakpoint2: 1201px;
+$lg-breakpoint: 992px;
+//
+//header, main, footer {
+//  padding-left: 240px;
+//}
+//
+//@media only screen and (max-width : 992px) {
+//  header, main, footer {
+//    padding-left: 0;
+//  }
+//}
+
+@media (min-width: $sidenav-breakpoint2) {
+  .sidenav-toggle {
+    visibility: hidden;
+    width: 0 !important;
+  }
+}
+
+@media (min-width: $lg-breakpoint) {
+  main {
+    margin-left: 3% !important;
+    margin-right: 3% !important;
+  }
+}
+
+.own-sidenav .side-nav {
+  background: $background2 !important;
+}
+
+.app {
+  margin: 20px auto;
+  padding-left: 15px;
+  padding-right: 15px;
+  //background: #3b5264;
+  //height: 100px;
+}
+
+.logo {
+}
+
+.logo img {
+  margin-top: 18px;
+  margin-left: 10px;
+}
+
+@media (max-width: 767px) {
+  .logo {
+    text-align: center;
+  }
+}
+
+.navbar-title {
+  width: 200px;
+}
+
+.title {
+  padding: 15px 0 0 0;
+  text-align: center;
+}
+
+.price {
+  text-align: center;
+}
+
+.price-value {
+  font-weight: bold;
+}
+
+.price-value.growing {
+  color: #81c784;
+}
+
+.price-value.falling {
+  color: #ff7043;
+}

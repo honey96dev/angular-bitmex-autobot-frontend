@@ -1,0 +1,45 @@
+<div class="p-3">
+  <div *ngIf="alert.show" class="alert alert-dismissible fade show" [ngClass]="alert.type" role="alert">
+    <button type="button" class="close" aria-label="Close" (click)="closeAlert()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    {{alert.message}}
+  </div>
+  <div class="m-b text-md">
+    {{strings.signInWithYourAccount}}
+  </div>
+  <form name="form" [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="md-form mt-4">
+      <mdb-icon fas icon="envelope" class="prefix"></mdb-icon>
+      <input mdbInput mdbValidate formControlName="email" minLength="8" maxLength="25" type="email"
+             class="form-control" [disabled]="loading">
+      <label>{{strings.email}}</label>
+      <mdb-error *ngIf="f.email.invalid && (f.email.dirty || f.email.touched)">{{strings.thisFieldIsRequired}}</mdb-error>
+<!--      <mdb-success *ngIf="f.email.valid && (f.email.dirty || f.email.touched)">Input valid</mdb-success>-->
+    </div>
+    <div class="md-form mt-5">
+      <mdb-icon fas icon="key" class="prefix"></mdb-icon>
+<!--      <mdb-icon fas icon="key" class="suffix"></mdb-icon>-->
+      <input mdbInput mdbValidate formControlName="password" minLength="4" [type]="passwordDisplayType"
+             class="form-control" [disabled]="loading">
+      <label>{{strings.password}}</label>
+      <mdb-error *ngIf="f.password.invalid && (f.password.dirty || f.password.touched)">{{strings.thisFieldIsRequired}}</mdb-error>
+<!--      <mdb-success *ngIf="f.password.valid && (f.password.dirty || f.password.touched)">Input valid</mdb-success>-->
+    </div>
+    <div class="text-align-center">
+      <button type="submit" mdbBtn color="primary" mdbWavesEffect [disabled]="loading">
+        <mdb-icon fas icon="sign-in-alt" class="mr-1"></mdb-icon>
+        {{strings.signIn}}
+      </button>
+    </div>
+<!--    <button type="submit" class="btn primary btn-block p-x-md" [disabled]="loading">{{strings.signIn}}</button>-->
+  </form>
+</div>
+
+<!--<div class="p-v-lg text-center">-->
+<!--  &lt;!&ndash;<div class="m-b"><a ui-sref="access.forgot-password" href="forgot-password.html"&ndash;&gt;-->
+<!--  &lt;!&ndash;class="text-primary _600">{{strings.forgotPassword}}</a></div>&ndash;&gt;-->
+<!--  <div>{{strings.doNotHaveAnAccount}} <a routerLink="/auth/sign-up" routerLinkActive="active"-->
+<!--                                         class="text-primary _600">{{strings.signUp}}</a>-->
+<!--  </div>-->
+<!--</div>-->

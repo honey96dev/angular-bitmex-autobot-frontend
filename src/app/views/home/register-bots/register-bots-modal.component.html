@@ -1,0 +1,279 @@
+<!--<div class="modal-content">-->
+<!--  <div class="modal-header">-->
+<!--    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">-->
+<!--      <span aria-hidden="true">×</span>-->
+<!--    </button>-->
+<!--    <h4 class="modal-title w-100" id="myModalLabel">{{editableRow.id ? 'Edit Bot: ' + editableRow.name : 'New Bot'}}</h4>-->
+<!--  </div>-->
+<!--  <div class="modal-body">-->
+    <form [formGroup]="form" class="mx-2">
+      <input id="id" type="hidden" class="form-control grey-text" formControlName="id" mdbInput>
+      <div class="row">
+        <div class="col-md-4">
+          <div class="md-form mt-0">
+            <input type="text" class="form-control" formControlName="name" mdbInput mdbValidate
+                   [validateSuccess]="false" placeholder="{{strings.name}}">
+            <label>{{strings.name}}</label>
+            <mdb-error *ngIf="f.name.invalid && (f.name.dirty || f.name.touched)">{{strings.thisFieldIsRequired}}</mdb-error>
+          </div>
+<!--          <div class="form-group row">-->
+<!--            <label class="col-sm-4 col-form-label">{{strings.name}}</label>-->
+<!--            <div class="col-sm-8">-->
+<!--              <div class="md-form mt-0">-->
+<!--                <input mdbInput type="text" formControlName="name" class="form-control">-->
+<!--                <mdb-error *ngIf="f.name.invalid && (f.name.dirty || f.name.touched)">{{strings.thisFieldIsRequired}}</mdb-error>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
+        </div>
+        <div class="col-md-4">
+          <div class="md-form mt-0">
+            <input type="text" class="form-control" formControlName="exchange" mdbInput mdbValidate
+                   [validateSuccess]="false" placeholder="{{strings.exchange}}">
+            <label>{{strings.exchange}}</label>
+            <mdb-error *ngIf="f.exchange.invalid && (f.exchange.dirty || f.exchange.touched)">{{strings.thisFieldIsRequired}}</mdb-error>
+          </div>
+<!--          <div class="form-group row">-->
+<!--            <label class="col-sm-4 col-form-label">{{strings.exchange}}</label>-->
+<!--            <div class="col-sm-8">-->
+<!--              <div class="md-form mt-0">-->
+<!--                <input mdbInput type="text" formControlName="exchange" class="form-control">-->
+<!--                <mdb-error *ngIf="f.exchange.invalid && (f.exchange.dirty || f.exchange.touched)">{{strings.thisFieldIsRequired}}</mdb-error>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
+        </div>
+        <div class="col-md-4">
+          <div class="md-form mt-0">
+            <input type="text" class="form-control" formControlName="symbol" mdbInput mdbValidate
+                   [validateSuccess]="false" placeholder="{{strings.symbol}}">
+            <label>{{strings.symbol}}</label>
+            <mdb-error *ngIf="f.symbol.invalid && (f.symbol.dirty || f.symbol.touched)">{{strings.thisFieldIsRequired}}</mdb-error>
+          </div>
+<!--          <div class="form-group row">-->
+<!--            <label class="col-sm-4 col-form-label">{{strings.symbol}}</label>-->
+<!--            <div class="col-sm-8">-->
+<!--              <div class="md-form mt-0">-->
+<!--                <input mdbInput type="text" formControlName="symbol" class="form-control">-->
+<!--                <mdb-error *ngIf="f.symbol.invalid && (f.symbol.dirty || f.symbol.touched)">{{strings.thisFieldIsRequired}}</mdb-error>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4 mb-4">
+          <div class="btn-group full-width">
+            <label mdbBtn color="primary" formControlName="orderType" mdbRadio="{{strings.market}}" mdbWavesEffect>
+              {{strings.market}}
+            </label>
+            <label mdbBtn color="primary" formControlName="orderType" mdbRadio="{{strings.limit}}" mdbWavesEffect>
+              {{strings.limit}}
+            </label>
+          </div>
+          <mdb-error *ngIf="f.orderType.invalid" class="my-error">{{strings.thisFieldIsRequired}}</mdb-error>
+        </div>
+        <div class="col-md-4 mb-4">
+          <div class="btn-group full-width">
+            <label mdbBtn color="info" formControlName="strategy" mdbRadio="{{strings.long}}" mdbWavesEffect>
+              {{strings.long}}
+            </label>
+            <label mdbBtn color="info" formControlName="strategy" mdbRadio="{{strings.short}}" mdbWavesEffect>
+              {{strings.short}}
+            </label>
+          </div>
+          <mdb-error *ngIf="f.strategy.invalid" class="my-error">{{strings.thisFieldIsRequired}}</mdb-error>
+        </div>
+        <div class="col-md-4 mb-4">
+          <div class="btn-group full-width">
+            <label mdbBtn color="secondary" formControlName="leverage" mdbRadio="{{strings.cross}}" mdbWavesEffect>
+              {{strings.cross}}
+            </label>
+            <label mdbBtn color="secondary" formControlName="leverage" mdbRadio="{{strings.custom}}" mdbWavesEffect>
+              {{strings.custom}}
+            </label>
+          </div>
+          <mdb-error *ngIf="f.leverage.invalid" class="my-error">{{strings.thisFieldIsRequired}}</mdb-error>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4">
+          <div class="md-form mt-0">
+            <input type="number" class="form-control" formControlName="quantity" mdbInput mdbValidate
+                   [validateSuccess]="false" placeholder="{{strings.quantity}}">
+            <label>{{strings.quantity}}</label>
+            <mdb-error *ngIf="f.quantity.invalid && (f.quantity.dirty || f.quantity.touched)">{{strings.thisFieldIsRequired}}</mdb-error>
+          </div>
+<!--          <div class="form-group row">-->
+<!--            <label class="col-sm-4 col-form-label">{{strings.quantity}}</label>-->
+<!--            <div class="col-sm-8">-->
+<!--              <div class="md-form mt-0">-->
+<!--                <input mdbInput type="text" formControlName="quantity" class="form-control">-->
+<!--                <mdb-error *ngIf="f.quantity.invalid && (f.quantity.dirty || f.quantity.touched)">{{strings.thisFieldIsRequired}}</mdb-error>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
+        </div>
+        <div class="col-md-4">
+          <div class="md-form mt-0">
+            <input type="number" class="form-control" formControlName="price" mdbInput mdbValidate
+                   [validateSuccess]="false" placeholder="{{strings.price}}">
+            <label>{{strings.price}}</label>
+            <mdb-error *ngIf="f.price.invalid && (f.price.dirty || f.price.touched)">{{strings.thisFieldIsRequired}}</mdb-error>
+          </div>
+<!--          <div class="form-group row">-->
+<!--            <label class="col-sm-4 col-form-label">{{strings.price}}</label>-->
+<!--            <div class="col-sm-8">-->
+<!--              <div class="md-form mt-0">-->
+<!--                <input mdbInput type="text" formControlName="price" class="form-control">-->
+<!--                <mdb-error *ngIf="f.price.invalid && (f.price.dirty || f.price.touched)">{{strings.thisFieldIsRequired}}</mdb-error>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3">
+          <div class="md-form mt-0">
+            <input type="number" class="form-control" formControlName="tpPercent" mdbInput mdbValidate
+                   [validateSuccess]="false" placeholder="{{strings.tpPercent}}">
+            <label>{{strings.tpPercent}}</label>
+            <mdb-error *ngIf="f.tpPercent.invalid && (f.tpPercent.dirty || f.tpPercent.touched)">{{strings.thisFieldIsRequired}}</mdb-error>
+          </div>
+<!--          <div class="form-group row">-->
+<!--            <label class="col-sm-4 col-form-label">{{strings.tpPercent}}</label>-->
+<!--            <div class="col-sm-8">-->
+<!--              <div class="md-form mt-0">-->
+<!--                <input mdbInput type="text" formControlName="tpPercent" class="form-control">-->
+<!--                <mdb-error *ngIf="f.tpPercent.invalid && (f.tpPercent.dirty || f.tpPercent.touched)">{{strings.thisFieldIsRequired}}</mdb-error>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
+        </div>
+        <div class="col-md-3">
+          <div class="md-form mt-0">
+            <input type="number" class="form-control" formControlName="slPercent" mdbInput mdbValidate
+                   [validateSuccess]="false" placeholder="{{strings.slPercent}}">
+            <label>{{strings.slPercent}}</label>
+            <mdb-error *ngIf="f.slPercent.invalid && (f.slPercent.dirty || f.slPercent.touched)">{{strings.thisFieldIsRequired}}</mdb-error>
+          </div>
+<!--          <div class="form-group row">-->
+<!--            <label class="col-sm-4 col-form-label">{{strings.quantity}}</label>-->
+<!--            <div class="col-sm-8">-->
+<!--              <div class="md-form mt-0">-->
+<!--                <input mdbInput type="text" formControlName="slPercent" class="form-control">-->
+<!--                <mdb-error *ngIf="f.slPercent.invalid && (f.slPercent.dirty || f.slPercent.touched)">{{strings.thisFieldIsRequired}}</mdb-error>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
+        </div>
+        <div class="col-md-3">
+          <div class="md-form mt-0">
+            <input type="number" class="form-control" formControlName="trailingStop" mdbInput mdbValidate
+                   [validateSuccess]="false" placeholder="{{strings.trailingStop}}">
+            <label>{{strings.trailingStop}}</label>
+            <mdb-error *ngIf="f.trailingStop.invalid && (f.trailingStop.dirty || f.trailingStop.touched)">{{strings.thisFieldIsRequired}}</mdb-error>
+          </div>
+<!--          <div class="form-group row">-->
+<!--            <label class="col-sm-9 col-form-label">{{strings.quantity}}</label>-->
+<!--            <div class="col-sm-3">-->
+<!--              <div class="md-form mt-0">-->
+<!--                <input mdbInput type="text" formControlName="trailingStop" class="form-control">-->
+<!--                <mdb-error *ngIf="f.trailingStop.invalid && (f.trailingStop.dirty || f.trailingStop.touched)">{{strings.thisFieldIsRequired}}</mdb-error>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
+        </div>
+        <div class="col-md-3">
+          <div class="md-form mt-0">
+            <input type="number" class="form-control" formControlName="numberOfSafeOrder" mdbInput mdbValidate
+                   [validateSuccess]="false" placeholder="{{strings.numberOfSafeOrder}}">
+            <label>{{strings.numberOfSafeOrder}}</label>
+            <mdb-error *ngIf="f.numberOfSafeOrder.invalid && (f.numberOfSafeOrder.dirty || f.numberOfSafeOrder.touched)">{{strings.thisFieldIsRequired}}</mdb-error>
+          </div>
+<!--          <div class="form-group row">-->
+<!--            <label class="col-sm-9 col-form-label">{{strings.numberOfSafeOrder}}</label>-->
+<!--            <div class="col-sm-3">-->
+<!--              <div class="md-form mt-0">-->
+<!--                <input mdbInput type="text" formControlName="numberOfSafeOrder" class="form-control">-->
+<!--                <mdb-error *ngIf="f.numberOfSafeOrder.invalid && (f.numberOfSafeOrder.dirty || f.numberOfSafeOrder.touched)">{{strings.thisFieldIsRequired}}</mdb-error>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <mdb-card>
+            <mdb-card-body>
+              <div class="full-width text-align-center">{{strings.actionForLoss}}</div>
+              <div class="switch primary-switch">
+                <label>
+                  <input type="checkbox">
+                  <span class="lever"></span> {{strings.closeTheOrder}}
+                </label>
+              </div>
+              <div class="switch primary-switch">
+                <label>
+                  <input type="checkbox">
+                  <span class="lever"></span> {{strings.openNewOrderOnStopLossPrice}}
+                </label>
+              </div>
+              <div class="md-form">
+                <input type="number" class="form-control" formControlName="valueOfLastCloseOrder" mdbInput mdbValidate
+                       [validateSuccess]="false" placeholder="{{strings.valueXOfLastCloseOrder}}">
+                <label>{{strings.valueXOfLastCloseOrder}}</label>
+                <mdb-error *ngIf="f.valueOfLastCloseOrder.invalid && (f.valueOfLastCloseOrder.dirty || f.valueOfLastCloseOrder.touched)">{{strings.thisFieldIsRequired}}</mdb-error>
+              </div>
+              <div class="md-form">
+                <input type="number" class="form-control" formControlName="timesRepeatSameLogic1" mdbInput mdbValidate
+                       [validateSuccess]="false" placeholder="{{strings.timesRepeatSameLogic}}">
+                <label>{{strings.timesRepeatSameLogic}}</label>
+                <mdb-error *ngIf="f.timesRepeatSameLogic1.invalid && (f.timesRepeatSameLogic1.dirty || f.timesRepeatSameLogic1.touched)">{{strings.thisFieldIsRequired}}</mdb-error>
+              </div>
+            </mdb-card-body>
+          </mdb-card>
+        </div>
+        <div class="col-md-6">
+          <mdb-card>
+            <mdb-card-body class="profit-card-body">
+              <div class="full-width text-align-center">{{strings.actionForProfit}}</div>
+              <div class="switch primary-switch">
+                <label>
+                  <input type="checkbox">
+                  <span class="lever"></span> {{strings.closeTheOrder}}
+                </label>
+              </div>
+              <div class="md-form mt-1">
+                <input type="number" class="form-control" formControlName="breakdownPriceForNewOrder" mdbInput mdbValidate
+                       [validateSuccess]="false" placeholder="{{strings.breakdownPriceForNewOrder}}">
+                <label>{{strings.breakdownPriceForNewOrder}}</label>
+                <mdb-error *ngIf="f.breakdownPriceForNewOrder.invalid && (f.breakdownPriceForNewOrder.dirty || f.breakdownPriceForNewOrder.touched)">{{strings.thisFieldIsRequired}}</mdb-error>
+              </div>
+              <div class="md-form">
+                <input type="number" class="form-control" formControlName="timeIntervalAfterClose" mdbInput mdbValidate
+                       [validateSuccess]="false" placeholder="{{strings.timeIntervalAfterClose}}">
+                <label>{{strings.timeIntervalAfterClose}}</label>
+                <mdb-error *ngIf="f.timeIntervalAfterClose.invalid && (f.timeIntervalAfterClose.dirty || f.timeIntervalAfterClose.touched)">{{strings.thisFieldIsRequired}}</mdb-error>
+              </div>
+              <div class="md-form">
+                <input type="number" class="form-control" formControlName="timesRepeatSameLogic2" mdbInput mdbValidate
+                       [validateSuccess]="false" placeholder="{{strings.timesRepeatSameLogic}}">
+                <label>{{strings.timesRepeatSameLogic}}</label>
+                <mdb-error *ngIf="f.timesRepeatSameLogic2.invalid && (f.timesRepeatSameLogic2.dirty || f.timesRepeatSameLogic2.touched)">{{strings.thisFieldIsRequired}}</mdb-error>
+              </div>
+            </mdb-card-body>
+          </mdb-card>
+        </div>
+      </div>
+      <div class="button-spec mt-3">
+        <button type="button" mdbBtn color="warning" class="waves-light" aria-label="Close"
+                mdbWavesEffect>{{strings.back}}
+        </button>
+        <button type="button" mdbBtn color="primary" class="relative waves-light" mdbWavesEffect
+                [disabled]="form.invalid" (click)="editRow()">{{strings.save}}
+        </button>
+      </div>
+    </form>
+<!--  </div>-->
+<!--</div>-->

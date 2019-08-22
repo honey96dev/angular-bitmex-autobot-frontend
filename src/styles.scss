@@ -1,0 +1,194 @@
+/* You can add global styles to this file, and also import other style files */
+$border-radius: 4px;
+$background: #424242;
+$background2: #3c3c3c;
+$foreground: #ffffff;
+$foreground2: #eeeeee ;
+$danger-color: #ff4444;
+$placeholder: #bdbdbd ;
+
+body {
+  color: $foreground;
+  background: $background;
+}
+
+table {
+  color: $foreground !important;
+}
+
+thead th {
+  color: $foreground2 !important;
+}
+
+.card {
+  background: $background2;
+}
+
+input {
+  color: $foreground;
+}
+
+.navbar {
+  background: $background;
+}
+
+.form-control, .form-control:focus {
+  color: $foreground;
+}
+
+.md-form label, .md-form label.active {
+  color: $placeholder;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.my-primary-bgcolor {
+  //background: #23c6c8;
+}
+
+.text-align-center {
+  text-align: center;
+}
+
+.margin-auto {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.round-border-tl {
+  border-top-left-radius: $border-radius;
+}
+
+.round-border-tr {
+  border-top-right-radius: $border-radius;
+}
+
+.round-border-bl {
+  border-bottom-left-radius: $border-radius;
+}
+
+.round-border-br {
+  border-bottom-right-radius: $border-radius;
+}
+
+.round-border-top {
+  border-top-left-radius: $border-radius;
+  border-top-right-radius: $border-radius;
+}
+
+.round-border-bottom {
+  border-bottom-left-radius: $border-radius;
+  border-bottom-right-radius: $border-radius;
+}
+
+.round-border-left {
+  border-top-left-radius: $border-radius;
+  border-bottom-left-radius: $border-radius;
+}
+
+.round-border-right {
+  border-top-right-radius: $border-radius;
+  border-bottom-right-radius: $border-radius;
+}
+
+.round-border {
+  border-radius: $border-radius;
+}
+
+.alert-danger {
+  color: $foreground;
+  background-color: $danger-color;
+  border-color: $danger-color;
+}
+
+.table-hover tbody tr:hover {
+  color: white;
+}
+
+.pagination .page-item .page-link {
+  color: $placeholder;
+}
+
+.pagination .page-item .page-link:hover {
+  color: $background;
+}
+
+//mdb-accordion-item-head.active a h5 {
+//  //color: red !important;
+//  background-color: rgba(255, 255, 255, 0.15) !important;
+//}
+//
+//// Change nested active links appearance
+//mdb-accordion-item-body a.active {
+//  //color: red !important;
+//  background-color: rgba(255, 255, 255, 0.15) !important;
+//}
+.modal-content {
+  background: $background;
+}
+
+@-webkit-keyframes autofill {
+  to {
+    color: $foreground;
+    background: transparent; } }
+
+@keyframes autofill {
+  to {
+    color: $foreground;
+    background: transparent; } }
+
+input:-webkit-autofill {
+  -webkit-animation-name: autofill;
+  animation-name: autofill;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both; }
+
+.close {
+  color: $foreground2 !important;
+}
+
+.close:hover {
+  color: $foreground !important;
+}
+
+@media (min-width: 770px) {
+  .wide-modal {
+    width: 768px;
+    max-width: 768px;
+  }
+}
+
+@media (min-width: 992px) {
+  .wide-modal {
+    width: 990px;
+    max-width: 990px;
+  }
+}
+
+@media (min-width: 1440px) {
+  .wide-modal {
+    width: 1000px;
+    max-width: 1000px;
+  }
+}
+
+//.modal-dialog {
+//  overflow-y: auto;
+//  pointer-events: initial;
+//}
+//.modal-open .modal {
+//  overflow-y: auto;
+//}
+//body.modal-open {
+//  overflow: hidden;
+//}
+//.modal-dialog {
+//  overflow-y: auto;
+//  pointer-events: initial;
+//}
+
+.col-form-label {
+  padding-top: calc(0.375rem + 5px);
+}
