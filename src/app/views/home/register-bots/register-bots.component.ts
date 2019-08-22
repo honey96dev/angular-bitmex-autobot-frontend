@@ -3,9 +3,12 @@ import {Title} from '@angular/platform-browser';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import strings from '@core/strings';
+import routes from '@core/routes';
 import {GlobalVariableService} from '@app/_services';
 import {MDBModalRef, MDBModalService, MdbTableDirective, MdbTablePaginationComponent} from 'ng-uikit-pro-standard';
 import {RegisterBotsModalComponent} from '@app/views/home/register-bots/register-bots-modal.component';
+import {RegisterBotsService} from '@app/_services/register-bots.service';
+import {first} from 'rxjs/operators';
 
 @Component({
   selector: 'home-register-bots',
@@ -14,6 +17,7 @@ import {RegisterBotsModalComponent} from '@app/views/home/register-bots/register
 })
 export class RegisterBotsComponent implements OnInit {
   strings = strings;
+  routes = routes;
   form: FormGroup;
   loading = false;
   submitted = false;
@@ -47,6 +51,7 @@ export class RegisterBotsComponent implements OnInit {
                      private route: ActivatedRoute,
                      private router: Router,
                      private globalVariableService: GlobalVariableService,
+                     private registerBotsService: RegisterBotsService,
                      private modalService: MDBModalService,
                      private cdRef: ChangeDetectorRef
   ) {
@@ -60,9 +65,7 @@ export class RegisterBotsComponent implements OnInit {
       password: ['', Validators.required]
     });
 
-    this.mdbTable.setDataSource(this.elements);
-    this.elements = this.mdbTable.getDataSource();
-    this.previous = this.mdbTable.getDataSource();
+    this.loadData();
   }
 
   ngAfterViewInit() {
@@ -75,6 +78,32 @@ export class RegisterBotsComponent implements OnInit {
 
   get f() {
     return this.form.controls;
+  }
+
+  loadData() {
+    this.registerBotsService.list().pipe(first())
+      .subscribe(res => {
+        this.loading = false;
+        if (res.result == 'success') {
+          this.elements = res.data;
+          this.mdbTable.setDataSource(this.elements);
+          this.elements = this.mdbTable.getDataSource();
+          this.previous = this.mdbTable.getDataSource();
+        } else {
+          this.alert = {
+            show: true,
+            type: 'alert-danger',
+            message: res.message,
+          };
+        }
+      }, error => {
+        this.loading = false;
+        this.alert = {
+          show: true,
+          type: 'alert-danger',
+          message: 'Unknown server error',
+        };
+      });
   }
 
   editItem(el: any) {
@@ -93,7 +122,7 @@ export class RegisterBotsComponent implements OnInit {
     //   this.elements[elementIndex] = newElement;
     // });
     // this.mdbTable.setDataSource(this.elements);
-    this.router.navigate(['/app/register-bots-modal']);
+    this.router.navigate([routes.registerBotsModal]);
   }
 
   removeItem(el: any) {

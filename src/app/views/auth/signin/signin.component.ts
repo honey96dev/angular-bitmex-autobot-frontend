@@ -5,6 +5,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {AuthenticationService} from "@app/_services/";
 import {first} from "rxjs/operators";
 import strings from '@core/strings';
+import routes from '@core/routes';
 import {environment} from "@environments/environment";
 import SocketIOClient from 'socket.io-client';
 
@@ -15,6 +16,7 @@ import SocketIOClient from 'socket.io-client';
 })
 export class SigninComponent implements OnInit {
   strings = strings;
+  routes = routes;
   form: FormGroup;
   loading = false;
   submitted = false;

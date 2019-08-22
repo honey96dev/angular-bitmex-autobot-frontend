@@ -5,6 +5,7 @@ $background2: #3c3c3c;
 $foreground: #ffffff;
 $foreground2: #eeeeee ;
 $danger-color: #ff4444;
+$success-color: #00C851;
 $placeholder: #bdbdbd ;
 
 body {
@@ -36,7 +37,7 @@ input {
   color: $foreground;
 }
 
-.md-form label, .md-form label.active {
+.md-form label, .md-form label.active, mdb-select label, mdb-select label.active {
   color: $placeholder;
 }
 
@@ -101,6 +102,12 @@ input {
   color: $foreground;
   background-color: $danger-color;
   border-color: $danger-color;
+}
+
+.alert-success {
+  color: $foreground;
+  background-color: $success-color;
+  border-color: $success-color;
 }
 
 .table-hover tbody tr:hover {
@@ -191,4 +198,20 @@ input:-webkit-autofill {
 
 .col-form-label {
   padding-top: calc(0.375rem + 5px);
+}
+
+mdb-select>div>div.single>div.placeholder {
+  color: $placeholder !important;
+}
+
+mdb-select-dropdown .dropdown-content {
+  background: $background !important;
+}
+
+.dropdown-content li.active, .dropdown-content li:hover {
+  background: $background2 !important;
+}
+
+mdb-select>div>div.single>div.value, .mdb-select-toggle {
+  color: $foreground !important;
 }

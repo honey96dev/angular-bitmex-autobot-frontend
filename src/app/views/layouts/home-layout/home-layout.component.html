@@ -18,28 +18,16 @@
         <ul class="collapsible collapsible-accordion">
           <mdb-accordion [multiple]="false" aria-multiselectable="false">
 
-<!--            &lt;!&ndash; Collapsible link &ndash;&gt;-->
-<!--            <mdb-accordion-item>-->
-<!--              <mdb-accordion-item-head mdbWavesEffect><mdb-icon fas icon="chevron-right"></mdb-icon> Collapsible menu-->
-<!--              </mdb-accordion-item-head>-->
-<!--              <mdb-accordion-item-body>-->
-<!--                <ul>-->
-<!--                  <li><a href="#" mdbWavesEffect>Link 1</a></li>-->
-<!--                  <li><a href="#" mdbWavesEffect>Link 2</a></li>-->
-<!--                </ul>-->
-<!--              </mdb-accordion-item-body>-->
-<!--            </mdb-accordion-item>-->
-
             <!-- Simple link -->
             <mdb-accordion-item class="no-collase">
-              <mdb-accordion-item-head mdbWavesEffect routerLink="/app" (click)="onClickNav('/app')">
+              <mdb-accordion-item-head mdbWavesEffect routerLink="{{routes.app}}" (click)="onClickNav(routes.app)">
                   <mdb-icon fas icon="tachometer-alt"></mdb-icon>{{strings.dashboard}}
               </mdb-accordion-item-head>
               <mdb-accordion-item-body></mdb-accordion-item-body>
             </mdb-accordion-item>
             <!-- Simple link -->
             <mdb-accordion-item class="no-collase">
-              <mdb-accordion-item-head mdbWavesEffect routerLink="/app/register-bots" (click)="onClickNav('/app/register-bots')">
+              <mdb-accordion-item-head mdbWavesEffect routerLink="{{routes.registerBots}}" (click)="onClickNav(routes.registerBots)">
                 <mdb-icon fas icon="robot"></mdb-icon>{{strings.registerBots}}
               </mdb-accordion-item-head>
               <mdb-accordion-item-body></mdb-accordion-item-body>

@@ -2,6 +2,7 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {AuthenticationService, GlobalVariableService} from '@app/_services';
 import {Router} from '@angular/router';
 import strings from '@core/strings';
+import routes from '@core/routes';
 // import {environment} from "@environments/environment";
 // import SocketIOClient from 'socket.io-client';
 
@@ -14,6 +15,7 @@ import strings from '@core/strings';
 })
 export class HomeLayoutComponent implements OnInit {
   strings = strings;
+  routes = routes;
   route: string;
   navbarTitle: string;
   @ViewChild('sidenav', { static: true }) public sidenav: any;
@@ -26,9 +28,11 @@ export class HomeLayoutComponent implements OnInit {
 
   ngOnInit() {
     this.route = this.router.url;
-    if (this.route === '/app') {
+    if (this.route === routes.app) {
       this.navbarTitle = strings.dashboard;
-    } else if (this.route === '/app/register-bots') {
+    } else if (this.route === routes.registerBots) {
+      this.navbarTitle = strings.registerBots;
+    } else if (this.route === routes.registerBotsModal) {
       this.navbarTitle = strings.registerBots;
     }
     this.globalVariableService.getNavbarTitle()
@@ -49,6 +53,6 @@ export class HomeLayoutComponent implements OnInit {
 
   onSignOut() {
     this.authService.signOut();
-    this.router.navigate(['/auth']);
+    this.router.navigate([routes.auth]);
   }
 }
