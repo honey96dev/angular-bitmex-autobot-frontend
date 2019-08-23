@@ -5,7 +5,6 @@ import {SigninComponent} from '@app/views/auth/signin/signin.component';
 import {HomeLayoutComponent} from '@app/views/layouts/home-layout/home-layout.component';
 import {AuthGuard} from '@app/_helpers';
 import {DashboardComponent} from '@app/views/home/dashboard/dashboard.component';
-import {NewApikeyComponent} from '@app/views/home/new-apikey/new-apikey.component';
 import {RegisterBotsComponent} from '@app/views/home/register-bots/register-bots.component';
 import {RegisterBotsModalComponent} from '@app/views/home/register-bots/register-bots-modal.component';
 // import {AuthGuard} from '@app/_helpers';

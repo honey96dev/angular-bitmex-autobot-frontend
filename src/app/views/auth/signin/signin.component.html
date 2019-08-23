@@ -14,7 +14,8 @@
       <input mdbInput mdbValidate formControlName="email" minLength="8" maxLength="25" type="email"
              class="form-control" [disabled]="loading">
       <label>{{strings.email}}</label>
-      <mdb-error *ngIf="f.email.invalid && (f.email.dirty || f.email.touched)">{{strings.thisFieldIsRequired}}</mdb-error>
+      <mdb-error *ngIf="f.email.errors && f.email.errors.required && (f.email.dirty || f.email.touched)">{{strings.thisFieldIsRequired}}</mdb-error>
+      <mdb-error *ngIf="f.email.errors && f.email.errors.email && (f.email.dirty || f.email.touched)">{{strings.thisFieldIsInvalid}}</mdb-error>
 <!--      <mdb-success *ngIf="f.email.valid && (f.email.dirty || f.email.touched)">Input valid</mdb-success>-->
     </div>
     <div class="md-form mt-5">

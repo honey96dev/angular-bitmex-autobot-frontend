@@ -19,7 +19,7 @@ export class RegisterBotsModalComponent implements OnInit {
   strings = strings;
   routes = routes;
   form: FormGroup;
-  // headElements = ['Name', 'Exchange', 'Currency', 'Order Type', 'Strategy', 'Leverage', 'Quantity', 'Price', 'T/P %', 'S/L %'];
+
   public editableRow: { id:string, name: string, exchange: string, symbol: string, apiKey: string, apiKeySecret: string, orderType: string, postOnly: boolean, strategy: string, leverage: string, leverageValue: number, quantity: BigInteger, price: BigInteger, tpPercent: number, slPercent: number, tsPercent: number, numberOfSafeOrder: number, closeOrder1: boolean, newOrderOnSLPrice: boolean, valueOfLastCloseOrder: number, timesRepeatSameLogic1: number, closeOrder2: boolean, breakdownPriceForNewOrder: number, timeIntervalAfterClose: number, timesRepeatSameLogic2: boolean };
   exchanges = [
     { value: 'bitmex', label: 'BitMEX' },
@@ -52,13 +52,13 @@ export class RegisterBotsModalComponent implements OnInit {
               private globalVariableService: GlobalVariableService,
               private registerBotsService: RegisterBotsService) {
     titleService.setTitle(`${strings.registerBots}-${strings.siteName}`);
-    globalVariableService.setNavbarTitle(strings.registerBots);
   }
 
   ngOnInit() {
-    const row = this.editableRow || {id: null, name: 'A', exchange: 'bitmex', symbol: 'XBTUSD', apiKey: '111', apiKeySecret: '222', orderType: 'Limit', postOnly: true, strategy: 'Long', leverage: 'Cross', leverageValue: 0, quantity: 0, price: 0, tpPercent: 0, slPercent: 0, tsPercent: 0, numberOfSafeOrder: 0, closeOrder1: false, newOrderOnSLPrice: false, valueOfLastCloseOrder: 0, timesRepeatSameLogic1: 0, closeOrder2: false, breakdownPriceForNewOrder: 0, timeIntervalAfterClose: 0, timesRepeatSameLogic2: 0};
+    const row = this.registerBotsService.editableRowValue();
+    this.globalVariableService.setNavbarTitle(`${strings.registerBots} - ${row.id ? strings.edit : strings.add}`);
     this.form = this.formBuilder.group({
-      id: new FormControl({value: '', disabled: true}),
+      id: new FormControl(''),
       name: new FormControl('', Validators.required),
       exchange: new FormControl('', Validators.required),
       symbol: new FormControl('', Validators.required),
@@ -84,6 +84,7 @@ export class RegisterBotsModalComponent implements OnInit {
       timeIntervalAfterClose: new FormControl('', [Validators.required, Validators.min(0)]),
       timesRepeatSameLogic2: new FormControl('', [Validators.required, Validators.min(0)]),
     });
+    console.log(row);
     this.f['id'].patchValue(row.id);
     this.f['name'].patchValue(row.name);
     this.f['exchange'].patchValue(row.exchange);
@@ -176,6 +177,7 @@ export class RegisterBotsModalComponent implements OnInit {
             message: res.message,
           };
           f.id.patchValue(res.data.insertId);
+          this.globalVariableService.setNavbarTitle(`${strings.registerBots} - ${strings.edit}`);
           // this.router.navigate([this.returnUrl]);
         } else {
           this.alert = {

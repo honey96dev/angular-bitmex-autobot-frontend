@@ -9,6 +9,7 @@ import {MDBModalRef, MDBModalService, MdbTableDirective, MdbTablePaginationCompo
 import {RegisterBotsModalComponent} from '@app/views/home/register-bots/register-bots-modal.component';
 import {RegisterBotsService} from '@app/_services/register-bots.service';
 import {first} from 'rxjs/operators';
+import {DeleteModalComponent} from '@app/views/partials/common-dialogs/delete-modal.component';
 
 @Component({
   selector: 'home-register-bots',
@@ -111,6 +112,7 @@ export class RegisterBotsComponent implements OnInit {
     if (el) {
       elementIndex = this.elements.findIndex((elem: any) => el === elem);
     }
+    this.registerBotsService.setEditableRow(el);
     // const modalOptions = {
     //   data: {
     //     editableRow: el
@@ -126,12 +128,36 @@ export class RegisterBotsComponent implements OnInit {
   }
 
   removeItem(el: any) {
-    const elementIndex = this.elements.findIndex((elem: any) => el === elem);
-    this.mdbTable.removeRow(elementIndex);
-    this.mdbTable.getDataSource().forEach((el: any, index: any) => {
-      el.id = (index + 1).toString();
+    const self = this;
+    const modalOptions = {
+      // class: 'modal-notify modal-warning',
+    };
+    this.modalRef = this.modalService.show(DeleteModalComponent, modalOptions);
+    this.modalRef.content.yesButtonClicked.subscribe(() => {
+      this.registerBotsService.delete(el).pipe(first())
+        .subscribe(res => {
+          this.loading = false;
+          if (res.result == 'success') {
+            this.elements = res.data;
+            this.mdbTable.setDataSource(this.elements);
+            this.elements = this.mdbTable.getDataSource();
+            this.previous = this.mdbTable.getDataSource();
+          } else {
+            this.alert = {
+              show: true,
+              type: 'alert-danger',
+              message: res.message,
+            };
+          }
+        }, error => {
+          this.loading = false;
+          this.alert = {
+            show: true,
+            type: 'alert-danger',
+            message: 'Unknown server error',
+          };
+        });
     });
-    this.mdbTable.setDataSource(this.elements);
   }
 
   emitDataSourceChange() {

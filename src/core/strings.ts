@@ -43,6 +43,7 @@ export default {
   edit: 'Edit',
   cancel: 'Cancel',
   thisEmailIsInvalid: 'This email is invalid',
+  delete: 'Delete',
 
   newApiKey: 'New Api Key',
   createBot: 'Create Bot',

@@ -10,15 +10,18 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {CommonModule} from '@angular/common';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {ErrorInterceptor, JwtInterceptor} from '@app/_helpers';
+import {CheckForceValidator, ErrorInterceptor, JwtInterceptor, MatchValueValidator} from '@app/_helpers';
 import {HomeLayoutComponent} from '@app/views/layouts/home-layout/home-layout.component';
 import {DashboardComponent} from '@app/views/home/dashboard/dashboard.component';
-import {NewApikeyComponent} from '@app/views/home/new-apikey/new-apikey.component';
 import {RegisterBotsComponent} from '@app/views/home/register-bots/register-bots.component';
 import {RegisterBotsModalComponent} from '@app/views/home/register-bots/register-bots-modal.component';
+import {DeleteModalComponent} from '@app/views/partials/common-dialogs/delete-modal.component';
 
 @NgModule({
   declarations: [
+    CheckForceValidator,
+    MatchValueValidator,
+    DeleteModalComponent,
     AppComponent,
     AuthLayoutComponent,
     SigninComponent,
@@ -46,7 +49,7 @@ import {RegisterBotsModalComponent} from '@app/views/home/register-bots/register
   ],
   bootstrap: [AppComponent],
   entryComponents: [
-    RegisterBotsModalComponent,
+    DeleteModalComponent,
   ],
 })
 export class AppModule {
