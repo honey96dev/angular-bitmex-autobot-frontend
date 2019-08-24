@@ -7,6 +7,7 @@ export default {
   home: 'Home',
   success: 'Success',
   error: 'Error',
+  successfullySaved: 'Successfully saved',
   unknownServerError: 'Unknown server error',
   signInWithYourAccount: 'Sign in with your account',
   signUpToYourAccount: 'Sign up to your Account',
@@ -15,6 +16,9 @@ export default {
   email: 'Email',
   username: 'Username',
   password: 'Password',
+  currentPassword: 'Current Password',
+  newPassword: 'New Password',
+  confirmPassword: 'Confirm Password',
   invitationCode: 'Invitation Code',
   keepMeSignedIn: 'Keep me signed in',
   forgotPassword: 'Forgot password?',
@@ -23,6 +27,10 @@ export default {
   thisFieldIsRequired: 'This field is required',
   thisFieldIsInvalid: 'This field is invalid',
   yourEmailIsInvalid: 'Your Email is invalid',
+  minLength: 'Min Length: ',
+  maxLength: 'Max Length: ',
+  min: 'Min: ',
+  max: 'Max: ',
   agreeTheTermsAndPolicy: 'Agree the terms and policy',
   pleaseAcceptThis: 'Please accept this',
   refresh: 'Refresh',
@@ -51,6 +59,10 @@ export default {
   editBot: 'Edit Bot',
   deleteBot: 'Delete Bot',
   stopBot: 'Stop Bot',
+
+  apikey: 'Apikey',
+  registerApikeys: 'Register Apikeys',
+  testnet: 'Testnet',
 
   registerBots: 'Register Bots',
   name: 'Name',
@@ -87,6 +99,7 @@ export default {
   selectExchange: '(Select Exchange)',
   selectSymbol: '(Select Symbol)',
 
-  registerApikeys: 'Register Apikeys',
-  testnet: 'Testnet'
+  settings: 'Settings',
+  confirmPasswordIsNotMatchWithNewPassword: 'Confirm Password is not match with new password',
+  change: 'Change',
 };

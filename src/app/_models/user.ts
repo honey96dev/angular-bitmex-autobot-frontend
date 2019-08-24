@@ -10,4 +10,8 @@ export class User {
   role: string;
   status?: string;
   token?: string;
+  apiKey?: {
+    apiKey: string;
+    apiKeySecret: string;
+  };
 }

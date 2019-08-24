@@ -1,0 +1,56 @@
+
+<mdb-card>
+  <mdb-card-body>
+    <div class="full-width text-align-center">{{strings.password}}</div>
+    <form [formGroup]="form" class="mx-2 mt-4" [matchValue]= "['password', 'password2']" (ngSubmit)="submit()">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="md-form mt-0">
+            <input type="password" class="form-control" formControlName="oldPassword" mdbInput mdbValidate
+                   [validateSuccess]="false" placeholder="{{strings.currentPassword}}">
+            <label>{{strings.currentPassword}}</label>
+            <mdb-error *ngIf="f.oldPassword.errors && f.oldPassword.errors.required && (f.oldPassword.dirty || f.oldPassword.touched)">{{strings.thisFieldIsRequired}}</mdb-error>
+            <mdb-error *ngIf="f.oldPassword.errors && f.oldPassword.errors.minlength && (f.oldPassword.dirty || f.oldPassword.touched)">{{strings.minLength}} 4</mdb-error>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="md-form mt-0">
+            <input type="password" class="form-control" formControlName="password" mdbInput mdbValidate
+                   [validateSuccess]="false" placeholder="{{strings.newPassword}}">
+            <label>{{strings.newPassword}}</label>
+            <mdb-error *ngIf="f.password.errors && f.password.errors.required && (f.password.dirty || f.password.touched)">{{strings.thisFieldIsRequired}}</mdb-error>
+            <mdb-error *ngIf="f.password.errors && f.password.errors.minlength && (f.password.dirty || f.password.touched)">{{strings.minLength}} 4</mdb-error>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="md-form mt-0">
+            <input type="password" class="form-control" formControlName="password2" mdbInput mdbValidate
+                   [validateSuccess]="false" placeholder="{{strings.confirmPassword}}">
+            <label>{{strings.confirmPassword}}</label>
+            <mdb-error *ngIf="f.password2.errors && f.password2.errors.required && (f.password2.dirty || f.password2.touched)">{{strings.thisFieldIsRequired}}</mdb-error>
+            <mdb-error *ngIf="f.password2.errors && f.password2.errors.minlength && (f.password2.dirty || f.password2.touched)">{{strings.minLength}} 4</mdb-error>
+            <mdb-error *ngIf="f.password2.errors && f.password2.errors.matchValueError && (f.password2.dirty || f.password2.touched)">{{strings.confirmPasswordIsNotMatchWithNewPassword}}</mdb-error>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="alert.show" class="alert alert-dismissible fade show mt-3" [ngClass]="alert.type" role="alert">
+        <button type="button" class="close" aria-label="Close" (click)="closeAlert()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        {{alert.message}}
+      </div>
+      <div class="button-spec">
+<!--        <button type="button" mdbBtn color="warning" class="waves-light" aria-label="Close"-->
+<!--                mdbWavesEffect (click)="goBack()" [disabled]="passwordLoading">{{strings.back}}-->
+<!--        </button>-->
+        <button type="submit" mdbBtn color="primary" class="relative waves-light" mdbWavesEffect
+                [disabled]="form.invalid || loading">{{strings.change}}
+        </button>
+      </div>
+    </form>
+  </mdb-card-body>
+</mdb-card>

@@ -4,8 +4,7 @@ import strings from '@core/strings';
 import routes from '@core/routes';
 import {Title} from '@angular/platform-browser';
 import {ActivatedRoute, Router} from '@angular/router';
-import {AuthenticationService, GlobalVariableService} from '@app/_services';
-import {RegisterBotsService} from '@app/_services/register-bots.service';
+import {AuthenticationService, GlobalVariableService, RegisterBotsService} from '@app/_services';
 import {first} from 'rxjs/operators';
 
 @Component({

@@ -4,11 +4,10 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import strings from '@core/strings';
 import routes from '@core/routes';
-import {AuthenticationService, GlobalVariableService} from '@app/_services';
+import {AuthenticationService, GlobalVariableService, RegisterApikeysService} from '@app/_services';
 import {MDBModalRef, MDBModalService, MdbTableDirective, MdbTablePaginationComponent} from 'ng-uikit-pro-standard';
 import {first} from 'rxjs/operators';
 import {DeleteModalComponent} from '@app/views/partials/common-dialogs/delete-modal.component';
-import {RegisterApikeysService} from '@app/_services/register-apikeys.service';
 
 @Component({
   selector: 'home-register-apikeys',

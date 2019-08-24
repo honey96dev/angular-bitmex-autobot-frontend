@@ -15,6 +15,11 @@ const apis = {
     edit: 'register-apikeys/edit',
     delete: 'register-apikeys/delete',
   },
+  settings: {
+    loadApikey: 'settings/load-apikey',
+    saveApikey: 'settings/save-apikey',
+    password: 'settings/password',
+  },
 };
 
 export {

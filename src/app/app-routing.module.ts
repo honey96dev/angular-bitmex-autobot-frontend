@@ -5,10 +5,12 @@ import {SigninComponent} from '@app/views/auth/signin/signin.component';
 import {HomeLayoutComponent} from '@app/views/layouts/home-layout/home-layout.component';
 import {AuthGuard} from '@app/_helpers';
 import {DashboardComponent} from '@app/views/home/dashboard/dashboard.component';
-import {RegisterBotsComponent} from '@app/views/home/register-bots/register-bots.component';
-import {RegisterBotsModalComponent} from '@app/views/home/register-bots/register-bots-modal.component';
 import {RegisterApikeysComponent} from '@app/views/home/register-apikeys/register-apikeys.component';
 import {RegisterApikeysModalComponent} from '@app/views/home/register-apikeys/register-apikeys-modal.component';
+import {RegisterBotsComponent} from '@app/views/home/register-bots/register-bots.component';
+import {RegisterBotsModalComponent} from '@app/views/home/register-bots/register-bots-modal.component';
+import {SettingsComponent} from '@app/views/home/settings/settings.component';
+import {ApikeyComponent} from '@app/views/home/apikey/apikey.component';
 // import {AuthGuard} from '@app/_helpers';
 // import {HomeLayoutComponent} from '@app/views/layouts/home-layout/home-layout.component';
 
@@ -28,12 +30,14 @@ const routes: Routes = [
     component: HomeLayoutComponent,
     canActivate: [AuthGuard],
     children: [
-      {path: '', component: DashboardComponent, pathMatch: 'full'},
+      {path: '', component: DashboardComponent},
       // {path: 'dashboard', component: DashboardComponent, pathMatch: 'full'},
-      {path: 'register-apikeys', component: RegisterApikeysComponent, pathMatch: 'full'},
-      {path: 'register-apikeys-modal', component: RegisterApikeysModalComponent, pathMatch: 'full'},
-      {path: 'register-bots', component: RegisterBotsComponent, pathMatch: 'full'},
-      {path: 'register-bots-modal', component: RegisterBotsModalComponent, pathMatch: 'full'},
+      {path: 'apikey', component: ApikeyComponent},
+      // {path: 'register-apikeys', component: RegisterApikeysComponent},
+      // {path: 'register-apikeys-modal', component: RegisterApikeysModalComponent},
+      {path: 'register-bots', component: RegisterBotsComponent},
+      {path: 'register-bots-modal', component: RegisterBotsModalComponent},
+      {path: 'settings', component: SettingsComponent},
     ],
   },
   {path: '**', redirectTo: 'app'}

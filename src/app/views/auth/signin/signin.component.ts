@@ -61,6 +61,8 @@ export class SigninComponent implements OnInit {
   onSubmit() {
     this.submitted = true;
 
+    console.log(this.f.password)
+
     // stop here if form is invalid
     if (this.form.invalid) {
       return;

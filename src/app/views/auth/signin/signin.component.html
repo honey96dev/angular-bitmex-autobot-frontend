@@ -24,8 +24,8 @@
       <input mdbInput mdbValidate formControlName="password" minLength="4" [type]="passwordDisplayType"
              class="form-control" [disabled]="loading">
       <label>{{strings.password}}</label>
-      <mdb-error *ngIf="f.password.invalid && (f.password.dirty || f.password.touched)">{{strings.thisFieldIsRequired}}</mdb-error>
-<!--      <mdb-success *ngIf="f.password.valid && (f.password.dirty || f.password.touched)">Input valid</mdb-success>-->
+      <mdb-error *ngIf="f.password.errors && f.password.errors.required && (f.password.dirty || f.password.touched)">{{strings.thisFieldIsRequired}}</mdb-error>
+      <mdb-error *ngIf="f.password.errors && f.password.errors.minlength && (f.password.dirty || f.password.touched)">{{strings.thisFieldIsInvalid}}</mdb-error>
     </div>
     <div class="text-align-center">
       <button type="submit" mdbBtn color="primary" mdbWavesEffect [disabled]="loading">

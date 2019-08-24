@@ -131,8 +131,8 @@
                        [validateSuccess]="false" placeholder="{{strings.leverage}}">
                 <label>{{strings.leverage}}</label>
                 <mdb-error *ngIf="f.leverageValue.errors && f.leverageValue.errors.required && (f.leverageValue.dirty || f.leverageValue.touched)">{{strings.thisFieldIsRequired}}</mdb-error>
-                <mdb-error *ngIf="f.leverageValue.errors && f.leverageValue.errors.min && (f.leverageValue.dirty || f.leverageValue.touched)">{{strings.thisFieldIsInvalid}}</mdb-error>
-                <mdb-error *ngIf="f.leverageValue.errors && f.leverageValue.errors.max && (f.leverageValue.dirty || f.leverageValue.touched)">{{strings.thisFieldIsInvalid}}</mdb-error>
+                <mdb-error *ngIf="f.leverageValue.errors && f.leverageValue.errors.min && (f.leverageValue.dirty || f.leverageValue.touched)">{{strings.min}} 0</mdb-error>
+                <mdb-error *ngIf="f.leverageValue.errors && f.leverageValue.errors.max && (f.leverageValue.dirty || f.leverageValue.touched)">{{strings.max}} 100</mdb-error>
               </div>
             </div>
           </div>
@@ -145,7 +145,7 @@
                    [validateSuccess]="false" placeholder="{{strings.quantity}}">
             <label>{{strings.quantity}}</label>
             <mdb-error *ngIf="f.quantity.errors && f.quantity.errors.required && (f.quantity.dirty || f.quantity.touched)">{{strings.thisFieldIsRequired}}</mdb-error>
-            <mdb-error *ngIf="f.quantity.errors && f.quantity.errors.min && (f.quantity.dirty || f.quantity.touched)">{{strings.thisFieldIsInvalid}}</mdb-error>
+            <mdb-error *ngIf="f.quantity.errors && f.quantity.errors.min && (f.quantity.dirty || f.quantity.touched)">{{strings.min}} 0</mdb-error>
           </div>
 <!--          <div class="form-group row">-->
 <!--            <label class="col-sm-4 col-form-label">{{strings.quantity}}</label>-->
@@ -163,7 +163,7 @@
                    [validateSuccess]="false" placeholder="{{strings.price}}">
             <label>{{strings.price}}</label>
             <mdb-error *ngIf="f.price.errors && f.price.errors.required && (f.price.dirty || f.price.touched)">{{strings.thisFieldIsRequired}}</mdb-error>
-            <mdb-error *ngIf="f.price.errors && f.price.errors.min && (f.price.dirty || f.price.touched)">{{strings.thisFieldIsInvalid}}</mdb-error>
+            <mdb-error *ngIf="f.price.errors && f.price.errors.min && (f.price.dirty || f.price.touched)">{{strings.min}} 0</mdb-error>
           </div>
 <!--          <div class="form-group row">-->
 <!--            <label class="col-sm-4 col-form-label">{{strings.price}}</label>-->
@@ -183,8 +183,8 @@
                    [validateSuccess]="false" placeholder="{{strings.takeProfitPercent}}">
             <label>{{strings.takeProfitPercent}}</label>
             <mdb-error *ngIf="f.tpPercent.errors && f.tpPercent.errors.required && (f.tpPercent.dirty || f.tpPercent.touched)">{{strings.thisFieldIsRequired}}</mdb-error>
-            <mdb-error *ngIf="f.tpPercent.errors && f.tpPercent.errors.min && (f.tpPercent.dirty || f.tpPercent.touched)">{{strings.thisFieldIsInvalid}}</mdb-error>
-            <mdb-error *ngIf="f.tpPercent.errors && f.tpPercent.errors.max && (f.tpPercent.dirty || f.tpPercent.touched)">{{strings.thisFieldIsInvalid}}</mdb-error>
+            <mdb-error *ngIf="f.tpPercent.errors && f.tpPercent.errors.min && (f.tpPercent.dirty || f.tpPercent.touched)">{{strings.min}} 0</mdb-error>
+            <mdb-error *ngIf="f.tpPercent.errors && f.tpPercent.errors.max && (f.tpPercent.dirty || f.tpPercent.touched)">{{strings.max}} 100</mdb-error>
           </div>
 <!--          <div class="form-group row">-->
 <!--            <label class="col-sm-4 col-form-label">{{strings.tpPercent}}</label>-->
@@ -202,8 +202,8 @@
                    [validateSuccess]="false" placeholder="{{strings.stopLossPercent}}">
             <label>{{strings.stopLossPercent}}</label>
             <mdb-error *ngIf="f.slPercent.errors && f.slPercent.errors.required && (f.slPercent.dirty || f.slPercent.touched)">{{strings.thisFieldIsRequired}}</mdb-error>
-            <mdb-error *ngIf="f.slPercent.errors && f.slPercent.errors.min && (f.slPercent.dirty || f.slPercent.touched)">{{strings.thisFieldIsInvalid}}</mdb-error>
-            <mdb-error *ngIf="f.slPercent.errors && f.slPercent.errors.max && (f.slPercent.dirty || f.slPercent.touched)">{{strings.thisFieldIsInvalid}}</mdb-error>
+            <mdb-error *ngIf="f.slPercent.errors && f.slPercent.errors.min && (f.slPercent.dirty || f.slPercent.touched)">{{strings.min}} 0</mdb-error>
+            <mdb-error *ngIf="f.slPercent.errors && f.slPercent.errors.max && (f.slPercent.dirty || f.slPercent.touched)">{{strings.max}} 100</mdb-error>
           </div>
 <!--          <div class="form-group row">-->
 <!--            <label class="col-sm-4 col-form-label">{{strings.quantity}}</label>-->
@@ -221,8 +221,8 @@
                    [validateSuccess]="false" placeholder="{{strings.trailingStop}}">
             <label>{{strings.trailingStop}}</label>
             <mdb-error *ngIf="f.trailingStop.errors && f.trailingStop.errors.required && (f.trailingStop.dirty || f.trailingStop.touched)">{{strings.thisFieldIsRequired}}</mdb-error>
-            <mdb-error *ngIf="f.trailingStop.errors && f.trailingStop.errors.min && (f.trailingStop.dirty || f.trailingStop.touched)">{{strings.thisFieldIsInvalid}}</mdb-error>
-            <mdb-error *ngIf="f.trailingStop.errors && f.trailingStop.errors.max && (f.trailingStop.dirty || f.trailingStop.touched)">{{strings.thisFieldIsInvalid}}</mdb-error>
+            <mdb-error *ngIf="f.trailingStop.errors && f.trailingStop.errors.min && (f.trailingStop.dirty || f.trailingStop.touched)">{{strings.min}} 0</mdb-error>
+            <mdb-error *ngIf="f.trailingStop.errors && f.trailingStop.errors.max && (f.trailingStop.dirty || f.trailingStop.touched)">{{strings.max}} 100</mdb-error>
           </div>
 <!--          <div class="form-group row">-->
 <!--            <label class="col-sm-9 col-form-label">{{strings.quantity}}</label>-->
@@ -240,7 +240,7 @@
                    [validateSuccess]="false" placeholder="{{strings.numberOfSafeOrder}}">
             <label>{{strings.numberOfSafeOrder}}</label>
             <mdb-error *ngIf="f.numberOfSafeOrder.errors && f.numberOfSafeOrder.errors.required && (f.numberOfSafeOrder.dirty || f.numberOfSafeOrder.touched)">{{strings.thisFieldIsRequired}}</mdb-error>
-            <mdb-error *ngIf="f.numberOfSafeOrder.errors && f.numberOfSafeOrder.errors.min && (f.numberOfSafeOrder.dirty || f.numberOfSafeOrder.touched)">{{strings.thisFieldIsInvalid}}</mdb-error>
+            <mdb-error *ngIf="f.numberOfSafeOrder.errors && f.numberOfSafeOrder.errors.min && (f.numberOfSafeOrder.dirty || f.numberOfSafeOrder.touched)">{{strings.min}} 0</mdb-error>
           </div>
 <!--          <div class="form-group row">-->
 <!--            <label class="col-sm-9 col-form-label">{{strings.numberOfSafeOrder}}</label>-->
@@ -275,14 +275,14 @@
                        [validateSuccess]="false" placeholder="{{strings.valueXOfLastCloseOrder}}">
                 <label>{{strings.valueXOfLastCloseOrder}}</label>
                 <mdb-error *ngIf="f.valueOfLastCloseOrder.errors && f.valueOfLastCloseOrder.errors.required && (f.valueOfLastCloseOrder.dirty || f.valueOfLastCloseOrder.touched)">{{strings.thisFieldIsRequired}}</mdb-error>
-                <mdb-error *ngIf="f.valueOfLastCloseOrder.errors && f.valueOfLastCloseOrder.errors.required && (f.valueOfLastCloseOrder.dirty || f.valueOfLastCloseOrder.touched)">{{strings.thisFieldIsInvalid}}</mdb-error>
+                <mdb-error *ngIf="f.valueOfLastCloseOrder.errors && f.valueOfLastCloseOrder.errors.min && (f.valueOfLastCloseOrder.dirty || f.valueOfLastCloseOrder.touched)">{{strings.min}} 0</mdb-error>
               </div>
               <div class="md-form">
                 <input type="number" class="form-control" formControlName="timesRepeatSameLogic1" mdbInput mdbValidate
                        [validateSuccess]="false" placeholder="{{strings.timesRepeatSameLogic}}">
                 <label>{{strings.timesRepeatSameLogic}}</label>
                 <mdb-error *ngIf="f.timesRepeatSameLogic1.errors && f.timesRepeatSameLogic1.errors.required && (f.timesRepeatSameLogic1.dirty || f.timesRepeatSameLogic1.touched)">{{strings.thisFieldIsRequired}}</mdb-error>
-                <mdb-error *ngIf="f.timesRepeatSameLogic1.errors && f.timesRepeatSameLogic1.errors.min && (f.timesRepeatSameLogic1.dirty || f.timesRepeatSameLogic1.touched)">{{strings.thisFieldIsInvalid}}</mdb-error>
+                <mdb-error *ngIf="f.timesRepeatSameLogic1.errors && f.timesRepeatSameLogic1.errors.min && (f.timesRepeatSameLogic1.dirty || f.timesRepeatSameLogic1.touched)">{{strings.min}} 0</mdb-error>
               </div>
             </mdb-card-body>
           </mdb-card>
@@ -302,21 +302,21 @@
                        [validateSuccess]="false" placeholder="{{strings.breakdownPriceForNewOrder}}">
                 <label>{{strings.breakdownPriceForNewOrder}}</label>
                 <mdb-error *ngIf="f.breakdownPriceForNewOrder.errors && f.breakdownPriceForNewOrder.errors.required && (f.breakdownPriceForNewOrder.dirty || f.breakdownPriceForNewOrder.touched)">{{strings.thisFieldIsRequired}}</mdb-error>
-                <mdb-error *ngIf="f.breakdownPriceForNewOrder.errors && f.breakdownPriceForNewOrder.errors.min && (f.breakdownPriceForNewOrder.dirty || f.breakdownPriceForNewOrder.touched)">{{strings.thisFieldIsInvalid}}</mdb-error>
+                <mdb-error *ngIf="f.breakdownPriceForNewOrder.errors && f.breakdownPriceForNewOrder.errors.min && (f.breakdownPriceForNewOrder.dirty || f.breakdownPriceForNewOrder.touched)">{{strings.min}} 0</mdb-error>
               </div>
               <div class="md-form">
                 <input type="number" class="form-control" formControlName="timeIntervalAfterClose" mdbInput mdbValidate
                        [validateSuccess]="false" placeholder="{{strings.timeIntervalAfterClose}}">
                 <label>{{strings.timeIntervalAfterClose}}</label>
                 <mdb-error *ngIf="f.timeIntervalAfterClose.errors && f.timeIntervalAfterClose.errors.required && (f.timeIntervalAfterClose.dirty || f.timeIntervalAfterClose.touched)">{{strings.thisFieldIsRequired}}</mdb-error>
-                <mdb-error *ngIf="f.timeIntervalAfterClose.errors && f.timeIntervalAfterClose.errors.min && (f.timeIntervalAfterClose.dirty || f.timeIntervalAfterClose.touched)">{{strings.thisFieldIsInvalid}}</mdb-error>
+                <mdb-error *ngIf="f.timeIntervalAfterClose.errors && f.timeIntervalAfterClose.errors.min && (f.timeIntervalAfterClose.dirty || f.timeIntervalAfterClose.touched)">{{strings.min}} 0</mdb-error>
               </div>
               <div class="md-form">
                 <input type="number" class="form-control" formControlName="timesRepeatSameLogic2" mdbInput mdbValidate
                        [validateSuccess]="false" placeholder="{{strings.timesRepeatSameLogic}}">
                 <label>{{strings.timesRepeatSameLogic}}</label>
                 <mdb-error *ngIf="f.timesRepeatSameLogic2.errors && f.timesRepeatSameLogic2.errors.required && (f.timesRepeatSameLogic2.dirty || f.timesRepeatSameLogic2.touched)">{{strings.thisFieldIsRequired}}</mdb-error>
-                <mdb-error *ngIf="f.timesRepeatSameLogic2.errors && f.timesRepeatSameLogic2.errors.min && (f.timesRepeatSameLogic2.dirty || f.timesRepeatSameLogic2.touched)">{{strings.thisFieldIsInvalid}}</mdb-error>
+                <mdb-error *ngIf="f.timesRepeatSameLogic2.errors && f.timesRepeatSameLogic2.errors.min && (f.timesRepeatSameLogic2.dirty || f.timesRepeatSameLogic2.touched)">{{strings.min}} 0</mdb-error>
               </div>
             </mdb-card-body>
           </mdb-card>

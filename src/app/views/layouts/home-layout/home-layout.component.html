@@ -27,15 +27,22 @@
             </mdb-accordion-item>
             <!-- Simple link -->
             <mdb-accordion-item class="no-collase">
-              <mdb-accordion-item-head mdbWavesEffect routerLink="{{routes.registerApikeys}}" (click)="onClickNav(routes.registerApikeys)">
-                <mdb-icon fas icon="key" class="side-nav-icon"></mdb-icon>{{strings.registerApikeys}}
+              <mdb-accordion-item-head mdbWavesEffect routerLink="{{routes.apikey}}" (click)="onClickNav(routes.apikey)">
+                <mdb-icon fas icon="key" class="side-nav-icon"></mdb-icon>{{strings.apikey}}
+              </mdb-accordion-item-head>
+              <mdb-accordion-item-body></mdb-accordion-item-body>
+            </mdb-accordion-item>
+<!--             Simple link-->
+            <mdb-accordion-item class="no-collase">
+              <mdb-accordion-item-head mdbWavesEffect routerLink="{{routes.registerBots}}" (click)="onClickNav(routes.registerBots)">
+                <mdb-icon fas icon="robot" class="side-nav-icon"></mdb-icon>{{strings.registerBots}}
               </mdb-accordion-item-head>
               <mdb-accordion-item-body></mdb-accordion-item-body>
             </mdb-accordion-item>
             <!-- Simple link -->
             <mdb-accordion-item class="no-collase">
-              <mdb-accordion-item-head mdbWavesEffect routerLink="{{routes.registerBots}}" (click)="onClickNav(routes.registerBots)">
-                <mdb-icon fas icon="robot" class="side-nav-icon"></mdb-icon>{{strings.registerBots}}
+              <mdb-accordion-item-head mdbWavesEffect routerLink="{{routes.settings}}" (click)="onClickNav(routes.settings)">
+                <mdb-icon fas icon="tools" class="side-nav-icon"></mdb-icon>{{strings.settings}}
               </mdb-accordion-item-head>
               <mdb-accordion-item-body></mdb-accordion-item-body>
             </mdb-accordion-item>
@@ -97,7 +104,7 @@
     <navlinks>
       <ul class="nav navbar-nav nav-flex-icons ml-auto ie-double-nav">
         <li class="nav-item">
-          <div class="nav-link">XBTUSD: <span class="price-value" [ngClass]="'falling'">10773.0</span></div>
+          <div class="nav-link">XBTUSD: <span class="price-value" [ngClass]="direction > 0 ? 'growing' : 'falling'">{{price}}</span></div>
         </li>
 <!--        <li class="nav-item">-->
 <!--          <a class="nav-link waves-light" mdbWavesEffect><mdb-icon far icon="comments"></mdb-icon> <span-->

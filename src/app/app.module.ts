@@ -18,6 +18,8 @@ import {RegisterBotsModalComponent} from '@app/views/home/register-bots/register
 import {DeleteModalComponent} from '@app/views/partials/common-dialogs/delete-modal.component';
 import {RegisterApikeysComponent} from '@app/views/home/register-apikeys/register-apikeys.component';
 import {RegisterApikeysModalComponent} from '@app/views/home/register-apikeys/register-apikeys-modal.component';
+import {SettingsComponent} from '@app/views/home/settings/settings.component';
+import {ApikeyComponent} from '@app/views/home/apikey/apikey.component';
 
 @NgModule({
   declarations: [
@@ -29,10 +31,12 @@ import {RegisterApikeysModalComponent} from '@app/views/home/register-apikeys/re
     SigninComponent,
     HomeLayoutComponent,
     DashboardComponent,
-    RegisterBotsComponent,
-    RegisterBotsModalComponent,
+    ApikeyComponent,
     RegisterApikeysComponent,
     RegisterApikeysModalComponent,
+    RegisterBotsComponent,
+    RegisterBotsModalComponent,
+    SettingsComponent,
   ],
   imports: [
     BrowserModule,

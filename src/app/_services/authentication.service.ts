@@ -26,7 +26,6 @@ export class AuthenticationService {
     return this.http.post<any>(`${environment.apiUrl}${apis.auth.signIn}`, {email, password})
       .pipe(map(res => {
         if (res.result == 'success') {
-          console.log(res.data);
           localStorage.setItem(strings.siteName, JSON.stringify(res.data));
           this.currentUserSubject.next(res.data);
         }
