@@ -8,7 +8,13 @@ const apis = {
     add: 'register-bots/add',
     edit: 'register-bots/edit',
     delete: 'register-bots/delete',
-  }
+  },
+  registerApikeys: {
+    list: 'register-apikeys',
+    add: 'register-apikeys/add',
+    edit: 'register-apikeys/edit',
+    delete: 'register-apikeys/delete',
+  },
 };
 
 export {

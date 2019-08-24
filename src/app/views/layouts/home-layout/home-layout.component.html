@@ -21,21 +21,28 @@
             <!-- Simple link -->
             <mdb-accordion-item class="no-collase">
               <mdb-accordion-item-head mdbWavesEffect routerLink="{{routes.app}}" (click)="onClickNav(routes.app)">
-                  <mdb-icon fas icon="tachometer-alt"></mdb-icon>{{strings.dashboard}}
+                <mdb-icon fas icon="tachometer-alt" class="side-nav-icon"></mdb-icon>{{strings.dashboard}}
+              </mdb-accordion-item-head>
+              <mdb-accordion-item-body></mdb-accordion-item-body>
+            </mdb-accordion-item>
+            <!-- Simple link -->
+            <mdb-accordion-item class="no-collase">
+              <mdb-accordion-item-head mdbWavesEffect routerLink="{{routes.registerApikeys}}" (click)="onClickNav(routes.registerApikeys)">
+                <mdb-icon fas icon="key" class="side-nav-icon"></mdb-icon>{{strings.registerApikeys}}
               </mdb-accordion-item-head>
               <mdb-accordion-item-body></mdb-accordion-item-body>
             </mdb-accordion-item>
             <!-- Simple link -->
             <mdb-accordion-item class="no-collase">
               <mdb-accordion-item-head mdbWavesEffect routerLink="{{routes.registerBots}}" (click)="onClickNav(routes.registerBots)">
-                <mdb-icon fas icon="robot"></mdb-icon>{{strings.registerBots}}
+                <mdb-icon fas icon="robot" class="side-nav-icon"></mdb-icon>{{strings.registerBots}}
               </mdb-accordion-item-head>
               <mdb-accordion-item-body></mdb-accordion-item-body>
             </mdb-accordion-item>
             <!-- Simple link -->
             <mdb-accordion-item class="no-collase">
               <mdb-accordion-item-head mdbWavesEffect (click)="onSignOut()">
-                <mdb-icon fas icon="sign-out-alt"></mdb-icon>{{strings.signOut}}
+                <mdb-icon fas icon="sign-out-alt" class="side-nav-icon"></mdb-icon>{{strings.signOut}}
               </mdb-accordion-item-head>
               <mdb-accordion-item-body></mdb-accordion-item-body>
             </mdb-accordion-item>

@@ -7,6 +7,7 @@ $foreground2: #eeeeee ;
 $danger-color: #ff4444;
 $success-color: #00C851;
 $placeholder: #bdbdbd ;
+$gray-color: #757575;
 
 body {
   color: $foreground;
@@ -214,4 +215,10 @@ mdb-select-dropdown .dropdown-content {
 
 mdb-select>div>div.single>div.value, .mdb-select-toggle {
   color: $foreground !important;
+}
+
+.form-control:disabled, .md-form .form-control[readonly] {
+  color: $gray-color;
+  border-bottom: 1px solid #bdbdbd;
+  background-color: transparent;
 }

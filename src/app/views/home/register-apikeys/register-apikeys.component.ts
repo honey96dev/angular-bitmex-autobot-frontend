@@ -6,16 +6,16 @@ import strings from '@core/strings';
 import routes from '@core/routes';
 import {AuthenticationService, GlobalVariableService} from '@app/_services';
 import {MDBModalRef, MDBModalService, MdbTableDirective, MdbTablePaginationComponent} from 'ng-uikit-pro-standard';
-import {RegisterBotsService} from '@app/_services/register-bots.service';
 import {first} from 'rxjs/operators';
 import {DeleteModalComponent} from '@app/views/partials/common-dialogs/delete-modal.component';
+import {RegisterApikeysService} from '@app/_services/register-apikeys.service';
 
 @Component({
-  selector: 'home-register-bots',
-  templateUrl: './register-bots.component.html',
-  styleUrls: ['./register-bots.component.scss']
+  selector: 'home-register-apikeys',
+  templateUrl: './register-apikeys.component.html',
+  styleUrls: ['./register-apikeys.component.scss']
 })
-export class RegisterBotsComponent implements OnInit {
+export class RegisterApikeysComponent implements OnInit {
   strings = strings;
   routes = routes;
   form: FormGroup;
@@ -30,7 +30,7 @@ export class RegisterBotsComponent implements OnInit {
   };
 
   elements: any = [];
-  headElements = ['Name', 'Exchange', 'Symbol', 'Order Type', 'Strategy', 'Leverage', 'Quantity', 'Price', 'T/P %', 'S/L %'];
+  headElements = ['#', 'Name', 'Testnet?', 'ApiKey', 'Registered Date'];
 
   searchText: string = '';
   previous: string;
@@ -51,13 +51,13 @@ export class RegisterBotsComponent implements OnInit {
                      private route: ActivatedRoute,
                      private router: Router,
                      private globalVariableService: GlobalVariableService,
-                     private service: RegisterBotsService,
+                     private service: RegisterApikeysService,
                      private modalService: MDBModalService,
                      private authService: AuthenticationService,
                      private cdRef: ChangeDetectorRef
   ) {
-    titleService.setTitle(`${strings.registerBots}-${strings.siteName}`);
-    globalVariableService.setNavbarTitle(strings.registerBots);
+    titleService.setTitle(`${strings.registerApikeys}-${strings.siteName}`);
+    globalVariableService.setNavbarTitle(strings.registerApikeys);
   }
 
   ngOnInit() {
@@ -118,18 +118,7 @@ export class RegisterBotsComponent implements OnInit {
       elementIndex = this.elements.findIndex((elem: any) => el === elem);
     }
     this.service.setEditableRow(el);
-    // const modalOptions = {
-    //   data: {
-    //     editableRow: el
-    //   },
-    //   class: 'wide-modal',
-    // };
-    // this.modalRef = this.modalService.show(RegisterBotsModalComponent, modalOptions);
-    // this.modalRef.content.saveButtonClicked.subscribe((newElement: any) => {
-    //   this.elements[elementIndex] = newElement;
-    // });
-    // this.mdbTable.setDataSource(this.elements);
-    this.router.navigate([routes.registerBotsModal]);
+    this.router.navigate([routes.registerApikeysModal]);
   }
 
   removeItem(el: any) {

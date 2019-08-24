@@ -1,0 +1,63 @@
+<!--<div class="modal-content">-->
+<!--  <div class="modal-header">-->
+<!--    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">-->
+<!--      <span aria-hidden="true">×</span>-->
+<!--    </button>-->
+<!--    <h4 class="modal-title w-100" id="myModalLabel">{{editableRow.id ? 'Edit Bot: ' + editableRow.name : 'New Bot'}}</h4>-->
+<!--  </div>-->
+<!--  <div class="modal-body">-->
+    <form [formGroup]="form" class="mx-2" (ngSubmit)="submit()">
+      <input id="id" type="hidden" class="form-control grey-text" formControlName="id" mdbInput>
+      <div class="row">
+        <div class="col-md-4">
+          <div class="md-form mt-0">
+            <input type="text" class="form-control" formControlName="name" mdbInput mdbValidate
+                   [validateSuccess]="false" placeholder="{{strings.name}}">
+            <label>{{strings.name}}</label>
+            <mdb-error *ngIf="f.name.invalid && (f.name.dirty || f.name.touched)">{{strings.thisFieldIsRequired}}</mdb-error>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-2 ">
+          <div class="switch primary-switch mt-2">
+            <label>
+              <input type="checkbox" formControlName="testnet">
+              <span class="lever"></span> {{strings.testnet}}
+            </label>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="md-form mt-0">
+            <input type="text" class="form-control" formControlName="apiKey" mdbInput mdbValidate
+                   [validateSuccess]="false" placeholder="{{strings.apiKey}}">
+            <label>{{strings.apiKey}}</label>
+            <mdb-error *ngIf="f.apiKey.invalid && (f.apiKey.dirty || f.apiKey.touched)">{{strings.thisFieldIsRequired}}</mdb-error>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="md-form mt-0">
+            <input type="text" class="form-control" formControlName="apiKeySecret" mdbInput mdbValidate
+                   [validateSuccess]="false" placeholder="{{strings.apiKeySecret}}">
+            <label>{{strings.apiKeySecret}}</label>
+            <mdb-error *ngIf="f.apiKeySecret.invalid && (f.apiKeySecret.dirty || f.apiKeySecret.touched)">{{strings.thisFieldIsRequired}}</mdb-error>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="alert.show" class="alert alert-dismissible fade show mt-3" [ngClass]="alert.type" role="alert">
+        <button type="button" class="close" aria-label="Close" (click)="closeAlert()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        {{alert.message}}
+      </div>
+      <div class="button-spec">
+        <button type="button" mdbBtn color="warning" class="waves-light" aria-label="Close"
+                mdbWavesEffect (click)="goBack()" [disabled]="loading">{{strings.back}}
+        </button>
+        <button type="submit" mdbBtn color="primary" class="relative waves-light" mdbWavesEffect
+                [disabled]="form.invalid || loading">{{strings.save}}
+        </button>
+      </div>
+    </form>
+<!--  </div>-->
+<!--</div>-->

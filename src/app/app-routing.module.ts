@@ -7,6 +7,8 @@ import {AuthGuard} from '@app/_helpers';
 import {DashboardComponent} from '@app/views/home/dashboard/dashboard.component';
 import {RegisterBotsComponent} from '@app/views/home/register-bots/register-bots.component';
 import {RegisterBotsModalComponent} from '@app/views/home/register-bots/register-bots-modal.component';
+import {RegisterApikeysComponent} from '@app/views/home/register-apikeys/register-apikeys.component';
+import {RegisterApikeysModalComponent} from '@app/views/home/register-apikeys/register-apikeys-modal.component';
 // import {AuthGuard} from '@app/_helpers';
 // import {HomeLayoutComponent} from '@app/views/layouts/home-layout/home-layout.component';
 
@@ -28,6 +30,8 @@ const routes: Routes = [
     children: [
       {path: '', component: DashboardComponent, pathMatch: 'full'},
       // {path: 'dashboard', component: DashboardComponent, pathMatch: 'full'},
+      {path: 'register-apikeys', component: RegisterApikeysComponent, pathMatch: 'full'},
+      {path: 'register-apikeys-modal', component: RegisterApikeysModalComponent, pathMatch: 'full'},
       {path: 'register-bots', component: RegisterBotsComponent, pathMatch: 'full'},
       {path: 'register-bots-modal', component: RegisterBotsModalComponent, pathMatch: 'full'},
     ],

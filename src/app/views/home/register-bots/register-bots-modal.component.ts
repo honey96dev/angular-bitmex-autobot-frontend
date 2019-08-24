@@ -1,12 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {MDBModalRef} from 'ng-uikit-pro-standard';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import {Subject} from 'rxjs';
 import strings from '@core/strings';
 import routes from '@core/routes';
 import {Title} from '@angular/platform-browser';
 import {ActivatedRoute, Router} from '@angular/router';
-import {GlobalVariableService} from '@app/_services';
+import {AuthenticationService, GlobalVariableService} from '@app/_services';
 import {RegisterBotsService} from '@app/_services/register-bots.service';
 import {first} from 'rxjs/operators';
 
@@ -20,7 +18,8 @@ export class RegisterBotsModalComponent implements OnInit {
   routes = routes;
   form: FormGroup;
 
-  public editableRow: { id:string, name: string, exchange: string, symbol: string, apiKey: string, apiKeySecret: string, orderType: string, postOnly: boolean, strategy: string, leverage: string, leverageValue: number, quantity: BigInteger, price: BigInteger, tpPercent: number, slPercent: number, tsPercent: number, numberOfSafeOrder: number, closeOrder1: boolean, newOrderOnSLPrice: boolean, valueOfLastCloseOrder: number, timesRepeatSameLogic1: number, closeOrder2: boolean, breakdownPriceForNewOrder: number, timeIntervalAfterClose: number, timesRepeatSameLogic2: boolean };
+  public editableRow: {
+    id:string, name: string, exchange: string, symbol: string, /*apiKey: string, apiKeySecret: string,*/ orderType: string, postOnly: boolean, strategy: string, leverage: string, leverageValue: number, quantity: number, price: number, tpPercent: number, slPercent: number, tsPercent: number, numberOfSafeOrder: number, closeOrder1: boolean, newOrderOnSLPrice: boolean, valueOfLastCloseOrder: number, timesRepeatSameLogic1: number, closeOrder2: boolean, breakdownPriceForNewOrder: number, timeIntervalAfterClose: number, timesRepeatSameLogic2: boolean };
   exchanges = [
     { value: 'bitmex', label: 'BitMEX' },
     // { value: '2', label: 'Option 2' },
@@ -50,20 +49,21 @@ export class RegisterBotsModalComponent implements OnInit {
               private route: ActivatedRoute,
               private router: Router,
               private globalVariableService: GlobalVariableService,
-              private registerBotsService: RegisterBotsService) {
+              private service: RegisterBotsService,
+              private authService: AuthenticationService) {
     titleService.setTitle(`${strings.registerBots}-${strings.siteName}`);
   }
 
   ngOnInit() {
-    const row = this.registerBotsService.editableRowValue();
+    const row = this.service.editableRowValue();
     this.globalVariableService.setNavbarTitle(`${strings.registerBots} - ${row.id ? strings.edit : strings.add}`);
     this.form = this.formBuilder.group({
       id: new FormControl(''),
       name: new FormControl('', Validators.required),
       exchange: new FormControl('', Validators.required),
       symbol: new FormControl('', Validators.required),
-      apiKey: new FormControl('', Validators.required),
-      apiKeySecret: new FormControl('', Validators.required),
+      // apiKey: new FormControl('', Validators.required),
+      // apiKeySecret: new FormControl('', Validators.required),
       orderType: new FormControl('', Validators.required),
       postOnly: new FormControl('', Validators.required),
       strategy: new FormControl('', Validators.required),
@@ -84,13 +84,13 @@ export class RegisterBotsModalComponent implements OnInit {
       timeIntervalAfterClose: new FormControl('', [Validators.required, Validators.min(0)]),
       timesRepeatSameLogic2: new FormControl('', [Validators.required, Validators.min(0)]),
     });
-    console.log(row);
+    // console.log(row);
     this.f['id'].patchValue(row.id);
     this.f['name'].patchValue(row.name);
     this.f['exchange'].patchValue(row.exchange);
     this.f['symbol'].patchValue(row.symbol);
-    this.f['apiKey'].patchValue(row.apiKey);
-    this.f['apiKeySecret'].patchValue(row.apiKeySecret);
+    // this.f['apiKey'].patchValue(row.apiKey);
+    // this.f['apiKeySecret'].patchValue(row.apiKeySecret);
     this.f['orderType'].patchValue(!!row.orderType ? row.orderType : 'Limit');
     this.f['postOnly'].patchValue(!!row.postOnly ? row.postOnly : false);
     this.f['strategy'].patchValue(!!row.strategy ? row.strategy : 'Long');
@@ -133,8 +133,8 @@ export class RegisterBotsModalComponent implements OnInit {
     const name = f.name.value;
     const exchange = f.exchange.value;
     const symbol = f.symbol.value;
-    const apiKey = f.apiKey.value;
-    const apiKeySecret = f.apiKeySecret.value;
+    // const apiKey = f.apiKey.value;
+    // const apiKeySecret = f.apiKeySecret.value;
     const orderType = f.orderType.value;
     const postOnly = f.postOnly.value;
     const strategy = f.strategy.value;
@@ -154,18 +154,19 @@ export class RegisterBotsModalComponent implements OnInit {
     const breakdownPriceForNewOrder = f.breakdownPriceForNewOrder.value;
     const timeIntervalAfterClose = f.timeIntervalAfterClose.value;
     const timesRepeatSameLogic2 = f.timesRepeatSameLogic2.value;
+    const userId = this.authService.currentUserValue.id;
 
     const data = {
-      id, name, exchange, symbol, apiKey, apiKeySecret, orderType, postOnly: postOnly ? 1 : 0, strategy, leverage, leverageValue, quantity, price, tpPercent, slPercent, trailingStop, numberOfSafeOrder, closeOrder1: closeOrder1 ? 1 : 0, newOrderOnSLPrice: newOrderOnSLPrice ? 1 : 0, valueOfLastCloseOrder, timesRepeatSameLogic1, closeOrder2: closeOrder2 ? 1 : 0, breakdownPriceForNewOrder, timeIntervalAfterClose, timesRepeatSameLogic2
+      id, userId, name, exchange, symbol, /*apiKey, apiKeySecret,*/ orderType, postOnly: postOnly ? 1 : 0, strategy, leverage, leverageValue, quantity, price, tpPercent, slPercent, trailingStop, numberOfSafeOrder, closeOrder1: closeOrder1 ? 1 : 0, newOrderOnSLPrice: newOrderOnSLPrice ? 1 : 0, valueOfLastCloseOrder, timesRepeatSameLogic1, closeOrder2: closeOrder2 ? 1 : 0, breakdownPriceForNewOrder, timeIntervalAfterClose, timesRepeatSameLogic2
     };
 
     this.loading = true;
     this.alert.show = false;
     let backend;
     if (id) {
-      backend = this.registerBotsService.edit(data);
+      backend = this.service.edit(data);
     } else {
-      backend = this.registerBotsService.add(data);
+      backend = this.service.add(data);
     }
     backend.pipe(first())
       .subscribe(res => {

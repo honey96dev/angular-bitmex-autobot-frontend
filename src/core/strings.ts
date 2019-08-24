@@ -86,4 +86,7 @@ export default {
   timeIntervalAfterClose: 'Time interval after close',
   selectExchange: '(Select Exchange)',
   selectSymbol: '(Select Symbol)',
+
+  registerApikeys: 'Register Apikeys',
+  testnet: 'Testnet'
 };

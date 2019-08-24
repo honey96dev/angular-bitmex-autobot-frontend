@@ -63,31 +63,31 @@
 <!--          </div>-->
         </div>
       </div>
-      <div class="row">
-        <div class="col-md-4">
-          <div class="md-form mt-0">
-            <input type="text" class="form-control" formControlName="apiKey" mdbInput mdbValidate
-                   [validateSuccess]="false" placeholder="{{strings.apiKey}}">
-            <label>{{strings.apiKey}}</label>
-            <mdb-error *ngIf="f.apiKey.invalid && (f.apiKey.dirty || f.apiKey.touched)">{{strings.thisFieldIsRequired}}</mdb-error>
-          </div>
-        </div>
-        <div class="col-md-8">
-          <div class="md-form mt-0">
-            <input type="text" class="form-control" formControlName="apiKeySecret" mdbInput mdbValidate
-                   [validateSuccess]="false" placeholder="{{strings.apiKeySecret}}">
-            <label>{{strings.apiKeySecret}}</label>
-            <mdb-error *ngIf="f.apiKeySecret.invalid && (f.apiKeySecret.dirty || f.apiKeySecret.touched)">{{strings.thisFieldIsRequired}}</mdb-error>
-          </div>
-        </div>
-      </div>
+<!--      <div class="row">-->
+<!--        <div class="col-md-4">-->
+<!--          <div class="md-form mt-0">-->
+<!--            <input type="text" class="form-control" formControlName="apiKey" mdbInput mdbValidate-->
+<!--                   [validateSuccess]="false" placeholder="{{strings.apiKey}}">-->
+<!--            <label>{{strings.apiKey}}</label>-->
+<!--            <mdb-error *ngIf="f.apiKey.invalid && (f.apiKey.dirty || f.apiKey.touched)">{{strings.thisFieldIsRequired}}</mdb-error>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--        <div class="col-md-8">-->
+<!--          <div class="md-form mt-0">-->
+<!--            <input type="text" class="form-control" formControlName="apiKeySecret" mdbInput mdbValidate-->
+<!--                   [validateSuccess]="false" placeholder="{{strings.apiKeySecret}}">-->
+<!--            <label>{{strings.apiKeySecret}}</label>-->
+<!--            <mdb-error *ngIf="f.apiKeySecret.invalid && (f.apiKeySecret.dirty || f.apiKeySecret.touched)">{{strings.thisFieldIsRequired}}</mdb-error>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
       <div class="row">
         <div class="col-md-4 mb-4">
           <div class="btn-group full-width" (click)="onOrderTypeChanged()">
-            <label mdbBtn color="primary" formControlName="orderType" mdbRadio="{{strings.market}}" mdbWavesEffect>
+            <label mdbBtn color="primary" formControlName="orderType" mdbRadio="{{strings.market}}" mdbWavesEffect class="gray-title">
               {{strings.market}}
             </label>
-            <label mdbBtn color="primary" formControlName="orderType" mdbRadio="{{strings.limit}}" mdbWavesEffect>
+            <label mdbBtn color="primary" formControlName="orderType" mdbRadio="{{strings.limit}}" mdbWavesEffect class="gray-title">
               {{strings.limit}}
             </label>
           </div>
@@ -102,10 +102,10 @@
         </div>
         <div class="col-md-4 mb-4">
           <div class="btn-group full-width">
-            <label mdbBtn color="info" formControlName="strategy" mdbRadio="{{strings.long}}" mdbWavesEffect>
+            <label mdbBtn color="primary" formControlName="strategy" mdbRadio="{{strings.long}}" mdbWavesEffect class="gray-title">
               {{strings.long}}
             </label>
-            <label mdbBtn color="info" formControlName="strategy" mdbRadio="{{strings.short}}" mdbWavesEffect>
+            <label mdbBtn color="primary" formControlName="strategy" mdbRadio="{{strings.short}}" mdbWavesEffect class="gray-title">
               {{strings.short}}
             </label>
           </div>
@@ -113,10 +113,10 @@
         </div>
         <div class="col-md-4 mb-4">
           <div class="btn-group full-width" (click)="onLeverageChanged()">
-            <label mdbBtn color="secondary" formControlName="leverage" mdbRadio="{{strings.cross}}" mdbWavesEffect>
+            <label mdbBtn color="primary" formControlName="leverage" mdbRadio="{{strings.cross}}" mdbWavesEffect class="gray-title">
               {{strings.cross}}
             </label>
-            <label mdbBtn color="secondary" formControlName="leverage" mdbRadio="{{strings.custom}}" mdbWavesEffect>
+            <label mdbBtn color="primary" formControlName="leverage" mdbRadio="{{strings.custom}}" mdbWavesEffect class="gray-title">
               {{strings.custom}}
             </label>
           </div>
@@ -180,8 +180,8 @@
         <div class="col-md-3">
           <div class="md-form mt-0">
             <input type="number" class="form-control" formControlName="tpPercent" mdbInput mdbValidate
-                   [validateSuccess]="false" placeholder="{{strings.tpPercent}}">
-            <label>{{strings.tpPercent}}</label>
+                   [validateSuccess]="false" placeholder="{{strings.takeProfitPercent}}">
+            <label>{{strings.takeProfitPercent}}</label>
             <mdb-error *ngIf="f.tpPercent.errors && f.tpPercent.errors.required && (f.tpPercent.dirty || f.tpPercent.touched)">{{strings.thisFieldIsRequired}}</mdb-error>
             <mdb-error *ngIf="f.tpPercent.errors && f.tpPercent.errors.min && (f.tpPercent.dirty || f.tpPercent.touched)">{{strings.thisFieldIsInvalid}}</mdb-error>
             <mdb-error *ngIf="f.tpPercent.errors && f.tpPercent.errors.max && (f.tpPercent.dirty || f.tpPercent.touched)">{{strings.thisFieldIsInvalid}}</mdb-error>
@@ -199,8 +199,8 @@
         <div class="col-md-3">
           <div class="md-form mt-0">
             <input type="number" class="form-control" formControlName="slPercent" mdbInput mdbValidate
-                   [validateSuccess]="false" placeholder="{{strings.slPercent}}">
-            <label>{{strings.slPercent}}</label>
+                   [validateSuccess]="false" placeholder="{{strings.stopLossPercent}}">
+            <label>{{strings.stopLossPercent}}</label>
             <mdb-error *ngIf="f.slPercent.errors && f.slPercent.errors.required && (f.slPercent.dirty || f.slPercent.touched)">{{strings.thisFieldIsRequired}}</mdb-error>
             <mdb-error *ngIf="f.slPercent.errors && f.slPercent.errors.min && (f.slPercent.dirty || f.slPercent.touched)">{{strings.thisFieldIsInvalid}}</mdb-error>
             <mdb-error *ngIf="f.slPercent.errors && f.slPercent.errors.max && (f.slPercent.dirty || f.slPercent.touched)">{{strings.thisFieldIsInvalid}}</mdb-error>

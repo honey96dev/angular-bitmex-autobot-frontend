@@ -15,37 +15,36 @@ export class RegisterBotsService {
   constructor(private http: HttpClient) {
   }
 
-  list() {
-
-    return this.http.get<any>(`${environment.apiUrl}${apis.registerBots.list}`, {})
+  list(params) {
+    return this.http.post<any>(`${environment.apiUrl}${apis.registerBots.list}`, params)
       .pipe(map(res => {
         return res;
       }));
   }
 
-  add(data) {
-    return this.http.post<any>(`${environment.apiUrl}${apis.registerBots.add}`, data)
+  add(params) {
+    return this.http.post<any>(`${environment.apiUrl}${apis.registerBots.add}`, params)
       .pipe(map(res => {
         return res;
       }));
   }
 
-  edit(data) {
-    return this.http.post<any>(`${environment.apiUrl}${apis.registerBots.edit}`, data)
+  edit(params) {
+    return this.http.post<any>(`${environment.apiUrl}${apis.registerBots.edit}`, params)
       .pipe(map(res => {
         return res;
       }));
   }
 
-  delete(data) {
-    return this.http.post<any>(`${environment.apiUrl}${apis.registerBots.delete}`, data)
+  delete(params) {
+    return this.http.post<any>(`${environment.apiUrl}${apis.registerBots.delete}`, params)
       .pipe(map(res => {
         return res;
       }));
   }
 
-  setEditableRow(data) {
-    this.editableRow = data;
+  setEditableRow(params) {
+    this.editableRow = params;
   }
 
   editableRowValue() {
