@@ -50,7 +50,7 @@ export class RegisterBotsModalComponent implements OnInit {
               private globalVariableService: GlobalVariableService,
               private service: RegisterBotsService,
               private authService: AuthenticationService) {
-    titleService.setTitle(`${strings.registerBots}-${strings.siteName}`);
+    titleService.setTitle(`${strings.registerBots} - ${strings.siteName}`);
   }
 
   ngOnInit() {

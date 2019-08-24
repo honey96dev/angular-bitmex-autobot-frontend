@@ -9,9 +9,9 @@ import strings from '@core/strings';
 
 @Injectable({providedIn: 'root'})
 export class SettingsService {
-  defaultApiKey = {userId: null, testnet: false, apiKey: '', apiKeySecret: ''};
+  defaultApiKey = {userId: null, testnet: null, apiKey: '', apiKeySecret: ''};
 
-  editableRow: { userId: string, testnet: boolean, apiKey: string, apiKeySecret: string };
+  editableRow: { userId: string, testnet: number, apiKey: string, apiKeySecret: string };
 
   constructor(private http: HttpClient,
               private authService: AuthenticationService) {

@@ -33,7 +33,7 @@ export class RegisterApikeysModalComponent implements OnInit {
               private globalVariableService: GlobalVariableService,
               private service: RegisterApikeysService,
               private authService: AuthenticationService) {
-    titleService.setTitle(`${strings.registerApikeys}-${strings.siteName}`);
+    titleService.setTitle(`${strings.registerApikeys} - ${strings.siteName}`);
   }
 
   ngOnInit() {

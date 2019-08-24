@@ -55,7 +55,7 @@ export class RegisterApikeysComponent implements OnInit {
                      private authService: AuthenticationService,
                      private cdRef: ChangeDetectorRef
   ) {
-    titleService.setTitle(`${strings.registerApikeys}-${strings.siteName}`);
+    titleService.setTitle(`${strings.registerApikeys} - ${strings.siteName}`);
     globalVariableService.setNavbarTitle(strings.registerApikeys);
   }
 

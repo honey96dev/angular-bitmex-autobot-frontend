@@ -55,7 +55,7 @@ export class RegisterBotsComponent implements OnInit {
                      private authService: AuthenticationService,
                      private cdRef: ChangeDetectorRef
   ) {
-    titleService.setTitle(`${strings.registerBots}-${strings.siteName}`);
+    titleService.setTitle(`${strings.registerBots} - ${strings.siteName}`);
     globalVariableService.setNavbarTitle(strings.registerBots);
   }
 
@@ -132,11 +132,12 @@ export class RegisterBotsComponent implements OnInit {
   }
 
   removeItem(el: any) {
-    const self = this;
     const modalOptions = {
-      // class: 'modal-notify modal-warning',
+      class: 'modal-dialog-centered',
     };
+
     this.modalRef = this.modalService.show(DeleteModalComponent, modalOptions);
+    this.modalRef.content.message = `${strings.doYouWantToDelete2} \`${el.name}\`?`;
     this.modalRef.content.yesButtonClicked.subscribe(() => {
       this.service.delete(el).pipe(first())
         .subscribe(res => {

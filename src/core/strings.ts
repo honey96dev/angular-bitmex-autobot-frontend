@@ -41,9 +41,13 @@ export default {
   no: 'No',
   back: 'Back',
   save: 'Save',
+  doYouWantToSignOut: 'Do you want to sign out?',
+  exitConfirmation: 'Exit Confirmation',
+  doYouWantToQuit: 'Do you want to quit?',
 
   deleteUser: 'Delete User',
   doYouWantToDelete: 'Do you want to delete?',
+  doYouWantToDelete2: 'Do you want to delete',
 
   addUser: 'Add User',
   editUser: 'Edit User',
@@ -63,6 +67,7 @@ export default {
   apikey: 'Apikey',
   registerApikeys: 'Register Apikeys',
   testnet: 'Testnet',
+  net: 'Net',
 
   registerBots: 'Register Bots',
   name: 'Name',
@@ -100,6 +105,7 @@ export default {
   selectSymbol: '(Select Symbol)',
 
   settings: 'Settings',
+  connetAnExchange: 'Connect an exchange',
   confirmPasswordIsNotMatchWithNewPassword: 'Confirm Password is not match with new password',
   change: 'Change',
 };

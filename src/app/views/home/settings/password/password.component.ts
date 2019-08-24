@@ -8,11 +8,11 @@ import {AuthenticationService, GlobalVariableService, SettingsService} from '@ap
 import {first} from 'rxjs/operators';
 
 @Component({
-  selector: 'home-settings',
-  templateUrl: './settings.component.html',
-  styleUrls: ['./settings.component.scss']
+  selector: 'home-password',
+  templateUrl: './password.component.html',
+  styleUrls: ['./password.component.scss']
 })
-export class SettingsComponent implements OnInit {
+export class PasswordComponent implements OnInit {
   strings = strings;
   routes = routes;
 
@@ -31,11 +31,11 @@ export class SettingsComponent implements OnInit {
               private globalVariableService: GlobalVariableService,
               private service: SettingsService,
               private authService: AuthenticationService) {
-    titleService.setTitle(`${strings.settings}-${strings.siteName}`);
+    titleService.setTitle(`${strings.settings} - ${strings.siteName}`);
   }
 
   ngOnInit() {
-    this.globalVariableService.setNavbarTitle(strings.settings);
+    this.globalVariableService.setNavbarTitle(`${strings.settings} - ${strings.password}`);
 
     this.form = this.formBuilder.group({
       oldPassword: new FormControl('', [Validators.required, Validators.minLength(4)]),
@@ -71,7 +71,7 @@ export class SettingsComponent implements OnInit {
     this.alert.show = false;
     this.service.password(data).pipe(first())
       .subscribe(res => {
-        this.loading = false;
+        // this.loading = false;
         if (res.result == 'success') {
           this.alert = {
             show: true,
@@ -86,7 +86,7 @@ export class SettingsComponent implements OnInit {
           };
         }
       }, error => {
-        this.loading = false;
+        // this.loading = false;
         this.alert = {
           show: true,
           type: 'alert-danger',

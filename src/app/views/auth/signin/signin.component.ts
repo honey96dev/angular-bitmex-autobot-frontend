@@ -37,7 +37,7 @@ export class SigninComponent implements OnInit {
     if (this.authenticationService.currentUserValue) {
       this.router.navigate(['/']);
     }
-    titleService.setTitle(`${strings.signIn}-${strings.siteName}`);
+    titleService.setTitle(`${strings.signIn} - ${strings.siteName}`);
   }
 
   ngOnInit() {

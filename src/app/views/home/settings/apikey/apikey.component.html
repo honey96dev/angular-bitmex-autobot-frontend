@@ -1,17 +1,18 @@
 
 
-<mdb-card class="mt-3">
-  <mdb-card-body>
-    <div class="full-width text-align-center">{{strings.apiKey}}</div>
+<!--<mdb-card class="mt-3">-->
+<!--  <mdb-card-body>-->
+<!--    <div class="full-width text-align-center">{{strings.apiKey}}</div>-->
     <form [formGroup]="form" class="mx-2 mt-4" (ngSubmit)="submit()">
       <div class="row">
         <div class="col-md-2 ">
-          <div class="switch primary-switch mt-2">
-            <label>
-              <input type="checkbox" formControlName="testnet">
-              <span class="lever"></span> {{strings.testnet}}
-            </label>
-          </div>
+<!--          <div class="switch primary-switch mt-2">-->
+<!--            <label>-->
+<!--              <input type="checkbox" formControlName="testnet">-->
+<!--              <span class="lever"></span> {{strings.testnet}}-->
+<!--            </label>-->
+<!--          </div>-->
+          <mdb-select [options]="nets" formControlName="testnet" placeholder="{{strings.net}}" label="{{strings.net}}"></mdb-select>
         </div>
         <div class="col-md-4">
           <div class="md-form mt-0">
@@ -23,7 +24,7 @@
         </div>
         <div class="col-md-6">
           <div class="md-form mt-0">
-            <input type="text" class="form-control" formControlName="apiKeySecret" mdbInput mdbValidate
+            <input type="password" class="form-control" formControlName="apiKeySecret" mdbInput mdbValidate
                    [validateSuccess]="false" placeholder="{{strings.apiKeySecret}}">
             <label>{{strings.apiKeySecret}}</label>
             <mdb-error *ngIf="f.apiKeySecret.invalid && (f.apiKeySecret.dirty || f.apiKeySecret.touched)">{{strings.thisFieldIsRequired}}</mdb-error>
@@ -45,5 +46,5 @@
         </button>
       </div>
     </form>
-  </mdb-card-body>
-</mdb-card>
+<!--  </mdb-card-body>-->
+<!--</mdb-card>-->

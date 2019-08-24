@@ -24,6 +24,11 @@ export class ApikeyComponent implements OnInit {
     message: '',
   };
 
+  nets = [
+    {value: '0', label: 'Realnet'},
+    {value: '1', label: 'Testnet'},
+  ];
+
   constructor(private titleService: Title,
               private formBuilder: FormBuilder,
               private route: ActivatedRoute,
@@ -31,11 +36,11 @@ export class ApikeyComponent implements OnInit {
               private globalVariableService: GlobalVariableService,
               private service: SettingsService,
               private authService: AuthenticationService) {
-    titleService.setTitle(`${strings.settings}-${strings.siteName}`);
+    titleService.setTitle(`${strings.settings} - ${strings.siteName}`);
   }
 
   ngOnInit() {
-    this.globalVariableService.setNavbarTitle(strings.settings);
+    this.globalVariableService.setNavbarTitle(`${strings.settings} - ${strings.connetAnExchange}`);
 
     this.form = this.formBuilder.group({
       // name: new FormControl('', Validators.required),
@@ -75,7 +80,7 @@ export class ApikeyComponent implements OnInit {
     const userId = this.authService.currentUserValue.id;
 
     const data = {
-      userId, testnet: testnet ? 1 : 0, apiKey, apiKeySecret
+      userId, testnet, apiKey, apiKeySecret
     };
 
     this.loading = true;
@@ -86,5 +91,6 @@ export class ApikeyComponent implements OnInit {
       type: 'alert-success',
       message: strings.successfullySaved,
     };
+    // this.loading = false;
   }
 }

@@ -7,6 +7,9 @@ import signals from '@core/signals';
 import {environment} from "@environments/environment";
 import SocketIOClient from 'socket.io-client';
 import numeral from 'numeral';
+import {DeleteModalComponent} from '@app/views/partials/common-dialogs/delete-modal.component';
+import {first} from 'rxjs/operators';
+import {MDBModalRef, MDBModalService} from 'ng-uikit-pro-standard';
 
 // let authLayout;
 
@@ -23,6 +26,7 @@ export class HomeLayoutComponent implements OnInit {
   prices: {};
   price: 0;
   direction: 1;
+  modalRef: MDBModalRef;
 
   ioClient = SocketIOClient(environment.socketIOUrl, {
     reconnection: true,
@@ -34,6 +38,7 @@ export class HomeLayoutComponent implements OnInit {
 
   constructor(private authService: AuthenticationService,
               private globalVariableService: GlobalVariableService,
+              private modalService: MDBModalService,
               private router: Router) {
     // authLayout = this;
   }
@@ -70,7 +75,16 @@ export class HomeLayoutComponent implements OnInit {
   }
 
   onSignOut() {
-    this.authService.signOut();
-    this.router.navigate([routes.auth]);
+    const modalOptions = {
+      class: 'modal-dialog-centered',
+    };
+
+    this.modalRef = this.modalService.show(DeleteModalComponent, modalOptions);
+    this.modalRef.content.title = strings.exitConfirmation;
+    this.modalRef.content.message = strings.doYouWantToQuit;
+    this.modalRef.content.yesButtonClicked.subscribe(() => {
+      this.authService.signOut();
+      this.router.navigate([routes.auth]);
+    });
   }
 }

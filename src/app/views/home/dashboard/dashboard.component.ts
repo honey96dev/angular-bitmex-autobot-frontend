@@ -33,7 +33,7 @@ export class DashboardComponent implements OnInit {
                      private authenticationService: AuthenticationService,
                      private globalVariableService: GlobalVariableService
   ) {
-    titleService.setTitle(`${strings.dashboard}-${strings.siteName}`);
+    titleService.setTitle(`${strings.dashboard} - ${strings.siteName}`);
     globalVariableService.setNavbarTitle(strings.dashboard);
   }
 
