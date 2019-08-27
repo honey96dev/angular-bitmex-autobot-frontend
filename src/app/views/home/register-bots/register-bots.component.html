@@ -7,7 +7,7 @@
 </div>
   <div class="row">
     <div class="col-md-6">
-      <button type="submit" mdbBtn color="primary" mdbWavesEffect [disabled]="loading" class="add-button" (click)="editItem({})">
+      <button type="submit" mdbBtn color="primary" mdbWavesEffect [disabled]="loading || !addButtonEnabled" class="add-button" (click)="editItem({})">
         <mdb-icon fas icon="plus" class="mr-1"></mdb-icon>
         {{strings.add}}
       </button>

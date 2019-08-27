@@ -20,12 +20,18 @@ import {RegisterApikeysComponent} from '@app/views/home/register-apikeys/registe
 import {RegisterApikeysModalComponent} from '@app/views/home/register-apikeys/register-apikeys-modal.component';
 import {ApikeyComponent} from '@app/views/home/settings/apikey/apikey.component';
 import {PasswordComponent} from '@app/views/home/settings/password/password.component';
+import {PriceChartComponent} from '@app/views/partials/price-chart/price-chart.component';
+import {PlotlyModule} from 'angular-plotly.js';
+
+import * as PlotlyJS from 'plotly.js/dist/plotly.js';
+PlotlyModule.plotlyjs = PlotlyJS;
 
 @NgModule({
   declarations: [
     CheckForceValidator,
     MatchValueValidator,
     DeleteModalComponent,
+    PriceChartComponent,
     AppComponent,
     AuthLayoutComponent,
     SigninComponent,
@@ -48,6 +54,7 @@ import {PasswordComponent} from '@app/views/home/settings/password/password.comp
 
     MDBBootstrapModulesPro.forRoot(),
     FormsModule,
+    PlotlyModule,
   ],
   providers: [
     Title,

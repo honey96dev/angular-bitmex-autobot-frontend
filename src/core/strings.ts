@@ -1,5 +1,5 @@
 export default {
-  siteName: 'BitMEX Bot',
+  siteName: 'Profit Bot',
   noData: 'No data',
   signIn: 'Sign in',
   signUp: 'Sign up',
@@ -8,6 +8,7 @@ export default {
   success: 'Success',
   error: 'Error',
   successfullySaved: 'Successfully saved',
+  successfullyCleared: 'Successfully cleared',
   unknownServerError: 'Unknown server error',
   signInWithYourAccount: 'Sign in with your account',
   signUpToYourAccount: 'Sign up to your Account',
@@ -69,7 +70,7 @@ export default {
   testnet: 'Testnet',
   net: 'Net',
 
-  registerBots: 'Register Bots',
+  registerBots: 'Create Bots',
   name: 'Name',
   exchange: 'Exchange',
   symbol: 'Symbol',
@@ -108,4 +109,7 @@ export default {
   connetAnExchange: 'Connect an exchange',
   confirmPasswordIsNotMatchWithNewPassword: 'Confirm Password is not match with new password',
   change: 'Change',
+  changePassword: 'Change Password',
+  resetPassword: 'Reset Password',
+  clear: 'Clear',
 };

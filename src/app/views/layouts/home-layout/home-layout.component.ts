@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {AuthenticationService, GlobalVariableService} from '@app/_services';
+import {AuthenticationService, GlobalVariableService, SocketIoService} from '@app/_services';
 import {Router} from '@angular/router';
 import strings from '@core/strings';
 import routes from '@core/routes';
@@ -23,21 +23,22 @@ export class HomeLayoutComponent implements OnInit {
   routes = routes;
   route: string;
   navbarTitle: string;
-  prices: {};
+  // prices: {};
   price: 0;
   direction: 1;
   modalRef: MDBModalRef;
 
-  ioClient = SocketIOClient(environment.socketIOUrl, {
-    reconnection: true,
-    reconnectionDelay: 2000,
-    reconnectionDelayMax: 4000,
-    reconnectionAttempts: Infinity
-  });
+  // ioClient = SocketIOClient(environment.socketIOUrl, {
+  //   reconnection: true,
+  //   reconnectionDelay: 2000,
+  //   reconnectionDelayMax: 4000,
+  //   reconnectionAttempts: Infinity
+  // });
   @ViewChild('sidenav', { static: true }) public sidenav: any;
 
   constructor(private authService: AuthenticationService,
               private globalVariableService: GlobalVariableService,
+              private socketIoService: SocketIoService,
               private modalService: MDBModalService,
               private router: Router) {
     // authLayout = this;
@@ -54,12 +55,17 @@ export class HomeLayoutComponent implements OnInit {
     }
     this.globalVariableService.getNavbarTitle()
       .subscribe(title => this.navbarTitle=title);
+    this.socketIoService.getXbtusdInfo()
+      .subscribe(info => {
+        this.price = info['price'];
+        this.direction = info['direction'];
+      });
 
-    this.ioClient.on(signals.price, (data) => {
-      this.prices = JSON.parse(data);
-      this.price = numeral(this.prices['XBTUSD']['price']).format('0,0.0');
-      this.direction = this.prices['XBTUSD']['direction'];
-    });
+    // this.ioClient.on(signals.price, (data) => {
+    //   this.prices = JSON.parse(data);
+    //   this.price = numeral(this.prices['XBTUSD']['price']).format('0,0.0');
+    //   this.direction = this.prices['XBTUSD']['direction'];
+    // });
   }
 
   // sendSignoutSignal() {

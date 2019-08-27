@@ -4,7 +4,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import strings from '@core/strings';
 import routes from '@core/routes';
-import {AuthenticationService, GlobalVariableService, RegisterBotsService} from '@app/_services';
+import {AuthenticationService, GlobalVariableService, RegisterBotsService, SettingsService} from '@app/_services';
 import {MDBModalRef, MDBModalService, MdbTableDirective, MdbTablePaginationComponent} from 'ng-uikit-pro-standard';
 import {first} from 'rxjs/operators';
 import {DeleteModalComponent} from '@app/views/partials/common-dialogs/delete-modal.component';
@@ -27,6 +27,7 @@ export class RegisterBotsComponent implements OnInit {
     type: '',
     message: '',
   };
+  addButtonEnabled: boolean = true;
 
   elements: any = [];
   headElements = ['Name', 'Exchange', 'Symbol', 'Order Type', 'Strategy', 'Leverage', 'Quantity', 'Price', 'T/P %', 'S/L %'];
@@ -53,6 +54,7 @@ export class RegisterBotsComponent implements OnInit {
                      private service: RegisterBotsService,
                      private modalService: MDBModalService,
                      private authService: AuthenticationService,
+                     private settingsService: SettingsService,
                      private cdRef: ChangeDetectorRef
   ) {
     titleService.setTitle(`${strings.registerBots} - ${strings.siteName}`);
@@ -66,6 +68,11 @@ export class RegisterBotsComponent implements OnInit {
     });
 
     this.loadData();
+
+    const userId = this.authService.currentUserValue.id;
+    const res = this.settingsService.loadApkKey({userId});
+    this.addButtonEnabled = !!res.apiKey && res.apiKey.length > 0;
+    console.log(res, this.addButtonEnabled);
   }
 
   ngAfterViewInit() {

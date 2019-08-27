@@ -3,6 +3,9 @@ const apis = {
     signIn: 'auth/sign-in',
     signUp: 'auth/sign-up',
   },
+  dashboard: {
+    price: 'dashboard/price',
+  },
   registerBots: {
     list: 'register-bots',
     add: 'register-bots/add',

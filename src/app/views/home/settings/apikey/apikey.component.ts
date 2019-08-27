@@ -69,6 +69,28 @@ export class ApikeyComponent implements OnInit {
     f.apiKeySecret.patchValue(res['apiKeySecret']);
   }
 
+  clearApiKey() {
+    const f = this.f;
+    f.testnet.patchValue('0');
+    f.apiKey.patchValue('');
+    f.apiKeySecret.patchValue('');
+    const testnet = f.testnet.value;
+    const apiKey = f.apiKey.value;
+    const apiKeySecret = f.apiKeySecret.value;
+    const userId = this.authService.currentUserValue.id;
+    const data = {
+      userId, testnet, apiKey, apiKeySecret
+    };
+    // this.loading = true;
+    this.alert.show = false;
+    this.service.saveApiKey(data);
+    this.alert = {
+      show: true,
+      type: 'alert-success',
+      message: strings.successfullyCleared,
+    };
+  }
+
   submit() {
     // console.log('submit');
     const f = this.f;
@@ -83,7 +105,7 @@ export class ApikeyComponent implements OnInit {
       userId, testnet, apiKey, apiKeySecret
     };
 
-    this.loading = true;
+    // this.loading = true;
     this.alert.show = false;
     this.service.saveApiKey(data);
     this.alert = {

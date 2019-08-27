@@ -35,7 +35,7 @@ export class PasswordComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.globalVariableService.setNavbarTitle(`${strings.settings} - ${strings.password}`);
+    this.globalVariableService.setNavbarTitle(`${strings.settings} - ${strings.resetPassword}`);
 
     this.form = this.formBuilder.group({
       oldPassword: new FormControl('', [Validators.required, Validators.minLength(4)]),

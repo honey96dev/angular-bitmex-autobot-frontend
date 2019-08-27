@@ -3,7 +3,8 @@
 <!--<mdb-card class="mt-3">-->
 <!--  <mdb-card-body>-->
 <!--    <div class="full-width text-align-center">{{strings.apiKey}}</div>-->
-    <form [formGroup]="form" class="mx-2 mt-4" (ngSubmit)="submit()">
+    <form autocomplete="off" [formGroup]="form" class="mx-2 mt-4" (ngSubmit)="submit()">
+      <input autocomplete="off" type="hidden">
       <div class="row">
         <div class="col-md-2 ">
 <!--          <div class="switch primary-switch mt-2">-->
@@ -16,7 +17,7 @@
         </div>
         <div class="col-md-4">
           <div class="md-form mt-0">
-            <input type="text" class="form-control" formControlName="apiKey" mdbInput mdbValidate
+            <input autocomplete="nope" type="text" class="form-control" formControlName="apiKey" mdbInput mdbValidate
                    [validateSuccess]="false" placeholder="{{strings.apiKey}}">
             <label>{{strings.apiKey}}</label>
             <mdb-error *ngIf="f.apiKey.invalid && (f.apiKey.dirty || f.apiKey.touched)">{{strings.thisFieldIsRequired}}</mdb-error>
@@ -24,7 +25,7 @@
         </div>
         <div class="col-md-6">
           <div class="md-form mt-0">
-            <input type="password" class="form-control" formControlName="apiKeySecret" mdbInput mdbValidate
+            <input autocomplete="off" type="password" class="form-control" formControlName="apiKeySecret" mdbInput mdbValidate
                    [validateSuccess]="false" placeholder="{{strings.apiKeySecret}}">
             <label>{{strings.apiKeySecret}}</label>
             <mdb-error *ngIf="f.apiKeySecret.invalid && (f.apiKeySecret.dirty || f.apiKeySecret.touched)">{{strings.thisFieldIsRequired}}</mdb-error>
@@ -38,9 +39,9 @@
         {{alert.message}}
       </div>
       <div class="button-spec">
-<!--        <button type="button" mdbBtn color="warning" class="waves-light" aria-label="Close"-->
-<!--                mdbWavesEffect (click)="goBack()" [disabled]="apiKeyLoading">{{strings.back}}-->
-<!--        </button>-->
+        <button type="button" mdbBtn color="warning" class="waves-light" aria-label="Close"
+                mdbWavesEffect (click)="clearApiKey()" [disabled]="loading">{{strings.clear}}
+        </button>
         <button type="submit" mdbBtn color="primary" class="relative waves-light" mdbWavesEffect
                 [disabled]="form.invalid || loading">{{strings.save}}
         </button>
