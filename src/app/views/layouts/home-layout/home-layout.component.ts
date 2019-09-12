@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {AuthenticationService, GlobalVariableService, SocketIoService} from '@app/_services';
+import {AuthenticationService, GlobalVariableService, SocketIoService, SettingsService} from '@app/_services';
 import {Router} from '@angular/router';
 import strings from '@core/strings';
 import routes from '@core/routes';
@@ -7,7 +7,8 @@ import signals from '@core/signals';
 import {environment} from "@environments/environment";
 import SocketIOClient from 'socket.io-client';
 import numeral from 'numeral';
-import {DeleteModalComponent} from '@app/views/partials/common-dialogs/delete-modal.component';
+import {AlertModalComponent} from '@app/views/partials/common-dialogs/alert/alert-modal.component';
+import {QuestionModalComponent} from '@app/views/partials/common-dialogs/question/question-modal.component';
 import {first} from 'rxjs/operators';
 import {MDBModalRef, MDBModalService} from 'ng-uikit-pro-standard';
 
@@ -22,11 +23,26 @@ export class HomeLayoutComponent implements OnInit {
   strings = strings;
   routes = routes;
   route: string;
-  navbarTitle: string;
+  navbarTitle: string = '';
   // prices: {};
   price: 0;
   direction: 1;
   modalRef: MDBModalRef;
+  userId;
+  apiKey: any = {};
+  apiKeyValid = false;
+  connected: boolean = false;
+  botStarted: boolean = false;
+  username: string = '';
+  firstName: string = '';
+  lastName: string = '';
+
+  connecting = false;
+  alert = {
+    show: false,
+    type: '',
+    message: '',
+  };
 
   // ioClient = SocketIOClient(environment.socketIOUrl, {
   //   reconnection: true,
@@ -39,6 +55,7 @@ export class HomeLayoutComponent implements OnInit {
   constructor(private authService: AuthenticationService,
               private globalVariableService: GlobalVariableService,
               private socketIoService: SocketIoService,
+              private settingsService: SettingsService,
               private modalService: MDBModalService,
               private router: Router) {
     // authLayout = this;
@@ -55,6 +72,36 @@ export class HomeLayoutComponent implements OnInit {
     }
     this.globalVariableService.getNavbarTitle()
       .subscribe(title => this.navbarTitle=title);
+    this.socketIoService.isConnected()
+      .subscribe(connected => {
+        this.connected = connected;
+        if (connected) {
+          this.settingsService.connectToExchange(this.apiKey).pipe(first())
+            .subscribe(res => {
+              this.connecting = false;
+              if (res.result == 'success') {
+                this.username = res.data.username;
+                this.firstName = res.data.firstname;
+                this.lastName = res.data.lastname;
+              } else {
+              }
+            }, error => {
+            });
+        }
+      });
+    this.socketIoService.isBotStarted()
+      .subscribe(data => {
+        this.botStarted = data['started'];
+        if (data['message'] != strings.generalReply) {
+          const modalOptions = {
+            class: 'modal-dialog-centered',
+          };
+          this.modalRef = this.modalService.show(AlertModalComponent, modalOptions);
+          this.modalRef.content.title = strings.botStatus;
+          this.modalRef.content.message = data['message'];
+          this.modalRef.content.yesButtonColor = 'primary';
+        }
+      });
     this.socketIoService.getXbtusdInfo()
       .subscribe(info => {
         this.price = info['price'];
@@ -66,6 +113,9 @@ export class HomeLayoutComponent implements OnInit {
     //   this.price = numeral(this.prices['XBTUSD']['price']).format('0,0.0');
     //   this.direction = this.prices['XBTUSD']['direction'];
     // });
+    this.userId = this.authService.currentUserValue.id;
+    this.loadApiKey();
+
   }
 
   // sendSignoutSignal() {
@@ -76,8 +126,187 @@ export class HomeLayoutComponent implements OnInit {
   //   authLayout.ioClient.emit('user-signout');
   // }
 
+  loadApiKey() {
+    this.settingsService.loadApkKey({userId: this.userId}).pipe(first())
+      .subscribe(res => {
+        // this.loading = false;
+        if (res.result == 'success') {
+          this.apiKey = res['data'];
+          // console.log(this.apiKey);
+          this.socketIoService.checkIsConnected(this.apiKey);
+          this.socketIoService.checkIsBotStarted({
+            userId: this.userId,
+            apiKey: this.apiKey,
+          })
+        } else {
+          this.alert = {
+            show: true,
+            type: 'alert-danger',
+            message: res.message,
+          };
+        }
+      }, error => {
+        // this.loading = false;
+        this.alert = {
+          show: true,
+          type: 'alert-danger',
+          message: strings.unknownServerError,
+        };
+      });
+  }
+
   onClickNav(route) {
     this.route = route;
+    // this.router.navigate(route);
+  }
+
+  onConnectToExchange() {
+    this.connecting = true;
+    const userId = this.authService.currentUserValue.id;
+    this.settingsService.loadApkKey({userId}).pipe(first())
+      .subscribe(res => {
+        // this.loading = false;
+        if (res.result == 'success') {
+          this.apiKey = res['data'];
+
+          this.settingsService.connectToExchange(this.apiKey).pipe(first())
+            .subscribe(res => {
+              this.connecting = false;
+              if (res.result == 'success') {
+                this.apiKey['connected'] = 1;
+                // this.settingsService.saveApiKey(this.apiKey);
+                this.alert = {
+                  show: true,
+                  type: 'alert-success',
+                  message: res.message,
+                };
+
+                const modalOptions = {
+                  class: 'modal-dialog-centered',
+                };
+                this.modalRef = this.modalService.show(AlertModalComponent, modalOptions);
+                this.modalRef.content.title = strings.connetAnExchange;
+                this.modalRef.content.message = res.message;
+                this.modalRef.content.yesButtonColor = 'primary';
+
+                this.username = res.data.username;
+                this.firstName = res.data.firstname;
+                this.lastName = res.data.lastname;
+
+                this.socketIoService.setConnected(true);
+                this.socketIoService.connectToExchange(this.apiKey);
+              } else {
+                this.alert = {
+                  show: true,
+                  type: 'alert-danger',
+                  message: res.message,
+                };
+
+                const modalOptions = {
+                  class: 'modal-dialog-centered',
+                };
+                this.modalRef = this.modalService.show(AlertModalComponent, modalOptions);
+                this.modalRef.content.title = strings.connetAnExchange;
+                this.modalRef.content.message = res.message;
+                this.modalRef.content.yesButtonColor = 'danger';
+              }
+            }, error => {
+              this.connecting = false;
+              this.alert = {
+                show: true,
+                type: 'alert-danger',
+                message: strings.unknownServerError,
+              };
+
+              const modalOptions = {
+                class: 'modal-dialog-centered',
+              };
+              this.modalRef = this.modalService.show(AlertModalComponent, modalOptions);
+              this.modalRef.content.title = strings.connetAnExchange;
+              this.modalRef.content.message = strings.unknownServerError;
+              this.modalRef.content.yesButtonColor = 'danger';
+            });
+        } else {
+          this.alert = {
+            show: true,
+            type: 'alert-danger',
+            message: res.message,
+          };
+        }
+      }, error => {
+        // this.loading = false;
+        this.alert = {
+          show: true,
+          type: 'alert-danger',
+          message: strings.unknownServerError,
+        };
+      });
+
+  }
+
+  onDisconnect() {
+    const modalOptions = {
+      class: 'modal-dialog-centered',
+    };
+
+    this.modalRef = this.modalService.show(QuestionModalComponent, modalOptions);
+    this.modalRef.content.title = strings.disconnect;
+    this.modalRef.content.message = strings.doYouWantToDisconnect;
+    this.modalRef.content.yesButtonColor = 'danger';
+    this.modalRef.content.yesButtonClicked.subscribe(() => {
+      this.settingsService.loadApkKey({userId: this.userId}).pipe(first())
+        .subscribe(res => {
+          // this.loading = false;
+          if (res.result == 'success') {
+            this.apiKey = res['data'];
+            this.socketIoService.disconnectFromExchange(this.apiKey);
+          } else {
+            this.alert = {
+              show: true,
+              type: 'alert-danger',
+              message: res.message,
+            };
+          }
+        }, error => {
+          // this.loading = false;
+          this.alert = {
+            show: true,
+            type: 'alert-danger',
+            message: strings.unknownServerError,
+          };
+        });
+    });
+  }
+
+  onStartBot() {
+    const {testnet, apiKey, apiKeySecret} = this.apiKey;
+    this.socketIoService.startBot({
+      userId: this.userId,
+      testnet,
+      apiKey,
+      apiKeySecret,
+    });
+  }
+
+  onStopBot() {
+    const modalOptions = {
+      class: 'modal-dialog-centered',
+    };
+
+    this.modalRef = this.modalService.show(QuestionModalComponent, modalOptions);
+    this.modalRef.content.title = strings.stopBot;
+    this.modalRef.content.message = strings.doYouWantToStop;
+    this.modalRef.content.yesButtonColor = 'danger';
+    this.modalRef.content.yesButtonClicked.subscribe(() => {
+      const {testnet, apiKey, apiKeySecret} = this.apiKey;
+      this.socketIoService.stopBot({
+        userId: this.userId,
+        testnet,
+        apiKey,
+        apiKeySecret,
+      });
+    });
+
   }
 
   onSignOut() {
@@ -85,9 +314,10 @@ export class HomeLayoutComponent implements OnInit {
       class: 'modal-dialog-centered',
     };
 
-    this.modalRef = this.modalService.show(DeleteModalComponent, modalOptions);
+    this.modalRef = this.modalService.show(QuestionModalComponent, modalOptions);
     this.modalRef.content.title = strings.exitConfirmation;
     this.modalRef.content.message = strings.doYouWantToQuit;
+    this.modalRef.content.yesButtonColor = 'danger';
     this.modalRef.content.yesButtonClicked.subscribe(() => {
       this.authService.signOut();
       this.router.navigate([routes.auth]);

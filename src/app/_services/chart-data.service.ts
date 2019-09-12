@@ -12,7 +12,7 @@ export class ChartDataService {
   }
 
   price(params) {
-    return this.http.get<any>(`${environment.apiUrl}${apis.dashboard.price}`, {params})
+    return this.http.get<any>(`${environment.apiUrl}${apis.dashboard.priceChart}`, {params})
       .pipe(map(res => {
         return res;
       }));

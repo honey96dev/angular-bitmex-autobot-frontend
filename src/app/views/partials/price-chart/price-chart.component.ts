@@ -3,11 +3,11 @@ import {DatePipe} from "@angular/common";
 import strings from "@core/strings";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Title} from "@angular/platform-browser";
-import {ChartDataService} from "@app/_services";
+import {AuthenticationService, ChartDataService, GlobalVariableService, SettingsService} from '@app/_services';
 import {first} from "rxjs/operators";
-import {GlobalVariableService} from "@app/_services/global-variable.service";
 
 let self;
+declare const TradingView: any;
 
 @Component({
   selector: 'price-chart',
@@ -25,46 +25,61 @@ export class PriceChartComponent implements OnInit {
   loading = false;
   submitted = false;
   error = '';
-
-  chartTimeoutId = null;
-  priceData = {
-    x: [],
-    y: [],
-    type: 'scatter',
-    // mode: 'lines+points',
-    // marker: {color: 'red'}
-  };
-  graph = {
-    data: [this.priceData],
-    // data: [
-    //   { x: this.priceData.x, y: this.priceData.y, type: 'scatter', mode: 'lines+points', marker: {color: 'red'} },
-    // ],
-    layout: {
-      height: 600,
-      autosize: true,
-      // margin: {
-      //   l: 40,
-      //   r: 40,
-      //   t: 30,
-      //   b: 30,
-      // },
-      xaxis: {
-        autorange: true,
-        rangeslider: {},
-        title: 'Date',
-        type: 'date',
-      },
-      yaxis: {
-        title: 'Price',
-        autorange: true,
-        type: 'linear',
-      },
-    },
-  };
+  //
+  // chartTimeoutId = null;
+  // openData = {
+  //   name: 'Open',
+  //   x: [],
+  //   y: [],
+  //   type: 'scatter',
+  //   // opacity: 0.2,
+  // };
+  // ohlcData = {
+  //   name: 'Candlestick',
+  //   x: [],
+  //   open: [],
+  //   high: [],
+  //   low: [],
+  //   close: [],
+  //   type: 'candlestick',
+  //   mode: 'lines+points',
+  //   marker: {
+  //     line: {
+  //       width: 2,
+  //     }
+  //   },
+  // };
+  // graph = {
+  //   data: [
+  //     this.openData,
+  //     // this.ohlcData,
+  //   ],
+  //   // data: [
+  //   //   { x: this.ohlcData.x, y: this.ohlcData.y, type: 'scatter', mode: 'lines+points', marker: {color: 'red'} },
+  //   // ],
+  //   layout: {
+  //     height: 600,
+  //     autosize: true,
+  //     xaxis: {
+  //       autorange: true,
+  //       rangeslider: {},
+  //       title: 'Date',
+  //       type: 'date',
+  //     },
+  //     yaxis: {
+  //       title: 'Price',
+  //       autorange: true,
+  //       rangeslider: {},
+  //       type: 'linear',
+  //     },
+  //   },
+  // };
 
   public constructor(private titleService: Title,
                      private formBuilder: FormBuilder,
                      private globalsService: GlobalVariableService,
+                     private authService: AuthenticationService,
+                     private settingsService: SettingsService,
                      private service: ChartDataService) {
     self = this;
   }
@@ -78,12 +93,54 @@ export class PriceChartComponent implements OnInit {
     // });
     // this.f.symbol.setValue(this.symbol);
     // this.f.timezone.setValue(0);
-    this.onSubmit();
+    // this.onSubmit();
+    this.initTradingView();
   }
 
   // convenience getter for easy access to form fields
   get f() {
     return this.form.controls;
+  }
+
+  initTradingView() {
+    // new TradingView.widget(
+    //   {
+    //     // autosize: true,
+    //     width: '100%',
+    //     height: 500,
+    //     "symbol": "BITMEX:XBTUSD",
+    //     "interval": "D",
+    //     "timezone": "Etc/UTC",
+    //     "theme": "Light",
+    //     "style": "1",
+    //     "locale": "en",
+    //     "toolbar_bg": "#f1f3f6",
+    //     "enable_publishing": false,
+    //     "withdateranges": true,
+    //     "hide_side_toolbar": false,
+    //     "allow_symbol_change": true,
+    //     container_id: "tradingview_f211b"
+    //   }
+    // );
+    const userId = this.authService.currentUserValue.id;
+    this.settingsService.loadPersonalChart({userId}).pipe(first())
+      .subscribe(res => {
+        if (res.result === 'success' && res.data.length > 0) {
+          console.log(res);
+          new TradingView.chart(
+            {
+              // autosize: true,
+              width: '100%',
+              height: 500,
+              chart: res.data,
+              // chart: 'i1ab4qXA',
+              container_id: "tradingview_f211b"
+            }
+          );
+        }
+      }, error => {
+
+      });
   }
 
   onSubmit() {
@@ -115,8 +172,13 @@ export class PriceChartComponent implements OnInit {
         self.loading = false;
         self.arrow.show = false;
 
-        self.priceData.x = [];
-        self.priceData.y = [];
+        self.openData.x = [];
+        self.openData.y = [];
+        self.ohlcData.x = [];
+        self.ohlcData.open = [];
+        self.ohlcData.high = [];
+        self.ohlcData.low = [];
+        self.ohlcData.close = [];
         if (res.result == 'success') {
           const data = res.data;
 
@@ -128,8 +190,13 @@ export class PriceChartComponent implements OnInit {
             };
           } else {
             for (let item of data) {
-              self.priceData.x.push(item['timestamp']);
-              self.priceData.y.push(item['open']);
+              self.openData.x.push(item['timestamp']);
+              self.openData.y.push(item['open']);
+              self.ohlcData.x.push(item['timestamp']);
+              self.ohlcData.open.push(item['open']);
+              self.ohlcData.high.push(item['high']);
+              self.ohlcData.low.push(item['low']);
+              self.ohlcData.close.push(item['close']);
             }
           }
         } else {
@@ -147,8 +214,13 @@ export class PriceChartComponent implements OnInit {
           type: 'danger',
           message: strings.unknownServerError,
         };
-        self.priceData.x = [];
-        self.priceData.y = [];
+        self.openData.x = [];
+        self.openData.y = [];
+        self.ohlcData.x = [];
+        self.ohlcData.open = [];
+        self.ohlcData.high = [];
+        self.ohlcData.low = [];
+        self.ohlcData.close = [];
       });
 
     let timeoutDelay = 2 * 60 * 1000;

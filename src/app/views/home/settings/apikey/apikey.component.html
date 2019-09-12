@@ -6,7 +6,7 @@
     <form autocomplete="off" [formGroup]="form" class="mx-2 mt-4" (ngSubmit)="submit()">
       <input autocomplete="off" type="hidden">
       <div class="row">
-        <div class="col-md-2 ">
+        <div class="col-md-2 mb-4">
 <!--          <div class="switch primary-switch mt-2">-->
 <!--            <label>-->
 <!--              <input type="checkbox" formControlName="testnet">-->
@@ -15,9 +15,13 @@
 <!--          </div>-->
           <mdb-select [options]="nets" formControlName="testnet" placeholder="{{strings.net}}" label="{{strings.net}}"></mdb-select>
         </div>
+<!--        <div style="width: 0; height: 0">-->
+<!--          <input type="text">-->
+<!--          <input type="password">-->
+<!--        </div>-->
         <div class="col-md-4">
           <div class="md-form mt-0">
-            <input autocomplete="nope" type="text" class="form-control" formControlName="apiKey" mdbInput mdbValidate
+            <input autocomplete="new-password" type="text" class="form-control" formControlName="apiKey" mdbInput mdbValidate
                    [validateSuccess]="false" placeholder="{{strings.apiKey}}">
             <label>{{strings.apiKey}}</label>
             <mdb-error *ngIf="f.apiKey.invalid && (f.apiKey.dirty || f.apiKey.touched)">{{strings.thisFieldIsRequired}}</mdb-error>
@@ -25,7 +29,7 @@
         </div>
         <div class="col-md-6">
           <div class="md-form mt-0">
-            <input autocomplete="off" type="password" class="form-control" formControlName="apiKeySecret" mdbInput mdbValidate
+            <input autocomplete="new-password" type="password" class="form-control" formControlName="apiKeySecret" mdbInput mdbValidate
                    [validateSuccess]="false" placeholder="{{strings.apiKeySecret}}">
             <label>{{strings.apiKeySecret}}</label>
             <mdb-error *ngIf="f.apiKeySecret.invalid && (f.apiKeySecret.dirty || f.apiKeySecret.touched)">{{strings.thisFieldIsRequired}}</mdb-error>

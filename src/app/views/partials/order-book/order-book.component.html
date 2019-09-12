@@ -1,0 +1,27 @@
+<!--<div class="col-md-12">-->
+<!--  <plotly-plot [data]="graph.data" [layout]="graph.layout" [useResizeHandler]="true"></plotly-plot>-->
+<!--</div>-->
+<div class="order-book mt-3 px-3 py-2 round-border">
+  <table class="full-width normal-font">
+    <thead>
+    <tr>
+    <th class="align-right buy-price">{{strings.total}}</th>
+    <th class="align-right buy-price">{{strings.size}}</th>
+    <th class="align-right buy-price">{{strings.price}}</th>
+    <th class="align-right sell-price">{{strings.price}}</th>
+    <th class="align-right sell-price">{{strings.size}}</th>
+    <th class="align-right sell-price">{{strings.total}}</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let el of orderBook['Buy']; let i = index">
+      <td class="align-right">{{el['total1']}}</td>
+      <td class="align-right">{{el['size1']}}</td>
+      <td class="align-right buy-price">{{el['price1']}}</td>
+      <td class="align-right sell-price">{{orderBook['Sell'][i]['price1']}}</td>
+      <td class="align-right">{{orderBook['Sell'][i]['size1']}}</td>
+      <td class="align-right">{{orderBook['Sell'][i]['total1']}}</td>
+    </tr>
+    </tbody>
+  </table>
+</div>

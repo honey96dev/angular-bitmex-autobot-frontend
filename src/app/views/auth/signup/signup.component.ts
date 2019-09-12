@@ -10,11 +10,11 @@ import {environment} from "@environments/environment";
 import SocketIOClient from 'socket.io-client';
 
 @Component({
-  selector: 'auth-signin',
-  templateUrl: './signin.component.html',
-  styleUrls: ['./signin.component.scss']
+  selector: 'auth-signup',
+  templateUrl: './signup.component.html',
+  styleUrls: ['./signup.component.scss']
 })
-export class SigninComponent implements OnInit {
+export class SignupComponent implements OnInit {
   strings = strings;
   routes = routes;
   form: FormGroup;
@@ -37,13 +37,14 @@ export class SigninComponent implements OnInit {
     if (this.authenticationService.currentUserValue) {
       this.router.navigate(['/']);
     }
-    titleService.setTitle(`${strings.signIn} - ${strings.siteName}`);
+    titleService.setTitle(`${strings.signUp} - ${strings.siteName}`);
   }
 
   ngOnInit() {
     this.form = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(4)]]
+      password: ['', [Validators.required, Validators.minLength(4)]],
+      password2: ['', [Validators.required, Validators.minLength(4)]],
     });
 
     // get return url from route parameters or default to '/'
@@ -60,9 +61,6 @@ export class SigninComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true;
-
-    console.log(this.f.password)
-
     // stop here if form is invalid
     if (this.form.invalid) {
       return;
@@ -72,14 +70,19 @@ export class SigninComponent implements OnInit {
     const password = this.f.password.value;
 
     this.loading = true;
-    this.authenticationService.signIn(email, password)
+    this.authenticationService.signUp({email, password})
       .pipe(first())
       .subscribe(res => {
         this.loading = false;
         this.alert.show = false;
 
         if (res.result == 'success') {
-          this.router.navigate([this.returnUrl]);
+          // this.router.navigate([this.returnUrl]);
+          this.alert = {
+            show: true,
+            type: 'alert-success',
+            message: res.message,
+          };
         } else {
           this.alert = {
             show: true,

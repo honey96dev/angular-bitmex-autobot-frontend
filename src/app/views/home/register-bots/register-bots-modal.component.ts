@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import strings from '@core/strings';
 import routes from '@core/routes';
@@ -6,6 +6,8 @@ import {Title} from '@angular/platform-browser';
 import {ActivatedRoute, Router} from '@angular/router';
 import {AuthenticationService, GlobalVariableService, RegisterBotsService} from '@app/_services';
 import {first} from 'rxjs/operators';
+import {MDBModalRef, MDBModalService, MdbTableDirective, MdbTablePaginationComponent} from 'ng-uikit-pro-standard';
+import {QuestionModalComponent} from '@app/views/partials/common-dialogs/question/question-modal.component';
 
 @Component({
   selector: 'home-register-bots-modal',
@@ -15,26 +17,45 @@ import {first} from 'rxjs/operators';
 export class RegisterBotsModalComponent implements OnInit {
   strings = strings;
   routes = routes;
-  form: FormGroup;
+  mainForm: FormGroup;
+  orderForm: FormGroup;
+  stopForm: FormGroup;
 
-  public editableRow: {
-    id:string, name: string, exchange: string, symbol: string, /*apiKey: string, apiKeySecret: string,*/ orderType: string, postOnly: boolean, strategy: string, leverage: string, leverageValue: number, quantity: number, price: number, tpPercent: number, slPercent: number, tsPercent: number, numberOfSafeOrder: number, closeOrder1: boolean, newOrderOnSLPrice: boolean, valueOfLastCloseOrder: number, timesRepeatSameLogic1: number, closeOrder2: boolean, breakdownPriceForNewOrder: number, timeIntervalAfterClose: number, timesRepeatSameLogic2: boolean };
+  public editableRow: { id:string, name: string, botLogic: string, leverage: number, closeOnTrigger: boolean, orderType: string, side: string, quantity: number, limitPrice: number };
   exchanges = [
     { value: 'bitmex', label: 'BitMEX' },
     // { value: '2', label: 'Option 2' },
     // { value: '3', label: 'Option 3' },
   ];
-  symbols = [
-    {label: 'Bitcoin', value: 'XBTUSD'},
-    {label: 'Ethereum', value: 'ETHUSD'},
-    // {label: 'Bitcoin Cash', value: 'tBABUSD'},
-    // {label: 'EOS', value: 'tEOSUSD'},
-    // {label: 'Litecoin', value: 'tLTCUSD'},
-    // {label: 'Bitcoin SV', value: 'tBSVUSD'},
+  // symbols = [
+  //   {label: 'Bitcoin', value: 'XBTUSD'},
+  //   {label: 'Ethereum', value: 'ETHUSD'},
+  //   // {label: 'Bitcoin Cash', value: 'tBABUSD'},
+  //   // {label: 'EOS', value: 'tEOSUSD'},
+  //   // {label: 'Litecoin', value: 'tLTCUSD'},
+  //   // {label: 'Bitcoin SV', value: 'tBSVUSD'},
+  // ];
+
+  // postOnlyDisabled: boolean;
+  // leverageValueDisabled: boolean;
+
+  orderHeads = ['Size', 'Value', 'Entry Price', 'Mark Price', 'Liq.Price', 'Margin'];
+  orders: any[] = [
+    {size: 60000, value: 56.78, entryPrice: 10597.76, markPrice: 10565.81, liqPrice: 9145.0, margin: 0.6099}
   ];
 
-  postOnlyDisabled: boolean;
-  leverageValueDisabled: boolean;
+  @ViewChild(MdbTableDirective, { static: true }) ordersTable: MdbTableDirective;
+  @ViewChild(MdbTablePaginationComponent, { static: true }) ordersPagination: MdbTablePaginationComponent;
+  @ViewChild('row', { static: true }) orderRow: ElementRef;
+
+  stopHeads = ['Qty', 'Order Price', 'Filled', 'Stop Price', 'Triggering Price'];
+  stops: any[] = [
+    {qty: -60000, orderPrice: 'Market', filled: '-', stopPrice: 10655.0, triggeringPrice: 10572.5},
+  ];
+
+  @ViewChild(MdbTableDirective, { static: true }) stopsTable: MdbTableDirective;
+  @ViewChild(MdbTablePaginationComponent, { static: true }) stopsPagination: MdbTablePaginationComponent;
+  @ViewChild('row', { static: true }) stopRow: ElementRef;
 
   loading = false;
   alert = {
@@ -42,6 +63,7 @@ export class RegisterBotsModalComponent implements OnInit {
     type: '',
     message: '',
   };
+  modalRef: MDBModalRef;
 
   constructor(private titleService: Title,
               private formBuilder: FormBuilder,
@@ -49,72 +71,57 @@ export class RegisterBotsModalComponent implements OnInit {
               private router: Router,
               private globalVariableService: GlobalVariableService,
               private service: RegisterBotsService,
-              private authService: AuthenticationService) {
+              private authService: AuthenticationService,
+              private modalService: MDBModalService) {
     titleService.setTitle(`${strings.registerBots} - ${strings.siteName}`);
   }
 
   ngOnInit() {
     const row = this.service.editableRowValue();
     this.globalVariableService.setNavbarTitle(`${strings.registerBots} - ${row.id ? strings.edit : strings.add}`);
-    this.form = this.formBuilder.group({
+    this.mainForm = this.formBuilder.group({
       id: new FormControl(''),
       name: new FormControl('', Validators.required),
-      exchange: new FormControl('', Validators.required),
-      symbol: new FormControl('', Validators.required),
-      // apiKey: new FormControl('', Validators.required),
-      // apiKeySecret: new FormControl('', Validators.required),
+      botLogic: new FormControl('', Validators.required),
+      leverage: new FormControl('', [Validators.required, Validators.min(0), Validators.max(100)]),
+      closeOnTrigger: new FormControl(''),
+    });
+    this.orderForm = this.formBuilder.group({
       orderType: new FormControl('', Validators.required),
-      postOnly: new FormControl('', Validators.required),
-      strategy: new FormControl('', Validators.required),
-      leverage: new FormControl('', Validators.required),
-      leverageValue: new FormControl('', [Validators.required, Validators.min(0), Validators.max(100)]),
+      side: new FormControl('', Validators.required),
       quantity: new FormControl('', [Validators.required, Validators.min(0)]),
-      price: new FormControl('', [Validators.required, Validators.min(0)]),
-      tpPercent: new FormControl('', [Validators.required, Validators.min(0), Validators.max(100)]),
-      slPercent: new FormControl('', [Validators.required, Validators.min(0), Validators.max(100)]),
-      trailingStop: new FormControl('', [Validators.required, Validators.min(0), Validators.max(100)]),
-      numberOfSafeOrder: new FormControl('', [Validators.required, Validators.min(0)]),
-      closeOrder1: new FormControl('', Validators.required),
-      newOrderOnSLPrice: new FormControl('', Validators.required),
-      valueOfLastCloseOrder: new FormControl('', [Validators.required, Validators.min(0)]),
-      timesRepeatSameLogic1: new FormControl('', [Validators.required, Validators.min(0)]),
-      closeOrder2: new FormControl('', Validators.required),
-      breakdownPriceForNewOrder: new FormControl('', [Validators.required, Validators.min(0)]),
-      timeIntervalAfterClose: new FormControl('', [Validators.required, Validators.min(0)]),
-      timesRepeatSameLogic2: new FormControl('', [Validators.required, Validators.min(0)]),
+      limitPrice: new FormControl('', [Validators.required, Validators.min(0)]),
+    });
+    this.stopForm = this.formBuilder.group({
+      quantity2: new FormControl('', [Validators.required, Validators.min(0)]),
+      triggerPrice: new FormControl('', [Validators.required, Validators.min(0)]),
     });
     // console.log(row);
-    this.f['id'].patchValue(row.id);
-    this.f['name'].patchValue(row.name);
-    this.f['exchange'].patchValue(row.exchange);
-    this.f['symbol'].patchValue(row.symbol);
-    // this.f['apiKey'].patchValue(row.apiKey);
-    // this.f['apiKeySecret'].patchValue(row.apiKeySecret);
-    this.f['orderType'].patchValue(!!row.orderType ? row.orderType : 'Limit');
-    this.f['postOnly'].patchValue(!!row.postOnly ? row.postOnly : false);
-    this.f['strategy'].patchValue(!!row.strategy ? row.strategy : 'Long');
-    this.f['leverage'].patchValue(!!row.leverage ? row.leverage : 'Cross');
-    this.f['leverageValue'].patchValue(!!row.leverageValue ? row.leverageValue : 100);
-    this.f['quantity'].patchValue(row.quantity);
-    this.f['price'].patchValue(row.price);
-    this.f['tpPercent'].patchValue(row.tpPercent);
-    this.f['slPercent'].patchValue(row.slPercent);
-    this.f['trailingStop'].patchValue(row.slPercent);
-    this.f['numberOfSafeOrder'].patchValue(row.numberOfSafeOrder);
-    this.f['closeOrder1'].patchValue(row.closeOrder1);
-    this.f['newOrderOnSLPrice'].patchValue(row.newOrderOnSLPrice);
-    this.f['valueOfLastCloseOrder'].patchValue(row.valueOfLastCloseOrder);
-    this.f['timesRepeatSameLogic1'].patchValue(row.timesRepeatSameLogic1);
-    this.f['closeOrder2'].patchValue(row.closeOrder2);
-    this.f['breakdownPriceForNewOrder'].patchValue(row.breakdownPriceForNewOrder);
-    this.f['timeIntervalAfterClose'].patchValue(row.timeIntervalAfterClose);
-    this.f['timesRepeatSameLogic2'].patchValue(row.timesRepeatSameLogic2);
-    this.onOrderTypeChanged();
-    this.onLeverageChanged();
+    this.mF['id'].patchValue(row.id);
+    this.mF['name'].patchValue(row.name);
+    this.mF['botLogic'].patchValue(row.botLogic);
+    this.mF['leverage'].patchValue(row.leverage);
+    this.mF['closeOnTrigger'].patchValue(row.closeOnTrigger);
+
+    this.oF['orderType'].patchValue(row.orderType);
+    this.oF['side'].patchValue(row.side);
+    this.oF['quantity'].patchValue(row.quantity);
+    this.oF['limitPrice'].patchValue(row.limitPrice);
+
+    this.sF['quantity2'].patchValue(0);
+    this.sF['triggerPrice'].patchValue(0);
   }
 
-  get f() {
-    return this.form.controls;
+  get mF() {
+    return this.mainForm.controls;
+  }
+
+  get oF() {
+    return this.orderForm.controls;
+  }
+
+  get sF() {
+    return this.stopForm.controls;
   }
 
   closeAlert() {
@@ -127,47 +134,27 @@ export class RegisterBotsModalComponent implements OnInit {
 
   submit() {
     // console.log('submit');
-    const f = this.f;
+    let f = this.mF;
     const id = f.id.value;
     const name = f.name.value;
-    const exchange = f.exchange.value;
-    const symbol = f.symbol.value;
-    // const apiKey = f.apiKey.value;
-    // const apiKeySecret = f.apiKeySecret.value;
-    const orderType = f.orderType.value;
-    const postOnly = f.postOnly.value;
-    const strategy = f.strategy.value;
+    const botLogic = f.botLogic.value;
     const leverage = f.leverage.value;
-    const leverageValue = f.leverageValue.value;
+    const closeOnTrigger = f.closeOnTrigger.value;
+    f = this.oF;
+    let orderType = f.orderType.value;
+    const side = f.side.value;
     const quantity = f.quantity.value;
-    const price = f.price.value;
-    const tpPercent = f.tpPercent.value;
-    const slPercent = f.slPercent.value;
-    const trailingStop = f.trailingStop.value;
-    const numberOfSafeOrder = f.numberOfSafeOrder.value;
-    const closeOrder1 = f.closeOrder1.value;
-    const newOrderOnSLPrice = f.newOrderOnSLPrice.value;
-    const valueOfLastCloseOrder = f.valueOfLastCloseOrder.value;
-    const timesRepeatSameLogic1 = f.timesRepeatSameLogic1.value;
-    const closeOrder2 = f.closeOrder2.value;
-    const breakdownPriceForNewOrder = f.breakdownPriceForNewOrder.value;
-    const timeIntervalAfterClose = f.timeIntervalAfterClose.value;
-    const timesRepeatSameLogic2 = f.timesRepeatSameLogic2.value;
+    const limitPrice = f.limitPrice.value;
     const userId = this.authService.currentUserValue.id;
 
+    orderType = botLogic === 'signal' ? 'Market' : botLogic;
     const data = {
-      id, userId, name, exchange, symbol, /*apiKey, apiKeySecret,*/ orderType, postOnly: postOnly ? 1 : 0, strategy, leverage, leverageValue, quantity, price, tpPercent, slPercent, trailingStop, numberOfSafeOrder, closeOrder1: closeOrder1 ? 1 : 0, newOrderOnSLPrice: newOrderOnSLPrice ? 1 : 0, valueOfLastCloseOrder, timesRepeatSameLogic1, closeOrder2: closeOrder2 ? 1 : 0, breakdownPriceForNewOrder, timeIntervalAfterClose, timesRepeatSameLogic2
+      id, userId, name, botLogic, leverage, closeOnTrigger, orderType, side, quantity, limitPrice
     };
 
     this.loading = true;
     this.alert.show = false;
-    let backend;
-    if (id) {
-      backend = this.service.edit(data);
-    } else {
-      backend = this.service.add(data);
-    }
-    backend.pipe(first())
+    this.service.edit(data).pipe(first())
       .subscribe(res => {
         this.loading = false;
         if (res.result == 'success') {
@@ -176,7 +163,7 @@ export class RegisterBotsModalComponent implements OnInit {
             type: 'alert-success',
             message: res.message,
           };
-          f.id.patchValue(res.data.insertId);
+          this.mF.id.patchValue(res.data.insertId);
           this.globalVariableService.setNavbarTitle(`${strings.registerBots} - ${strings.edit}`);
           // this.router.navigate([this.returnUrl]);
         } else {
@@ -191,26 +178,22 @@ export class RegisterBotsModalComponent implements OnInit {
         this.alert = {
           show: true,
           type: 'alert-danger',
-          message: 'Unknown server error',
+          message: strings.unknownServerError,
         };
       });
   }
 
-  onOrderTypeChanged() {
-    const orderType = this.f.orderType.value;
-    const postOnlyDisabled = orderType === strings.limit;
-    this.postOnlyDisabled = postOnlyDisabled;
-    if (postOnlyDisabled) {
-      this.f.postOnly.patchValue(true);
-    }
-  }
+  removeStopItem(el: any) {
+    const modalOptions = {
+      class: 'modal-dialog-centered',
+    };
 
-  onLeverageChanged() {
-    const leverage = this.f.leverage.value;
-    const leverageValueDisabled = leverage === strings.cross;
-    this.leverageValueDisabled = leverageValueDisabled;
-    if (leverageValueDisabled) {
-      this.f.leverageValue.patchValue(0);
-    }
+    this.modalRef = this.modalService.show(QuestionModalComponent, modalOptions);
+    this.modalRef.content.title = strings.delete;
+    this.modalRef.content.message = `${strings.doYouWantToDelete2}?`;
+    this.modalRef.content.yesButtonColor = 'danger';
+    this.modalRef.content.yesButtonClicked.subscribe(() => {
+
+    });
   }
 }

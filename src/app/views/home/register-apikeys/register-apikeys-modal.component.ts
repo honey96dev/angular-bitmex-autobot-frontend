@@ -112,7 +112,7 @@ export class RegisterApikeysModalComponent implements OnInit {
         this.alert = {
           show: true,
           type: 'alert-danger',
-          message: 'Unknown server error',
+          message: strings.unknownServerError,
         };
       });
   }

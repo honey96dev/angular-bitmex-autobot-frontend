@@ -27,6 +27,7 @@
     "chart.js": "^2.5.0",
     "easy-pie-chart": "^2.1.7",
     "hammerjs": "^2.0.8",
+    "lodash": "^4.17.15",
     "ng-uikit-pro-standard": "^8.1.0",
     "numeral": "^2.0.6",
     "plotly.js": "^1.49.0",

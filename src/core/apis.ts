@@ -4,13 +4,14 @@ const apis = {
     signUp: 'auth/sign-up',
   },
   dashboard: {
-    price: 'dashboard/price',
+    priceChart: 'dashboard/price-chart',
   },
   registerBots: {
     list: 'register-bots',
     add: 'register-bots/add',
     edit: 'register-bots/edit',
     delete: 'register-bots/delete',
+    activate: 'register-bots/activate',
   },
   registerApikeys: {
     list: 'register-apikeys',
@@ -22,6 +23,9 @@ const apis = {
     loadApikey: 'settings/load-apikey',
     saveApikey: 'settings/save-apikey',
     password: 'settings/password',
+    connectToExchange: 'settings/connect-to-exchange',
+    loadPersonalChart: 'settings/load-personal-chart',
+    savePersonalChart: 'settings/save-personal-chart',
   },
 };
 

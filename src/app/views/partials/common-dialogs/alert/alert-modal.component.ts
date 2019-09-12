@@ -4,14 +4,15 @@ import {Subject} from 'rxjs';
 import strings from '@core/strings';
 
 @Component({
-  selector: 'home-delete-modal',
-  templateUrl: './delete-modal.component.html',
-  styleUrls: ['./delete-modal.component.scss']
+  selector: 'home-alert-modal',
+  templateUrl: './alert-modal.component.html',
+  styleUrls: ['./alert-modal.component.scss']
 })
-export class DeleteModalComponent {
+export class AlertModalComponent {
   strings = strings;
   title: string = strings.delete;
   message: string = strings.doYouWantToDelete;
+  yesButtonColor: string = 'primary';
   public yesButtonClicked: Subject<any> = new Subject<any>();
 
   constructor(public modalRef: MDBModalRef) { }

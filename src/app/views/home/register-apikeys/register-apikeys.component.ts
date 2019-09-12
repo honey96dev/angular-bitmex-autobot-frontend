@@ -7,7 +7,7 @@ import routes from '@core/routes';
 import {AuthenticationService, GlobalVariableService, RegisterApikeysService} from '@app/_services';
 import {MDBModalRef, MDBModalService, MdbTableDirective, MdbTablePaginationComponent} from 'ng-uikit-pro-standard';
 import {first} from 'rxjs/operators';
-import {DeleteModalComponent} from '@app/views/partials/common-dialogs/delete-modal.component';
+import {QuestionModalComponent} from '@app/views/partials/common-dialogs/question/question-modal.component';
 
 @Component({
   selector: 'home-register-apikeys',
@@ -106,7 +106,7 @@ export class RegisterApikeysComponent implements OnInit {
         this.alert = {
           show: true,
           type: 'alert-danger',
-          message: 'Unknown server error',
+          message: strings.unknownServerError,
         };
       });
   }
@@ -125,7 +125,7 @@ export class RegisterApikeysComponent implements OnInit {
     const modalOptions = {
       // class: 'modal-notify modal-warning',
     };
-    this.modalRef = this.modalService.show(DeleteModalComponent, modalOptions);
+    this.modalRef = this.modalService.show(QuestionModalComponent, modalOptions);
     this.modalRef.content.yesButtonClicked.subscribe(() => {
       this.service.delete(el).pipe(first())
         .subscribe(res => {
@@ -147,7 +147,7 @@ export class RegisterApikeysComponent implements OnInit {
           this.alert = {
             show: true,
             type: 'alert-danger',
-            message: 'Unknown server error',
+            message: strings.unknownServerError,
           };
         });
     });

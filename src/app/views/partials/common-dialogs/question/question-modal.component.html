@@ -9,10 +9,10 @@
     <div>{{message}}</div>
   </div>
   <div class="modal-footer">
-    <button type="button" mdbBtn color="secondary" class="waves-light" aria-label="Close"
+    <button type="button" mdbBtn class="waves-light btn btn-{{noButtonColor}}" aria-label="Close"
             (click)="modalRef.hide()" mdbWavesEffect>{{strings.no}}
     </button>
-    <button type="button" mdbBtn color="danger" class="relative waves-light" mdbWavesEffect
+    <button type="button" mdbBtn class="relative waves-light btn btn-{{yesButtonColor}}" mdbWavesEffect
             (click)="doYes()">{{strings.yes}}
     </button>
   </div>

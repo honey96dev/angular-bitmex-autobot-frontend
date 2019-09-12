@@ -3,6 +3,19 @@ $gray-color: #757575;
 $gray-color2: #b9babc;
 $primary-color: #4285f4;
 $gray-primary-color: #426db5;
+$background-color: #424242;
+
+$screen-breakpoint: 992px;
+
+.screen-breakpoint {
+  width: $screen-breakpoint;
+}
+
+@media (max-width: $screen-breakpoint) {
+  .screen-breakpoint{
+    width: 100%;
+  }
+}
 
 form {
   //margin-left: 15px;
@@ -35,4 +48,21 @@ form {
 .btn-primary:not([disabled]):not(.disabled).active, .btn-light-blue:not([disabled]):not(.disabled):active, .show>.btn-light-blue.dropdown-toggle {
   background-color: $primary-color !important;
   color: $white-color;
+}
+
+fieldset {
+  margin: 8px;
+  border: 1px solid silver;
+  padding: 8px;
+  border-radius: 4px;
+}
+
+legend.my-group-title {
+  font: unset !important;
+  width: auto !important;
+  padding: 2px;
+}
+
+input.dark-back-ground {
+  background-color: $background-color;
 }

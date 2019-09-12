@@ -1,341 +1,311 @@
-<!--<div class="modal-content">-->
-<!--  <div class="modal-header">-->
-<!--    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">-->
-<!--      <span aria-hidden="true">×</span>-->
-<!--    </button>-->
-<!--    <h4 class="modal-title w-100" id="myModalLabel">{{editableRow.id ? 'Edit Bot: ' + editableRow.name : 'New Bot'}}</h4>-->
-<!--  </div>-->
-<!--  <div class="modal-body">-->
-    <form [formGroup]="form" class="mx-2" (ngSubmit)="submit()">
+<div class="screen-breakpoint mx-auto">
+  <form [formGroup]="mainForm">
+    <div class="row">
       <input id="id" type="hidden" class="form-control grey-text" formControlName="id" mdbInput>
-      <div class="row">
-        <div class="col-md-4">
-          <div class="md-form mt-0">
-            <input type="text" class="form-control" formControlName="name" mdbInput mdbValidate
-                   [validateSuccess]="false" placeholder="{{strings.name}}">
-            <label>{{strings.name}}</label>
-            <mdb-error *ngIf="f.name.invalid && (f.name.dirty || f.name.touched)">{{strings.thisFieldIsRequired}}</mdb-error>
-          </div>
-<!--          <div class="form-group row">-->
-<!--            <label class="col-sm-4 col-form-label">{{strings.name}}</label>-->
-<!--            <div class="col-sm-8">-->
-<!--              <div class="md-form mt-0">-->
-<!--                <input mdbInput type="text" formControlName="name" class="form-control">-->
-<!--                <mdb-error *ngIf="f.name.invalid && (f.name.dirty || f.name.touched)">{{strings.thisFieldIsRequired}}</mdb-error>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--          </div>-->
-        </div>
-        <div class="col-md-4">
-<!--          <div class="md-form mt-0">-->
-<!--            <input type="text" class="form-control" formControlName="exchange" mdbInput mdbValidate-->
-<!--                   [validateSuccess]="false" placeholder="{{strings.exchange}}">-->
-<!--            <label>{{strings.exchange}}</label>-->
-<!--            <mdb-error *ngIf="f.exchange.invalid && (f.exchange.dirty || f.exchange.touched)">{{strings.thisFieldIsRequired}}</mdb-error>-->
-<!--          </div>-->
-          <mdb-select [options]="exchanges" formControlName="exchange" placeholder="{{strings.selectExchange}}" label="{{strings.exchange}}"></mdb-select>
-<!--          <div class="form-group row">-->
-<!--            <label class="col-sm-4 col-form-label">{{strings.exchange}}</label>-->
-<!--            <div class="col-sm-8">-->
-<!--              <div class="md-form mt-0">-->
-<!--                <input mdbInput type="text" formControlName="exchange" class="form-control">-->
-<!--                <mdb-error *ngIf="f.exchange.invalid && (f.exchange.dirty || f.exchange.touched)">{{strings.thisFieldIsRequired}}</mdb-error>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--          </div>-->
-        </div>
-        <div class="col-md-4">
-<!--          <div class="md-form mt-0">-->
-<!--            <input type="text" class="form-control" formControlName="symbol" mdbInput mdbValidate-->
-<!--                   [validateSuccess]="false" placeholder="{{strings.symbol}}">-->
-<!--            <label>{{strings.symbol}}</label>-->
-<!--            <mdb-error *ngIf="f.symbol.invalid && (f.symbol.dirty || f.symbol.touched)">{{strings.thisFieldIsRequired}}</mdb-error>-->
-<!--          </div>-->
-          <mdb-select [options]="symbols" formControlName="symbol" placeholder="{{strings.selectSymbol}}" label="{{strings.symbol}}"></mdb-select>
-<!--          <div class="form-group row">-->
-<!--            <label class="col-sm-4 col-form-label">{{strings.symbol}}</label>-->
-<!--            <div class="col-sm-8">-->
-<!--              <div class="md-form mt-0">-->
-<!--                <input mdbInput type="text" formControlName="symbol" class="form-control">-->
-<!--                <mdb-error *ngIf="f.symbol.invalid && (f.symbol.dirty || f.symbol.touched)">{{strings.thisFieldIsRequired}}</mdb-error>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--          </div>-->
+      <div class="col-md-6">
+        <div class="md-form mt-0">
+          <input type="text" id="name" class="form-control" formControlName="name" mdbInput mdbValidate
+                 [validateSuccess]="false">
+          <label for="name">{{strings.name}}</label>
+          <mdb-error *ngIf="mF.name.invalid && (mF.name.dirty || mF.name.touched)">{{strings.thisFieldIsRequired}}</mdb-error>
         </div>
       </div>
-<!--      <div class="row">-->
-<!--        <div class="col-md-4">-->
-<!--          <div class="md-form mt-0">-->
-<!--            <input type="text" class="form-control" formControlName="apiKey" mdbInput mdbValidate-->
-<!--                   [validateSuccess]="false" placeholder="{{strings.apiKey}}">-->
-<!--            <label>{{strings.apiKey}}</label>-->
-<!--            <mdb-error *ngIf="f.apiKey.invalid && (f.apiKey.dirty || f.apiKey.touched)">{{strings.thisFieldIsRequired}}</mdb-error>-->
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="row">
+          <div class="col-md-4 mt-2">
+            {{strings.botLogicBasedOn}}
+          </div>
+          <div class="col-md-8">
+            <div class="btn-group full-width">
+              <label mdbBtn color="primary" formControlName="botLogic" mdbRadio="signal" mdbWavesEffect class="gray-title">
+                {{strings.signal}}
+              </label>
+              <label mdbBtn color="primary" formControlName="botLogic" mdbRadio="custom" mdbWavesEffect class="gray-title">
+                {{strings.custom}}
+              </label>
+            </div>
+            <mdb-error *ngIf="mF.botLogic.invalid" class="my-error">{{strings.thisFieldIsRequired}}</mdb-error>
+          </div>
+        </div>
+      </div>
+<!--      <div *ngIf="mF.botLogic.value === 'signal'" class="col-md-6">-->
+<!--        <div class="row">-->
+<!--          <div class="col-md-7 mt-2">-->
+<!--            {{strings.closeOnTrigger}}-->
 <!--          </div>-->
-<!--        </div>-->
-<!--        <div class="col-md-8">-->
-<!--          <div class="md-form mt-0">-->
-<!--            <input type="text" class="form-control" formControlName="apiKeySecret" mdbInput mdbValidate-->
-<!--                   [validateSuccess]="false" placeholder="{{strings.apiKeySecret}}">-->
-<!--            <label>{{strings.apiKeySecret}}</label>-->
-<!--            <mdb-error *ngIf="f.apiKeySecret.invalid && (f.apiKeySecret.dirty || f.apiKeySecret.touched)">{{strings.thisFieldIsRequired}}</mdb-error>-->
+<!--          <div class="col-md-5">-->
+<!--            <div class="md-form mt-0">-->
+<!--              <mdb-checkbox formControlName="closeOnTrigger"></mdb-checkbox>-->
+<!--            </div>-->
 <!--          </div>-->
 <!--        </div>-->
 <!--      </div>-->
-      <div class="row">
-        <div class="col-md-4 mb-4">
-          <div class="btn-group full-width" (click)="onOrderTypeChanged()">
-            <label mdbBtn color="primary" formControlName="orderType" mdbRadio="{{strings.market}}" mdbWavesEffect class="gray-title">
-              {{strings.market}}
-            </label>
-            <label mdbBtn color="primary" formControlName="orderType" mdbRadio="{{strings.limit}}" mdbWavesEffect class="gray-title">
-              {{strings.limit}}
-            </label>
+<!--      <div *ngIf="mF.botLogic.value === 'custom'" class="col-md-6">-->
+      <div class="col-md-6">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="row">
+              <div class="col-md-6 mt-2">
+                {{strings.leverage}}
+              </div>
+              <div class="col-md-6">
+                <div class="md-form mt-0">
+                  <input type="number" class="form-control" formControlName="leverage" mdbInput mdbValidate
+                         [validateSuccess]="false">
+                  <mdb-error *ngIf="mF.leverage.errors && mF.leverage.errors.required && (mF.leverage.dirty || mF.leverage.touched)">{{strings.thisFieldIsRequired}}</mdb-error>
+                  <mdb-error *ngIf="mF.leverage.errors && mF.leverage.errors.min && (mF.leverage.dirty || mF.leverage.touched)">{{strings.min}} 0</mdb-error>
+                  <mdb-error *ngIf="mF.leverage.errors && mF.leverage.errors.max && (mF.leverage.dirty || mF.leverage.touched)">{{strings.max}} 100</mdb-error>
+                </div>
+              </div>
+            </div>
           </div>
-          <mdb-error *ngIf="f.orderType.invalid" class="my-error">{{strings.thisFieldIsRequired}}</mdb-error>
-          <div class="switch primary-switch mt-2">
-            <label>
-              <input *ngIf="postOnlyDisabled" type="checkbox" disabled formControlName="postOnly">
-              <input *ngIf="!postOnlyDisabled" type="checkbox" formControlName="postOnly">
-              <span class="lever"></span> {{strings.postOnly}}
-            </label>
-          </div>
-        </div>
-        <div class="col-md-4 mb-4">
-          <div class="btn-group full-width">
-            <label mdbBtn color="primary" formControlName="strategy" mdbRadio="{{strings.long}}" mdbWavesEffect class="gray-title">
-              {{strings.long}}
-            </label>
-            <label mdbBtn color="primary" formControlName="strategy" mdbRadio="{{strings.short}}" mdbWavesEffect class="gray-title">
-              {{strings.short}}
-            </label>
-          </div>
-          <mdb-error *ngIf="f.strategy.invalid" class="my-error">{{strings.thisFieldIsRequired}}</mdb-error>
-        </div>
-        <div class="col-md-4 mb-4">
-          <div class="btn-group full-width" (click)="onLeverageChanged()">
-            <label mdbBtn color="primary" formControlName="leverage" mdbRadio="{{strings.cross}}" mdbWavesEffect class="gray-title">
-              {{strings.cross}}
-            </label>
-            <label mdbBtn color="primary" formControlName="leverage" mdbRadio="{{strings.custom}}" mdbWavesEffect class="gray-title">
-              {{strings.custom}}
-            </label>
-          </div>
-          <mdb-error *ngIf="f.leverage.invalid" class="my-error">{{strings.thisFieldIsRequired}}</mdb-error>
-          <div class="row">
-            <div class="col-6"></div>
-            <div class="col-6">
-              <div class="md-form mt-3">
-                <input *ngIf="leverageValueDisabled" type="number" class="form-control" formControlName="leverageValue" mdbInput mdbValidate
-                       [validateSuccess]="false" placeholder="{{strings.leverage}}" disabled>
-                <input *ngIf="!leverageValueDisabled" type="number" class="form-control" formControlName="leverageValue" mdbInput mdbValidate
-                       [validateSuccess]="false" placeholder="{{strings.leverage}}">
-                <label>{{strings.leverage}}</label>
-                <mdb-error *ngIf="f.leverageValue.errors && f.leverageValue.errors.required && (f.leverageValue.dirty || f.leverageValue.touched)">{{strings.thisFieldIsRequired}}</mdb-error>
-                <mdb-error *ngIf="f.leverageValue.errors && f.leverageValue.errors.min && (f.leverageValue.dirty || f.leverageValue.touched)">{{strings.min}} 0</mdb-error>
-                <mdb-error *ngIf="f.leverageValue.errors && f.leverageValue.errors.max && (f.leverageValue.dirty || f.leverageValue.touched)">{{strings.max}} 100</mdb-error>
+          <div class="col-md-6">
+            <div class="row">
+              <div class="col-md-7 mt-2">
+                {{strings.closeOnTrigger}}
+              </div>
+              <div class="col-md-5">
+                <div class="md-form mt-0">
+                  <mdb-checkbox formControlName="closeOnTrigger"></mdb-checkbox>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div class="row">
-        <div class="col-md-4">
-          <div class="md-form mt-0">
-            <input type="number" class="form-control" formControlName="quantity" mdbInput mdbValidate
-                   [validateSuccess]="false" placeholder="{{strings.quantity}}">
-            <label>{{strings.quantity}}</label>
-            <mdb-error *ngIf="f.quantity.errors && f.quantity.errors.required && (f.quantity.dirty || f.quantity.touched)">{{strings.thisFieldIsRequired}}</mdb-error>
-            <mdb-error *ngIf="f.quantity.errors && f.quantity.errors.min && (f.quantity.dirty || f.quantity.touched)">{{strings.min}} 0</mdb-error>
+    </div>
+  </form>
+  <div class="row">
+    <div class="col-md-6">
+      <fieldset *ngIf="mF.botLogic.value === 'signal'">
+        <legend class="my-group-title">{{strings.orderDetails}}</legend>
+          <div class="row">
+            <div class="col-md-4 mt-2">
+              {{strings.quantity}}
+            </div>
+            <form [formGroup]="orderForm" class="col-md-8">
+              <div class="input-group mb-2">
+                <div class="input-group-prepend">
+                  <div class="input-group-text">USD</div>
+                </div>
+                <input type="number" class="form-control py-0 dark-back-ground" formControlName="quantity" mdbInput mdbValidate>
+              </div>
+              <mdb-error *ngIf="oF.quantity.errors && oF.quantity.errors.required && (oF.quantity.dirty || oF.quantity.touched)">{{strings.thisFieldIsRequired}}</mdb-error>
+              <mdb-error *ngIf="oF.quantity.errors && oF.quantity.errors.min && (oF.quantity.dirty || oF.quantity.touched)">{{strings.min}} 0</mdb-error>
+              <mdb-error *ngIf="oF.quantity.errors && oF.quantity.errors.max && (oF.quantity.dirty || oF.quantity.touched)">{{strings.max}} 100</mdb-error>
+            </form>
           </div>
-<!--          <div class="form-group row">-->
-<!--            <label class="col-sm-4 col-form-label">{{strings.quantity}}</label>-->
-<!--            <div class="col-sm-8">-->
-<!--              <div class="md-form mt-0">-->
-<!--                <input mdbInput type="text" formControlName="quantity" class="form-control">-->
-<!--                <mdb-error *ngIf="f.quantity.invalid && (f.quantity.dirty || f.quantity.touched)">{{strings.thisFieldIsRequired}}</mdb-error>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--          </div>-->
-        </div>
-        <div class="col-md-4">
-          <div class="md-form mt-0">
-            <input type="number" class="form-control" formControlName="price" mdbInput mdbValidate
-                   [validateSuccess]="false" placeholder="{{strings.price}}">
-            <label>{{strings.price}}</label>
-            <mdb-error *ngIf="f.price.errors && f.price.errors.required && (f.price.dirty || f.price.touched)">{{strings.thisFieldIsRequired}}</mdb-error>
-            <mdb-error *ngIf="f.price.errors && f.price.errors.min && (f.price.dirty || f.price.touched)">{{strings.min}} 0</mdb-error>
-          </div>
-<!--          <div class="form-group row">-->
-<!--            <label class="col-sm-4 col-form-label">{{strings.price}}</label>-->
-<!--            <div class="col-sm-8">-->
-<!--              <div class="md-form mt-0">-->
-<!--                <input mdbInput type="text" formControlName="price" class="form-control">-->
-<!--                <mdb-error *ngIf="f.price.invalid && (f.price.dirty || f.price.touched)">{{strings.thisFieldIsRequired}}</mdb-error>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--          </div>-->
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-3">
-          <div class="md-form mt-0">
-            <input type="number" class="form-control" formControlName="tpPercent" mdbInput mdbValidate
-                   [validateSuccess]="false" placeholder="{{strings.takeProfitPercent}}">
-            <label>{{strings.takeProfitPercent}}</label>
-            <mdb-error *ngIf="f.tpPercent.errors && f.tpPercent.errors.required && (f.tpPercent.dirty || f.tpPercent.touched)">{{strings.thisFieldIsRequired}}</mdb-error>
-            <mdb-error *ngIf="f.tpPercent.errors && f.tpPercent.errors.min && (f.tpPercent.dirty || f.tpPercent.touched)">{{strings.min}} 0</mdb-error>
-            <mdb-error *ngIf="f.tpPercent.errors && f.tpPercent.errors.max && (f.tpPercent.dirty || f.tpPercent.touched)">{{strings.max}} 100</mdb-error>
-          </div>
-<!--          <div class="form-group row">-->
-<!--            <label class="col-sm-4 col-form-label">{{strings.tpPercent}}</label>-->
-<!--            <div class="col-sm-8">-->
-<!--              <div class="md-form mt-0">-->
-<!--                <input mdbInput type="text" formControlName="tpPercent" class="form-control">-->
-<!--                <mdb-error *ngIf="f.tpPercent.invalid && (f.tpPercent.dirty || f.tpPercent.touched)">{{strings.thisFieldIsRequired}}</mdb-error>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--          </div>-->
-        </div>
-        <div class="col-md-3">
-          <div class="md-form mt-0">
-            <input type="number" class="form-control" formControlName="slPercent" mdbInput mdbValidate
-                   [validateSuccess]="false" placeholder="{{strings.stopLossPercent}}">
-            <label>{{strings.stopLossPercent}}</label>
-            <mdb-error *ngIf="f.slPercent.errors && f.slPercent.errors.required && (f.slPercent.dirty || f.slPercent.touched)">{{strings.thisFieldIsRequired}}</mdb-error>
-            <mdb-error *ngIf="f.slPercent.errors && f.slPercent.errors.min && (f.slPercent.dirty || f.slPercent.touched)">{{strings.min}} 0</mdb-error>
-            <mdb-error *ngIf="f.slPercent.errors && f.slPercent.errors.max && (f.slPercent.dirty || f.slPercent.touched)">{{strings.max}} 100</mdb-error>
-          </div>
-<!--          <div class="form-group row">-->
-<!--            <label class="col-sm-4 col-form-label">{{strings.quantity}}</label>-->
-<!--            <div class="col-sm-8">-->
-<!--              <div class="md-form mt-0">-->
-<!--                <input mdbInput type="text" formControlName="slPercent" class="form-control">-->
-<!--                <mdb-error *ngIf="f.slPercent.invalid && (f.slPercent.dirty || f.slPercent.touched)">{{strings.thisFieldIsRequired}}</mdb-error>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--          </div>-->
-        </div>
-        <div class="col-md-3">
-          <div class="md-form mt-0">
-            <input type="number" class="form-control" formControlName="trailingStop" mdbInput mdbValidate
-                   [validateSuccess]="false" placeholder="{{strings.trailingStop}}">
-            <label>{{strings.trailingStop}}</label>
-            <mdb-error *ngIf="f.trailingStop.errors && f.trailingStop.errors.required && (f.trailingStop.dirty || f.trailingStop.touched)">{{strings.thisFieldIsRequired}}</mdb-error>
-            <mdb-error *ngIf="f.trailingStop.errors && f.trailingStop.errors.min && (f.trailingStop.dirty || f.trailingStop.touched)">{{strings.min}} 0</mdb-error>
-            <mdb-error *ngIf="f.trailingStop.errors && f.trailingStop.errors.max && (f.trailingStop.dirty || f.trailingStop.touched)">{{strings.max}} 100</mdb-error>
-          </div>
-<!--          <div class="form-group row">-->
-<!--            <label class="col-sm-9 col-form-label">{{strings.quantity}}</label>-->
-<!--            <div class="col-sm-3">-->
-<!--              <div class="md-form mt-0">-->
-<!--                <input mdbInput type="text" formControlName="trailingStop" class="form-control">-->
-<!--                <mdb-error *ngIf="f.trailingStop.invalid && (f.trailingStop.dirty || f.trailingStop.touched)">{{strings.thisFieldIsRequired}}</mdb-error>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--          </div>-->
-        </div>
-        <div class="col-md-3">
-          <div class="md-form mt-0">
-            <input type="number" class="form-control" formControlName="numberOfSafeOrder" mdbInput mdbValidate
-                   [validateSuccess]="false" placeholder="{{strings.numberOfSafeOrder}}">
-            <label>{{strings.numberOfSafeOrder}}</label>
-            <mdb-error *ngIf="f.numberOfSafeOrder.errors && f.numberOfSafeOrder.errors.required && (f.numberOfSafeOrder.dirty || f.numberOfSafeOrder.touched)">{{strings.thisFieldIsRequired}}</mdb-error>
-            <mdb-error *ngIf="f.numberOfSafeOrder.errors && f.numberOfSafeOrder.errors.min && (f.numberOfSafeOrder.dirty || f.numberOfSafeOrder.touched)">{{strings.min}} 0</mdb-error>
-          </div>
-<!--          <div class="form-group row">-->
-<!--            <label class="col-sm-9 col-form-label">{{strings.numberOfSafeOrder}}</label>-->
-<!--            <div class="col-sm-3">-->
-<!--              <div class="md-form mt-0">-->
-<!--                <input mdbInput type="text" formControlName="numberOfSafeOrder" class="form-control">-->
-<!--                <mdb-error *ngIf="f.numberOfSafeOrder.invalid && (f.numberOfSafeOrder.dirty || f.numberOfSafeOrder.touched)">{{strings.thisFieldIsRequired}}</mdb-error>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--          </div>-->
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-6">
-          <mdb-card>
-            <mdb-card-body>
-              <div class="full-width text-align-center">{{strings.actionForLoss}}</div>
-              <div class="switch primary-switch">
-                <label>
-                  <input type="checkbox" formControlName="closeOrder1">
-                  <span class="lever"></span> {{strings.closeTheOrder}}
+      </fieldset>
+    </div>
+    <div class="col-md-6">
+
+    </div>
+  </div>
+  <div *ngIf="mF.botLogic.value === 'custom'" class="row">
+    <div class="col-md-6">
+      <form [formGroup]="orderForm">
+        <fieldset>
+          <legend class="my-group-title">{{strings.placeOrder}}</legend>
+          <div class="row">
+            <div class="col-md-4 mt-2">
+              {{strings.orderType}}
+            </div>
+            <div class="col-md-8">
+              <div class="btn-group full-width">
+                <label mdbBtn color="primary" formControlName="orderType" mdbRadio="Limit" mdbWavesEffect class="gray-title">
+                  {{strings.limit}}
+                </label>
+                <label mdbBtn color="primary" formControlName="orderType" mdbRadio="Market" mdbWavesEffect class="gray-title">
+                  {{strings.market}}
                 </label>
               </div>
-              <div class="switch primary-switch">
-                <label>
-                  <input type="checkbox" formControlName="newOrderOnSLPrice">
-                  <span class="lever"></span> {{strings.openNewOrderOnStopLossPrice}}
-                </label>
+            </div>
+          </div>
+          <div class="row mt-3">
+            <div class="col-md-4 mt-2">
+              {{strings.quantity}}
+            </div>
+            <div class="col-md-8">
+              <div class="input-group mb-2">
+                <div class="input-group-prepend">
+                  <div class="input-group-text">USD</div>
+                </div>
+                <input type="number" class="form-control py-0 dark-back-ground" formControlName="quantity" mdbInput mdbValidate>
               </div>
-              <div class="md-form">
-                <input type="number" class="form-control" formControlName="valueOfLastCloseOrder" mdbInput mdbValidate
-                       [validateSuccess]="false" placeholder="{{strings.valueXOfLastCloseOrder}}">
-                <label>{{strings.valueXOfLastCloseOrder}}</label>
-                <mdb-error *ngIf="f.valueOfLastCloseOrder.errors && f.valueOfLastCloseOrder.errors.required && (f.valueOfLastCloseOrder.dirty || f.valueOfLastCloseOrder.touched)">{{strings.thisFieldIsRequired}}</mdb-error>
-                <mdb-error *ngIf="f.valueOfLastCloseOrder.errors && f.valueOfLastCloseOrder.errors.min && (f.valueOfLastCloseOrder.dirty || f.valueOfLastCloseOrder.touched)">{{strings.min}} 0</mdb-error>
+              <mdb-error *ngIf="oF.quantity.errors && oF.quantity.errors.required && (oF.quantity.dirty || oF.quantity.touched)">{{strings.thisFieldIsRequired}}</mdb-error>
+              <mdb-error *ngIf="oF.quantity.errors && oF.quantity.errors.min && (oF.quantity.dirty || oF.quantity.touched)">{{strings.min}} 0</mdb-error>
+            </div>
+          </div>
+          <div class="row mt-3">
+            <div class="col-md-4 mt-2">
+              {{strings.limitPrice}}
+            </div>
+            <div class="col-md-8">
+              <div class="input-group mb-2">
+                <div class="input-group-prepend">
+                  <div class="input-group-text">USD</div>
+                </div>
+                <input type="number" class="form-control py-0 dark-back-ground" formControlName="limitPrice" mdbInput mdbValidate>
               </div>
-              <div class="md-form">
-                <input type="number" class="form-control" formControlName="timesRepeatSameLogic1" mdbInput mdbValidate
-                       [validateSuccess]="false" placeholder="{{strings.timesRepeatSameLogic}}">
-                <label>{{strings.timesRepeatSameLogic}}</label>
-                <mdb-error *ngIf="f.timesRepeatSameLogic1.errors && f.timesRepeatSameLogic1.errors.required && (f.timesRepeatSameLogic1.dirty || f.timesRepeatSameLogic1.touched)">{{strings.thisFieldIsRequired}}</mdb-error>
-                <mdb-error *ngIf="f.timesRepeatSameLogic1.errors && f.timesRepeatSameLogic1.errors.min && (f.timesRepeatSameLogic1.dirty || f.timesRepeatSameLogic1.touched)">{{strings.min}} 0</mdb-error>
+              <mdb-error *ngIf="oF.limitPrice.errors && oF.limitPrice.errors.required && (oF.limitPrice.dirty || oF.limitPrice.touched)">{{strings.thisFieldIsRequired}}</mdb-error>
+              <mdb-error *ngIf="oF.limitPrice.errors && oF.limitPrice.errors.min && (oF.limitPrice.dirty || oF.limitPrice.touched)">{{strings.min}} 0</mdb-error>
+            </div>
+          </div>
+          <div class="row mt-3">
+            <div class="col-md-6 text-align-right">
+              <button type="button" mdbBtn mdbWavesEffect class="waves-light growing-background"
+                      [disabled]="orderForm.invalid || loading">{{strings.buyLong}}
+              </button>
+            </div>
+            <div class="col-md-6">
+              <button type="button" mdbBtn mdbWavesEffect class="waves-light falling-background"
+                      [disabled]="orderForm.invalid || loading">{{strings.sellShort}}
+              </button>
+            </div>
+          </div>
+        </fieldset>
+      </form>
+    </div>
+    <div class="col-md-6">
+      <form [formGroup]="stopForm">
+        <fieldset>
+          <legend class="my-group-title">{{strings.placeOrder}}</legend>
+          <div class="row mt-3">
+            <div class="col-md-4 mt-2">
+              {{strings.quantity}}
+            </div>
+            <div class="col-md-8">
+              <div class="input-group mb-2">
+                <div class="input-group-prepend">
+                  <div class="input-group-text">USD</div>
+                </div>
+                <input type="number" class="form-control py-0 dark-back-ground" formControlName="quantity2" mdbInput mdbValidate>
               </div>
-            </mdb-card-body>
-          </mdb-card>
+              <mdb-error *ngIf="sF.quantity2.errors && sF.quantity2.errors.required && (sF.quantity2.dirty || sF.quantity2.touched)">{{strings.thisFieldIsRequired}}</mdb-error>
+              <mdb-error *ngIf="sF.quantity2.errors && sF.quantity2.errors.min && (sF.quantity2.dirty || sF.quantity2.touched)">{{strings.min}} 0</mdb-error>
+            </div>
+          </div>
+          <div class="row mt-3">
+            <div class="col-md-4 mt-2">
+              {{strings.stopPrice}}
+            </div>
+            <div class="col-md-8">
+              <div class="input-group mb-2">
+                <div class="input-group-prepend">
+                  <div class="input-group-text">USD</div>
+                </div>
+                <input type="number" class="form-control py-0 dark-back-ground" formControlName="triggerPrice" mdbInput mdbValidate>
+              </div>
+              <mdb-error *ngIf="sF.triggerPrice.errors && sF.triggerPrice.errors.required && (sF.triggerPrice.dirty || sF.triggerPrice.touched)">{{strings.thisFieldIsRequired}}</mdb-error>
+              <mdb-error *ngIf="sF.triggerPrice.errors && sF.triggerPrice.errors.min && (sF.triggerPrice.dirty || sF.triggerPrice.touched)">{{strings.min}} 0</mdb-error>
+            </div>
+          </div>
+          <div class="row mt-lg-5">
+            <div class="col-md-12 text-align-center mb-lg-3">
+              <button type="submit" mdbBtn color="primary" class="relative waves-light" mdbWavesEffect
+                      [disabled]="stopForm.invalid || loading">{{strings.add}}
+              </button>
+            </div>
+          </div>
+        </fieldset>
+      </form>
+    </div>
+  </div>
+  <fieldset *ngIf="mF.botLogic.value === 'custom'">
+    <legend class="my-group-title">{{strings.orderDetails}}</legend>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="table-responsive">
+          <table mdbTable stickyHeader="true" stickyHeaderBgColor="#3c3c3c" hover="true" striped="true" class="z-depth-1">
+            <thead class="sticky-top">
+            <tr>
+              <th *ngFor="let head of orderHeads; let i = index" [mdbTableSort]="orders" [sortBy]="orderHeads[i]"
+                  scope="col">{{head}} <mdb-icon fas icon="sort"></mdb-icon>
+              </th>
+              <th scope="col" class="edit-col"></th>
+            </tr>
+            </thead>
+            <tbody #row>
+            <tr mdbTableCol *ngFor="let el of orders; let i = index">
+              <td>{{el.size}}</td>
+              <td>{{el.value}} XBT</td>
+              <td>{{el.entryPrice}}</td>
+              <td>{{el.markPrice}}</td>
+              <td>{{el.liqPrice}}</td>
+              <td>{{el.margin}} XBT (Cross)</td>
+<!--              <td *ngIf="i+1 >= ordersPagination.firstItemIndex && i < ordersPagination.lastItemIndex">{{el.size}}</td>-->
+<!--              <td *ngIf="i+1 >= ordersPagination.firstItemIndex && i < ordersPagination.lastItemIndex">{{el.value}} XBT</td>-->
+<!--              <td *ngIf="i+1 >= ordersPagination.firstItemIndex && i < ordersPagination.lastItemIndex">{{el.entryPrice}}</td>-->
+<!--              <td *ngIf="i+1 >= ordersPagination.firstItemIndex && i < ordersPagination.lastItemIndex">{{el.markPrice}}</td>-->
+<!--              <td *ngIf="i+1 >= ordersPagination.firstItemIndex && i < ordersPagination.lastItemIndex">{{el.liqPrice}}</td>-->
+<!--              <td *ngIf="i+1 >= ordersPagination.firstItemIndex && i < ordersPagination.lastItemIndex">{{el.margin}} XBT (Cross)</td>-->
+            </tr>
+            </tbody>
+          </table>
         </div>
-        <div class="col-md-6">
-          <mdb-card>
-            <mdb-card-body class="profit-card-body">
-              <div class="full-width text-align-center">{{strings.actionForProfit}}</div>
-              <div class="switch primary-switch">
-                <label>
-                  <input type="checkbox" formControlName="closeOrder2">
-                  <span class="lever"></span> {{strings.closeTheOrder}}
-                </label>
-              </div>
-              <div class="md-form mt-1">
-                <input type="number" class="form-control" formControlName="breakdownPriceForNewOrder" mdbInput mdbValidate
-                       [validateSuccess]="false" placeholder="{{strings.breakdownPriceForNewOrder}}">
-                <label>{{strings.breakdownPriceForNewOrder}}</label>
-                <mdb-error *ngIf="f.breakdownPriceForNewOrder.errors && f.breakdownPriceForNewOrder.errors.required && (f.breakdownPriceForNewOrder.dirty || f.breakdownPriceForNewOrder.touched)">{{strings.thisFieldIsRequired}}</mdb-error>
-                <mdb-error *ngIf="f.breakdownPriceForNewOrder.errors && f.breakdownPriceForNewOrder.errors.min && (f.breakdownPriceForNewOrder.dirty || f.breakdownPriceForNewOrder.touched)">{{strings.min}} 0</mdb-error>
-              </div>
-              <div class="md-form">
-                <input type="number" class="form-control" formControlName="timeIntervalAfterClose" mdbInput mdbValidate
-                       [validateSuccess]="false" placeholder="{{strings.timeIntervalAfterClose}}">
-                <label>{{strings.timeIntervalAfterClose}}</label>
-                <mdb-error *ngIf="f.timeIntervalAfterClose.errors && f.timeIntervalAfterClose.errors.required && (f.timeIntervalAfterClose.dirty || f.timeIntervalAfterClose.touched)">{{strings.thisFieldIsRequired}}</mdb-error>
-                <mdb-error *ngIf="f.timeIntervalAfterClose.errors && f.timeIntervalAfterClose.errors.min && (f.timeIntervalAfterClose.dirty || f.timeIntervalAfterClose.touched)">{{strings.min}} 0</mdb-error>
-              </div>
-              <div class="md-form">
-                <input type="number" class="form-control" formControlName="timesRepeatSameLogic2" mdbInput mdbValidate
-                       [validateSuccess]="false" placeholder="{{strings.timesRepeatSameLogic}}">
-                <label>{{strings.timesRepeatSameLogic}}</label>
-                <mdb-error *ngIf="f.timesRepeatSameLogic2.errors && f.timesRepeatSameLogic2.errors.required && (f.timesRepeatSameLogic2.dirty || f.timesRepeatSameLogic2.touched)">{{strings.thisFieldIsRequired}}</mdb-error>
-                <mdb-error *ngIf="f.timesRepeatSameLogic2.errors && f.timesRepeatSameLogic2.errors.min && (f.timesRepeatSameLogic2.dirty || f.timesRepeatSameLogic2.touched)">{{strings.min}} 0</mdb-error>
-              </div>
-            </mdb-card-body>
-          </mdb-card>
-        </div>
       </div>
-      <div *ngIf="alert.show" class="alert alert-dismissible fade show mt-3" [ngClass]="alert.type" role="alert">
-        <button type="button" class="close" aria-label="Close" (click)="closeAlert()">
-          <span aria-hidden="true">&times;</span>
-        </button>
-        {{alert.message}}
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <fieldset>
+          <legend class="my-group-title">{{strings.closeOrderDetails}}</legend>
+            <div class="table-responsive">
+              <table mdbTable #stopsTableEl="mdbTable" stickyHeader="true" stickyHeaderBgColor="#3c3c3c" hover="true" striped="true" class="z-depth-1">
+                <thead class="sticky-top">
+                <tr>
+                  <th *ngFor="let head of stopHeads; let i = index" [mdbTableSort]="stops" [sortBy]="stopHeads[i]"
+                      scope="col">{{head}} <mdb-icon fas icon="sort"></mdb-icon>
+                  </th>
+                  <th scope="col" class="edit-col"></th>
+                </tr>
+                </thead>
+                <tbody #row>
+                <tr mdbTableCol *ngFor="let el of stops; let i = index">
+                  <td>{{el.qty}}</td>
+                  <td>{{el.orderPrice}} XBT</td>
+                  <td>{{el.filled}}</td>
+                  <td>{{el.stopPrice}}</td>
+                  <td>{{el.triggeringPrice}}</td>
+                  <td class="edit-col">
+                    <a mdbBtn floating="true" rounded="true" color="danger" size="sm" mdbWavesEffect (click)="removeStopItem(el)"><mdb-icon fas icon="trash"></mdb-icon></a>
+                  </td>
+<!--                  <td *ngIf="i+1 >= stopsPagination.firstItemIndex && i < stopsPagination.lastItemIndex">{{el.qty}}</td>-->
+<!--                  <td *ngIf="i+1 >= stopsPagination.firstItemIndex && i < stopsPagination.lastItemIndex">{{el.orderPrice}} XBT</td>-->
+<!--                  <td *ngIf="i+1 >= stopsPagination.firstItemIndex && i < stopsPagination.lastItemIndex">{{el.filled}}</td>-->
+<!--                  <td *ngIf="i+1 >= stopsPagination.firstItemIndex && i < stopsPagination.lastItemIndex">{{el.stopPrice}}</td>-->
+<!--                  <td *ngIf="i+1 >= stopsPagination.firstItemIndex && i < stopsPagination.lastItemIndex">{{el.triggeringPrice}}</td>-->
+<!--                  <td *ngIf="i+1 >= stopsPagination.firstItemIndex && i < stopsPagination.lastItemIndex" class="edit-col">-->
+<!--                    <a mdbBtn floating="true" rounded="true" color="danger" size="sm" mdbWavesEffect (click)="removeStopItem(el)"><mdb-icon fas icon="trash"></mdb-icon></a>-->
+<!--                  </td>-->
+                </tr>
+                </tbody>
+<!--                <tfoot class="">-->
+<!--                <tr>-->
+<!--                  <td colspan="6">-->
+<!--                    <mdb-table-pagination [tableEl]="stopsTableEl" paginationAlign="" [searchDataSource]="orders"></mdb-table-pagination>-->
+<!--                  </td>-->
+<!--                </tr>-->
+<!--                </tfoot>-->
+              </table>
+            </div>
+        </fieldset>
       </div>
-      <div class="button-spec mt-3">
-        <button type="button" mdbBtn color="warning" class="waves-light" aria-label="Close"
-                mdbWavesEffect (click)="goBack()" [disabled]="loading">{{strings.back}}
-        </button>
-        <button type="submit" mdbBtn color="primary" class="relative waves-light" mdbWavesEffect
-                [disabled]="form.invalid || loading">{{strings.save}}
-        </button>
-      </div>
-    </form>
-<!--  </div>-->
-<!--</div>-->
+    </div>
+  </fieldset>
+  <div *ngIf="alert.show" class="alert alert-dismissible fade show mt-3" [ngClass]="alert.type" role="alert">
+    <button type="button" class="close" aria-label="Close" (click)="closeAlert()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    {{alert.message}}
+  </div>
+  <div class="button-spec mt-3">
+    <button type="button" mdbBtn color="warning" class="waves-light" aria-label="Close"
+            mdbWavesEffect (click)="goBack()" [disabled]="loading">{{strings.back}}
+    </button>
+    <button type="submit" mdbBtn color="primary" class="relative waves-light" mdbWavesEffect
+            [disabled]="mainForm.invalid || loading" (click)="submit()">{{strings.save}}
+    </button>
+  </div>
+</div>

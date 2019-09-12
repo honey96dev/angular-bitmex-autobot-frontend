@@ -1,1 +1,9 @@
-<price-chart></price-chart>
+<div class="row">
+  <order-book class="col-md-6"></order-book>
+  <wallet *ngIf="connected" class="col-md-6"></wallet>
+<!--  <wallet class="col-md-6"></wallet>-->
+</div>
+<div class="row mt-3">
+  <price-chart class="col-md-12"></price-chart>
+<!--  <iframe src="https://www.bitmex.com/chartEmbed?symbol=XBTUSD"></iframe>-->
+</div>

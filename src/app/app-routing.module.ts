@@ -11,6 +11,8 @@ import {RegisterBotsComponent} from '@app/views/home/register-bots/register-bots
 import {RegisterBotsModalComponent} from '@app/views/home/register-bots/register-bots-modal.component';
 import {ApikeyComponent} from '@app/views/home/settings/apikey/apikey.component';
 import {PasswordComponent} from '@app/views/home/settings/password/password.component';
+import {SignupComponent} from '@app/views/auth/signup/signup.component';
+import {PersonalChartComponent} from '@app/views/home/settings/personal-chart/personal-chart.component';
 // import {AuthGuard} from '@app/_helpers';
 // import {HomeLayoutComponent} from '@app/views/layouts/home-layout/home-layout.component';
 
@@ -20,9 +22,8 @@ const routes: Routes = [
     path: 'auth',
     component: AuthLayoutComponent,
     children: [
-      {path: '', component: SigninComponent, pathMatch: 'full'},
-      // {path: 'sign-in', component: SigninComponent, pathMatch: 'full'},
-    //   {path: 'sign-up', component: SignupComponent, pathMatch: 'full'},
+      {path: '', component: SigninComponent},
+      {path: 'signup', component: SignupComponent},
     ],
   },
   {
@@ -38,6 +39,7 @@ const routes: Routes = [
       {path: 'register-bots-modal', component: RegisterBotsModalComponent},
       {path: 'settings/apikey', component: ApikeyComponent},
       {path: 'settings/password', component: PasswordComponent},
+      {path: 'settings/personal-chart', component: PersonalChartComponent},
     ],
   },
   {path: '**', redirectTo: 'app'}

@@ -7,7 +7,7 @@ import routes from '@core/routes';
 import {AuthenticationService, GlobalVariableService, RegisterBotsService, SettingsService} from '@app/_services';
 import {MDBModalRef, MDBModalService, MdbTableDirective, MdbTablePaginationComponent} from 'ng-uikit-pro-standard';
 import {first} from 'rxjs/operators';
-import {DeleteModalComponent} from '@app/views/partials/common-dialogs/delete-modal.component';
+import {QuestionModalComponent} from '@app/views/partials/common-dialogs/question/question-modal.component';
 
 @Component({
   selector: 'home-register-bots',
@@ -30,7 +30,8 @@ export class RegisterBotsComponent implements OnInit {
   addButtonEnabled: boolean = true;
 
   elements: any = [];
-  headElements = ['Name', 'Exchange', 'Symbol', 'Order Type', 'Strategy', 'Leverage', 'Quantity', 'Price', 'T/P %', 'S/L %'];
+  // headElements = ['', 'Name', 'Exchange', 'Symbol', 'Order Type', 'Strategy', 'Leverage', 'Quantity', 'Price', 'T/P %', 'S/L %'];
+  headElements = ['', 'Name', 'Logic', 'Order Type', 'Leverage', 'Quantity', 'Price'];
 
   searchText: string = '';
   previous: string;
@@ -70,9 +71,18 @@ export class RegisterBotsComponent implements OnInit {
     this.loadData();
 
     const userId = this.authService.currentUserValue.id;
-    const res = this.settingsService.loadApkKey({userId});
-    this.addButtonEnabled = !!res.apiKey && res.apiKey.length > 0;
-    console.log(res, this.addButtonEnabled);
+    const res = this.settingsService.loadApkKey({userId}).pipe(first())
+      .subscribe(res => {
+        // this.loading = false;
+        if (res.result == 'success') {
+          const apiKey = res['data'];
+          this.addButtonEnabled = !!apiKey['apiKey'] && apiKey['apiKey'].length > 0;
+        } else {
+          this.addButtonEnabled = false;
+        }
+      }, error => {
+        this.addButtonEnabled = false;
+      });
   }
 
   ngAfterViewInit() {
@@ -113,7 +123,34 @@ export class RegisterBotsComponent implements OnInit {
         this.alert = {
           show: true,
           type: 'alert-danger',
-          message: 'Unknown server error',
+          message: strings.unknownServerError,
+        };
+      });
+  }
+
+  activateItem(el: any) {
+    const userId = this.authService.currentUserValue.id;
+    this.service.activate({id: el.id, userId}).pipe(first())
+      .subscribe(res => {
+        this.loading = false;
+        if (res.result == 'success') {
+          this.elements = res.data;
+          this.mdbTable.setDataSource(this.elements);
+          this.elements = this.mdbTable.getDataSource();
+          this.previous = this.mdbTable.getDataSource();
+        } else {
+          this.alert = {
+            show: true,
+            type: 'alert-danger',
+            message: res.message,
+          };
+        }
+      }, error => {
+        this.loading = false;
+        this.alert = {
+          show: true,
+          type: 'alert-danger',
+          message: strings.unknownServerError,
         };
       });
   }
@@ -143,8 +180,10 @@ export class RegisterBotsComponent implements OnInit {
       class: 'modal-dialog-centered',
     };
 
-    this.modalRef = this.modalService.show(DeleteModalComponent, modalOptions);
+    this.modalRef = this.modalService.show(QuestionModalComponent, modalOptions);
+    this.modalRef.content.title = strings.delete;
     this.modalRef.content.message = `${strings.doYouWantToDelete2} \`${el.name}\`?`;
+    this.modalRef.content.yesButtonColor = 'danger';
     this.modalRef.content.yesButtonClicked.subscribe(() => {
       this.service.delete(el).pipe(first())
         .subscribe(res => {
@@ -166,7 +205,7 @@ export class RegisterBotsComponent implements OnInit {
           this.alert = {
             show: true,
             type: 'alert-danger',
-            message: 'Unknown server error',
+            message: strings.unknownServerError,
           };
         });
     });

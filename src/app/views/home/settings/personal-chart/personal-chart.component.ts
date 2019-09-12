@@ -8,11 +8,11 @@ import {AuthenticationService, GlobalVariableService, SettingsService} from '@ap
 import {first} from 'rxjs/operators';
 
 @Component({
-  selector: 'home-password',
-  templateUrl: './password.component.html',
-  styleUrls: ['./password.component.scss']
+  selector: 'home-personal-chart',
+  templateUrl: './personal-chart.component.html',
+  styleUrls: ['./personal-chart.component.scss']
 })
-export class PasswordComponent implements OnInit {
+export class PersonalChartComponent implements OnInit {
   strings = strings;
   routes = routes;
 
@@ -38,10 +38,10 @@ export class PasswordComponent implements OnInit {
     this.globalVariableService.setNavbarTitle(`${strings.settings} - ${strings.resetPassword}`);
 
     this.form = this.formBuilder.group({
-      oldPassword: new FormControl('', [Validators.required, Validators.minLength(4)]),
-      password: new FormControl('', [Validators.required, Validators.minLength(4)]),
-      password2: new FormControl('', [Validators.required, Validators.minLength(4)]),
+      chartId: new FormControl(''),
     });
+
+    this.loadData();
   }
 
   get f() {
@@ -52,24 +52,42 @@ export class PasswordComponent implements OnInit {
     this.alert.show = false;
   }
 
-  goBack() {
-    this.router.navigate([routes.registerApikeys]);
+  loadData() {
+    const f = this.f;
+    const userId = this.authService.currentUserValue.id;
+    this.service.loadPersonalChart({userId}).pipe(first())
+      .subscribe(res => {
+        if (res.result == 'success') {
+          f.chartId.patchValue(res.data);
+        } else {
+          this.alert = {
+            show: true,
+            type: 'alert-danger',
+            message: res.message,
+          };
+        }
+      }, error => {
+        this.alert = {
+          show: true,
+          type: 'alert-danger',
+          message: strings.unknownServerError,
+        };
+      });
   }
 
   submit() {
     const f = this.f;
     // const name = f.name.value;
-    const oldPassword = f.oldPassword.value;
-    const password = f.password.value;
+    const chartId = f.chartId.value;
     const userId = this.authService.currentUserValue.id;
 
     const data = {
-      userId, oldPassword, password
+      userId, chartId,
     };
 
     this.loading = true;
     this.alert.show = false;
-    this.service.password(data).pipe(first())
+    this.service.savePersonalChart(data).pipe(first())
       .subscribe(res => {
         // this.loading = false;
         if (res.result == 'success') {

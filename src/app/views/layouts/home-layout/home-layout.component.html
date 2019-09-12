@@ -6,7 +6,7 @@
       <!-- Logo -->
       <li>
         <div class="logo-wrapper waves-light">
-          <a href="#"><img src="./assets/media/logos/logo.png" class="img-fluid flex-center px-3"></a>
+          <a routerLink="/app"><img src="./assets/media/logos/logo.png" class="img-fluid flex-center px-3"></a>
         </div>
       </li>
       <!--/. Logo -->
@@ -38,8 +38,9 @@
               </mdb-accordion-item-head>
               <mdb-accordion-item-body>
                 <ul>
-                  <li><a routerLink="{{routes.settingApikey}}" mdbWavesEffect>{{strings.connetAnExchange}}</a></li>
-                  <li><a routerLink="{{routes.settingPassword}}" mdbWavesEffect>{{strings.changePassword}}</a></li>
+                  <li><a routerLink="{{routes.settingApikey}}" mdbWavesEffect (click)="onClickNav(routes.settingApikey)">{{strings.connetAnExchange}}</a></li>
+                  <li><a routerLink="{{routes.settingPassword}}" mdbWavesEffect (click)="onClickNav(routes.settingPassword)">{{strings.changePassword}}</a></li>
+                  <li><a routerLink="{{routes.settingPersonalChart}}" mdbWavesEffect (click)="onClickNav(routes.settingPersonalChart)">{{strings.personalChart}}</a></li>
                 </ul>
               </mdb-accordion-item-body>
             </mdb-accordion-item>
@@ -89,6 +90,7 @@
       <!--/. Side navigation links -->
     </links>
     <div class="sidenav-bg mask-strong"></div>
+    <div class="connect-lamp"><mdb-icon fas [icon]="apiKey['connected'] ? 'check' : 'times'" class="side-nav-icon"></mdb-icon>{{apiKey['connected'] && connected ? strings.connected : strings.disconnected}}</div>
   </mdb-side-nav>
   <!--/. Sidebar navigation -->
 
@@ -115,6 +117,25 @@
     <navlinks>
       <ul class="nav navbar-nav nav-flex-icons ml-auto ie-double-nav">
         <li class="nav-item">
+          <button *ngIf="!connected && route == '/app'" mdbBtn color="primary" class="relative waves-light btn-sm" mdbWavesEffect
+                  [disabled]="connecting" (click)="onConnectToExchange()">{{strings.connect}}
+          </button>
+          <button *ngIf="connected && route == '/app'" type="submit" mdbBtn color="danger" class="relative waves-light btn-sm" mdbWavesEffect
+                  [disabled]="connecting" (click)="onDisconnect()">{{strings.disconnect}}
+          </button>
+        </li>
+        <li *ngIf="connected && username.length > 0 && route == '/app'" class="nav-item">
+          <button *ngIf="!botStarted" mdbBtn color="primary" class="relative waves-light btn-sm" mdbWavesEffect
+                  [disabled]="connecting" (click)="onStartBot()">{{strings.startBot}}
+          </button>
+          <button *ngIf="botStarted" mdbBtn color="danger" class="relative waves-light btn-sm" mdbWavesEffect
+                  [disabled]="connecting" (click)="onStopBot()">{{strings.stopBot}}
+          </button>
+        </li>
+        <li *ngIf="connected && username.length > 0 && route == '/app'" class="nav-item ml-4">
+          <div class="nav-link">{{firstName}} {{lastName}}({{username}})</div>
+        </li>
+        <li *ngIf="connected && username.length > 0 && route == '/app'" class="nav-item ml-4">
           <div class="nav-link">XBTUSD: <span class="price-value" [ngClass]="direction > 0 ? 'growing' : 'falling'">{{price}}</span></div>
         </li>
 <!--        <li class="nav-item">-->
