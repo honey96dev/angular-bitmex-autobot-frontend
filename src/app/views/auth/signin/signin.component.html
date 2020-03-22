@@ -11,7 +11,7 @@
   <form name="form" [formGroup]="form" (ngSubmit)="onSubmit()">
     <div class="md-form mt-4">
       <mdb-icon fas icon="envelope" class="prefix"></mdb-icon>
-      <input mdbInput mdbValidate id="email" formControlName="email" minLength="8" maxLength="25" type="email"
+      <input mdbInput mdbValidate id="email" formControlName="email" type="email"
              class="form-control" [disabled]="loading">
       <label for="email">{{strings.email}}</label>
       <mdb-error *ngIf="f.email.errors && f.email.errors.required && (f.email.dirty || f.email.touched)">{{strings.thisFieldIsRequired}}</mdb-error>
@@ -21,7 +21,7 @@
     <div class="md-form mt-5">
       <mdb-icon fas icon="key" class="prefix"></mdb-icon>
 <!--      <mdb-icon fas icon="key" class="suffix"></mdb-icon>-->
-      <input mdbInput mdbValidate id="password" formControlName="password" minLength="4" [type]="passwordDisplayType"
+      <input mdbInput mdbValidate id="password" formControlName="password" [type]="passwordDisplayType"
              class="form-control" [disabled]="loading">
       <label for="password">{{strings.password}}</label>
       <mdb-error *ngIf="f.password.errors && f.password.errors.required && (f.password.dirty || f.password.touched)">{{strings.thisFieldIsRequired}}</mdb-error>

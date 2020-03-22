@@ -1,5 +1,6 @@
 export default {
   siteName: 'Profit Bot',
+  cryptKey: 'Profit_Bot',
   noData: 'No data',
   signIn: 'Sign in',
   signUp: 'Sign up',
@@ -107,6 +108,7 @@ export default {
   selectExchange: '(Select Exchange)',
   selectSymbol: '(Select Symbol)',
   botLogicBasedOn: 'Bot Logic Based On',
+  logic: 'Logic',
   signal: 'Signal',
   leverageX: 'Leverage(X)',
   closeOnTrigger: 'Close on Trigger',
@@ -128,6 +130,9 @@ export default {
   filled: 'Filled',
   stopPrice: 'Stop Price',
   triggeringPrice: 'Triggering Price',
+  profitMargin: 'Profit Margin ($)',
+  trailingMargin: 'Trailing Margin ($)',
+  numberOfStopOrder: 'Number of Stop Order',
   saveBotData: 'Save Bot Data',
   backToMain: 'Back to Main',
 
@@ -160,4 +165,6 @@ export default {
   botStatus: 'Bot Status',
 
   tradingviewPersonalChartId: 'Tradingview personal Chart ID',
+  buyUrl: 'Buy URL',
+  sellUrl: 'Sell URL',
 };

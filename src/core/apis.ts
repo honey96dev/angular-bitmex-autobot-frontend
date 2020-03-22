@@ -27,6 +27,9 @@ const apis = {
     loadPersonalChart: 'settings/load-personal-chart',
     savePersonalChart: 'settings/save-personal-chart',
   },
+  signalBot: {
+    order: 'signal-bot/order',
+  },
 };
 
 export {

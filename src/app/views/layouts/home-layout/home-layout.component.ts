@@ -76,18 +76,24 @@ export class HomeLayoutComponent implements OnInit {
       .subscribe(connected => {
         this.connected = connected;
         if (connected) {
-          this.settingsService.connectToExchange(this.apiKey).pipe(first())
-            .subscribe(res => {
-              this.connecting = false;
-              if (res.result == 'success') {
-                this.username = res.data.username;
-                this.firstName = res.data.firstname;
-                this.lastName = res.data.lastname;
-              } else {
-              }
-            }, error => {
-            });
+          // this.settingsService.connectToExchange(this.apiKey).pipe(first())
+          //   .subscribe(res => {
+          //     this.connecting = false;
+          //     if (res.result == 'success') {
+          //       this.username = res.data.username;
+          //       this.firstName = res.data.firstname;
+          //       this.lastName = res.data.lastname;
+          //     } else {
+          //     }
+          //   }, error => {
+          //   });
         }
+      });
+    this.socketIoService.userValue()
+      .subscribe(data => {
+        this.username = data.username;
+        this.firstName = data.firstName;
+        this.lastName = data.lastName;
       });
     this.socketIoService.isBotStarted()
       .subscribe(data => {
@@ -193,8 +199,9 @@ export class HomeLayoutComponent implements OnInit {
                 this.firstName = res.data.firstname;
                 this.lastName = res.data.lastname;
 
-                this.socketIoService.setConnected(true);
-                this.socketIoService.connectToExchange(this.apiKey);
+                // console.log('connectToExchange', this.username, this.firstName, this.lastName);
+                this.socketIoService.setConnected(true, res.data);
+                this.socketIoService.connectToExchange(this.apiKey, {username: this.username, firstName: this.firstName, lastName: this.lastName});
               } else {
                 this.alert = {
                   show: true,

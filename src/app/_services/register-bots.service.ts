@@ -11,9 +11,9 @@ export class RegisterBotsService {
   // defaultRow = {id: null, name: '', exchange: 'bitmex', symbol: 'XBTUSD', apiKey: '', apiKeySecret: '', orderType: 'Limit', postOnly: true, strategy: 'Long', leverage: 'Cross', leverageValue: 0, quantity: 0, price: 0, tpPercent: 0, slPercent: 0, tsPercent: 0, numberOfSafeOrder: 0, closeOrder1: false, newOrderOnSLPrice: false, valueOfLastCloseOrder: 0, timesRepeatSameLogic1: 1, closeOrder2: false, breakdownPriceForNewOrder: 0, timeIntervalAfterClose: 0, timesRepeatSameLogic2: 1};
   //
   // editableRow: { id:string, name: string, exchange: string, symbol: string, apiKey: string, apiKeySecret: string, orderType: string, postOnly: boolean, strategy: string, leverage: string, leverageValue: number, quantity: number, price: number, tpPercent: number, slPercent: number, tsPercent: number, numberOfSafeOrder: number, closeOrder1: boolean, newOrderOnSLPrice: boolean, valueOfLastCloseOrder: number, timesRepeatSameLogic1: number, closeOrder2: boolean, breakdownPriceForNewOrder: number, timeIntervalAfterClose: number, timesRepeatSameLogic2: number };
-  defaultRow = {id:null, name: '', botLogic: 'signal', leverage: 0, closeOnTrigger: true, orderType: 'Limit', side: 'Buy', quantity: 0, limitPrice: 0};
+  defaultRow = {id:null, name: '', botLogic: 'signal', leverage: 0, closeOnTrigger: true, orderType: 'Limit', side: 'Buy', quantity: 0, limitPrice: 0, profitMargin: 0, trailingMargin: 0, numOrder: 1};
 
-  editableRow: { id:string, name: string, botLogic: string, leverage: number, closeOnTrigger: boolean, orderType: string, side: string, quantity: number, limitPrice: number };
+  editableRow: { id:string, name: string, botLogic: string, leverage: number, closeOnTrigger: boolean, orderType: string, side: string, quantity: number, limitPrice: number, profitMargin: number, trailingMargin: number, numOrder: number };
 
   constructor(private http: HttpClient) {
   }

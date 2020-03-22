@@ -8,6 +8,9 @@ import {AuthenticationService, GlobalVariableService, RegisterBotsService} from 
 import {first} from 'rxjs/operators';
 import {MDBModalRef, MDBModalService, MdbTableDirective, MdbTablePaginationComponent} from 'ng-uikit-pro-standard';
 import {QuestionModalComponent} from '@app/views/partials/common-dialogs/question/question-modal.component';
+import * as CryptoJS from 'crypto-js';
+import {environment} from '@environments/environment';
+import {apis} from '@core/apis';
 
 @Component({
   selector: 'home-register-bots-modal',
@@ -20,6 +23,11 @@ export class RegisterBotsModalComponent implements OnInit {
   mainForm: FormGroup;
   orderForm: FormGroup;
   stopForm: FormGroup;
+  botUrl: {
+    buy: string,
+    sell: string,
+  } = {buy: '', sell: ''};
+  // aes: AES = new Cryptr(strings.cryptKey);
 
   public editableRow: { id:string, name: string, botLogic: string, leverage: number, closeOnTrigger: boolean, orderType: string, side: string, quantity: number, limitPrice: number };
   exchanges = [
@@ -91,6 +99,9 @@ export class RegisterBotsModalComponent implements OnInit {
       side: new FormControl('', Validators.required),
       quantity: new FormControl('', [Validators.required, Validators.min(0)]),
       limitPrice: new FormControl('', [Validators.required, Validators.min(0)]),
+      profitMargin: new FormControl('', [Validators.required, Validators.min(0)]),
+      trailingMargin: new FormControl('', [Validators.required, Validators.min(0)]),
+      numOrder: new FormControl('', [Validators.required, Validators.min(0)]),
     });
     this.stopForm = this.formBuilder.group({
       quantity2: new FormControl('', [Validators.required, Validators.min(0)]),
@@ -107,9 +118,24 @@ export class RegisterBotsModalComponent implements OnInit {
     this.oF['side'].patchValue(row.side);
     this.oF['quantity'].patchValue(row.quantity);
     this.oF['limitPrice'].patchValue(row.limitPrice);
+    this.oF['profitMargin'].patchValue(row.profitMargin);
+    this.oF['trailingMargin'].patchValue(row.trailingMargin);
+    this.oF['numOrder'].patchValue(row.numOrder);
 
     this.sF['quantity2'].patchValue(0);
     this.sF['triggerPrice'].patchValue(0);
+
+    const baseUrl = `${environment.apiUrl}${apis.signalBot.order}`;
+    const userId = this.authService.currentUserValue.id;
+    const password = this.authService.currentUserValue.hash;
+    let buyUrl = CryptoJS.AES.encrypt(`${userId}/${password}/buy`, strings.cryptKey).toString();
+    let sellUrl = CryptoJS.AES.encrypt(`${userId}/${password}/sell`, strings.cryptKey).toString();
+    buyUrl = buyUrl.replace(/\//g, '@');
+    sellUrl = sellUrl.replace(/\//g, '@');
+    this.botUrl = {
+      buy: `${baseUrl}/${buyUrl}`,
+      sell: `${baseUrl}/${sellUrl}`,
+    };
   }
 
   get mF() {

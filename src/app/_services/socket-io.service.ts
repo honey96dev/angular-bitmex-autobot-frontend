@@ -13,6 +13,7 @@ export class SocketIoService {
   direction: 1;
 
   @Output() connected: EventEmitter<any> = new EventEmitter();
+  @Output() user: EventEmitter<any> = new EventEmitter();
   @Output() botStarted: EventEmitter<any> = new EventEmitter();
   @Output() xbtusdInfo: EventEmitter<any> = new EventEmitter();
   @Output() orderBookL2_25: EventEmitter<any> = new EventEmitter();
@@ -53,7 +54,7 @@ export class SocketIoService {
 
     this.ioClient.on(signals.answerIsConnected, (data) => {
       const params = JSON.parse(data);
-      this.setConnected(params['connected']);
+      this.setConnected(params['connected'], params['user']);
     });
 
     this.ioClient.on(signals.connectedToExchange, (data) => {
@@ -78,6 +79,10 @@ export class SocketIoService {
     return this.connected;
   }
 
+  userValue() {
+    return this.user;
+  }
+
   isBotStarted() {
     return this.botStarted;
   }
@@ -98,17 +103,21 @@ export class SocketIoService {
     return this.position;
   }
 
-  connectToExchange(params) {
+  connectToExchange(params, params2) {
+    // console.log(params, params2);
+    params = Object.assign({}, params, params2);
+    // console.log(params);
     this.ioClient.emit(signals.connectToExchange, JSON.stringify(params));
   }
 
   disconnectFromExchange(params) {
     this.ioClient.emit(signals.disconnectFromExchange, JSON.stringify(params));
-    this.setConnected(false);
+    this.setConnected(false, {});
   }
 
-  setConnected(connected) {
+  setConnected(connected, user) {
     this.connected.emit(connected);
+    this.user.emit(user);
   }
 
   checkIsConnected(params) {

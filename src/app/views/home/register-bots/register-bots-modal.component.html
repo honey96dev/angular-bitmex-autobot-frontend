@@ -14,16 +14,19 @@
     <div class="row">
       <div class="col-md-6">
         <div class="row">
-          <div class="col-md-4 mt-2">
-            {{strings.botLogicBasedOn}}
+          <div class="col-md-2 mt-2">
+            {{strings.logic}}
           </div>
-          <div class="col-md-8">
+          <div class="col-md-10">
             <div class="btn-group full-width">
               <label mdbBtn color="primary" formControlName="botLogic" mdbRadio="signal" mdbWavesEffect class="gray-title">
                 {{strings.signal}}
               </label>
-              <label mdbBtn color="primary" formControlName="botLogic" mdbRadio="custom" mdbWavesEffect class="gray-title">
-                {{strings.custom}}
+              <label mdbBtn color="primary" formControlName="botLogic" mdbRadio="custom1" mdbWavesEffect class="gray-title">
+                {{strings.custom}}1
+              </label>
+              <label mdbBtn color="primary" formControlName="botLogic" mdbRadio="custom2" mdbWavesEffect class="gray-title">
+                {{strings.custom}}2
               </label>
             </div>
             <mdb-error *ngIf="mF.botLogic.invalid" class="my-error">{{strings.thisFieldIsRequired}}</mdb-error>
@@ -86,7 +89,7 @@
               {{strings.quantity}}
             </div>
             <form [formGroup]="orderForm" class="col-md-8">
-              <div class="input-group mb-2">
+              <div class="input-group mb-4">
                 <div class="input-group-prepend">
                   <div class="input-group-text">USD</div>
                 </div>
@@ -103,7 +106,66 @@
 
     </div>
   </div>
-  <div *ngIf="mF.botLogic.value === 'custom'" class="row">
+  <div class="row">
+    <div class="col-md-6">
+      <fieldset *ngIf="mF.botLogic.value === 'custom1'">
+        <legend class="my-group-title">{{strings.placeOrder}}</legend>
+        <form [formGroup]="orderForm">
+          <div class="row">
+            <div class="col-md-6">{{strings.quantity}}</div>
+            <div class="col-md-6">
+              <div class="input-group mb-4">
+                <div class="input-group-prepend">
+                  <div class="input-group-text">USD</div>
+                </div>
+                <input type="number" class="form-control py-0 dark-back-ground" formControlName="quantity" mdbInput mdbValidate>
+              </div>
+              <mdb-error *ngIf="oF.quantity.errors && oF.quantity.errors.required && (oF.quantity.dirty || oF.quantity.touched)">{{strings.thisFieldIsRequired}}</mdb-error>
+              <mdb-error *ngIf="oF.quantity.errors && oF.quantity.errors.min && (oF.quantity.dirty || oF.quantity.touched)">{{strings.min}} 0</mdb-error>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">{{strings.profitMargin}}</div>
+            <div class="col-md-6">
+              <div class="input-group mb-4">
+                <div class="input-group-prepend">
+                  <div class="input-group-text">USD</div>
+                </div>
+                <input type="number" class="form-control py-0 dark-back-ground" formControlName="profitMargin" mdbInput mdbValidate>
+              </div>
+              <mdb-error *ngIf="oF.profitMargin.errors && oF.profitMargin.errors.required && (oF.profitMargin.dirty || oF.profitMargin.touched)">{{strings.thisFieldIsRequired}}</mdb-error>
+              <mdb-error *ngIf="oF.profitMargin.errors && oF.profitMargin.errors.min && (oF.profitMargin.dirty || oF.profitMargin.touched)">{{strings.min}} 0</mdb-error>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">{{strings.trailingMargin}}</div>
+            <div class="col-md-6">
+              <div class="input-group mb-4">
+                <div class="input-group-prepend">
+                  <div class="input-group-text">USD</div>
+                </div>
+                <input type="number" class="form-control py-0 dark-back-ground" formControlName="trailingMargin" mdbInput mdbValidate>
+              </div>
+              <mdb-error *ngIf="oF.trailingMargin.errors && oF.trailingMargin.errors.required && (oF.trailingMargin.dirty || oF.trailingMargin.touched)">{{strings.thisFieldIsRequired}}</mdb-error>
+              <mdb-error *ngIf="oF.trailingMargin.errors && oF.trailingMargin.errors.min && (oF.trailingMargin.dirty || oF.trailingMargin.touched)">{{strings.min}} 0</mdb-error>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">{{strings.numberOfStopOrder}}</div>
+            <div class="col-md-6">
+              <div class="input-group mb-4">
+                <input type="number" class="form-control py-0 dark-back-ground" formControlName="numOrder" mdbInput mdbValidate>
+              </div>
+              <mdb-error *ngIf="oF.numOrder.errors && oF.numOrder.errors.required && (oF.numOrder.dirty || oF.numOrder.touched)">{{strings.thisFieldIsRequired}}</mdb-error>
+              <mdb-error *ngIf="oF.numOrder.errors && oF.numOrder.errors.min && (oF.numOrder.dirty || oF.numOrder.touched)">{{strings.min}} 0</mdb-error>
+            </div>
+          </div>
+        </form>
+      </fieldset>
+    </div>
+    <div class="col-md-6"></div>
+  </div>
+  <div *ngIf="mF.botLogic.value === 'custom2'" class="row">
     <div class="col-md-6">
       <form [formGroup]="orderForm">
         <fieldset>
@@ -213,7 +275,7 @@
       </form>
     </div>
   </div>
-  <fieldset *ngIf="mF.botLogic.value === 'custom'">
+  <fieldset *ngIf="mF.botLogic.value === 'custom2'">
     <legend class="my-group-title">{{strings.orderDetails}}</legend>
     <div class="row">
       <div class="col-md-12">
@@ -299,6 +361,14 @@
       <span aria-hidden="true">&times;</span>
     </button>
     {{alert.message}}
+  </div>
+  <div *ngIf="mF.botLogic.value === 'signal'" class="row">
+    <div class="col-md-2">{{strings.buyUrl}}</div>
+    <div class="col-md-10 buy-sell-url-wrap">{{botUrl.buy}}</div>
+  </div>
+  <div *ngIf="mF.botLogic.value === 'signal'" class="row">
+    <div class="col-md-2">{{strings.sellUrl}}</div>
+    <div class="col-md-10 buy-sell-url-wrap">{{botUrl.sell}}</div>
   </div>
   <div class="button-spec mt-3">
     <button type="button" mdbBtn color="warning" class="waves-light" aria-label="Close"

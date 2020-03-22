@@ -10,11 +10,11 @@ import {first} from 'rxjs/operators';
 let self;
 
 @Component({
-  selector: 'wallet',
-  templateUrl: './wallet.component.html',
-  styleUrls: ['./wallet.component.scss']
+  selector: 'chart-id',
+  templateUrl: './chart-id.component.html',
+  styleUrls: ['./chart-id.component.scss']
 })
-export class WalletComponent implements OnInit {
+export class ChartIdComponent implements OnInit {
   strings = strings;
   form: FormGroup;
   arrow = {
@@ -98,7 +98,7 @@ export class WalletComponent implements OnInit {
         // this.loading = false;
         if (res.result == 'success') {
           this.apiKey = res['data'];
-          // console.log(this.apiKey);
+          console.log(this.apiKey);
           this.socketIOService.checkIsConnected(this.apiKey);
           this.socketIOService.checkIsBotStarted({
             userId: userId,

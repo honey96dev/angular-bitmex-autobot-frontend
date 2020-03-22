@@ -23,13 +23,14 @@ import {RegisterApikeysModalComponent} from '@app/views/home/register-apikeys/re
 import {ApikeyComponent} from '@app/views/home/settings/apikey/apikey.component';
 import {PasswordComponent} from '@app/views/home/settings/password/password.component';
 import {PriceChartComponent} from '@app/views/partials/price-chart/price-chart.component';
-import {PlotlyModule} from 'angular-plotly.js';
-
-import * as PlotlyJS from 'plotly.js/dist/plotly.js';
+// import {PlotlyModule} from 'angular-plotly.js';
+//
+// import * as PlotlyJS from 'plotly.js/dist/plotly.js';
 import {OrderBookComponent} from '@app/views/partials/order-book/order-book.component';
 import {WalletComponent} from '@app/views/partials/wallet/wallet.component';
 import {PersonalChartComponent} from '@app/views/home/settings/personal-chart/personal-chart.component';
-PlotlyModule.plotlyjs = PlotlyJS;
+import {ChartIdComponent} from '@app/views/partials/chart-id/chart-id.component';
+// PlotlyModule.plotlyjs = PlotlyJS;
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ PlotlyModule.plotlyjs = PlotlyJS;
     PriceChartComponent,
     OrderBookComponent,
     WalletComponent,
+    ChartIdComponent,
     AppComponent,
     AuthLayoutComponent,
     SigninComponent,
@@ -64,7 +66,7 @@ PlotlyModule.plotlyjs = PlotlyJS;
 
     MDBBootstrapModulesPro.forRoot(),
     FormsModule,
-    PlotlyModule,
+    // PlotlyModule,
   ],
   providers: [
     Title,
